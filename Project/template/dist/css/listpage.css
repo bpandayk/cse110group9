@@ -1,4 +1,8 @@
 
+body {
+    background-color: #f3f3f3;
+}
+
 .head h1 {
     padding: 0px;
     margin: 0px;
@@ -9,5 +13,13 @@
     padding: 10px;
     background-color: #505050;
     color: #bbb;
+}
+
+#sidebar {
+    background: url(../../img/listpage_sidebar_border.png) top right repeat-y;
+}
+
+#sidebar .nav {
+    margin-right: 4px;
 }
 

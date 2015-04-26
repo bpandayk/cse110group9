@@ -1,0 +1,13 @@
+
+.head h1 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 18pt;
+}
+
+.head {
+    padding: 10px;
+    background-color: #505050;
+    color: #bbb;
+}
+

@@ -1,13 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+
+<title>Lost & Found</title>
+
+<style type ="text/css">
+	body {
+		background-color: 0xFFFFFF;
+		background-image: url("http://www.designbolts.com/wp-content/uploads/2012/12/Silver-scale-White-Seamless-Texture-For-Website-Background.jpg");
+		background-attachment:fixed;
+	}
+	
+	a {
+		color: #FFFFFF;
+		text-decoration: none;
+	}
+	
+	@font-face {
+		font-family: 'breamcatcher';
+		src: url('bream_catcher-webfont.eot'),
+	}
+	
+	.button {
+		width: 450px;
+		height: 100px;
+		right: 100px;
+		padding-top: 0px;
+		padding-bottom: 45px;
+		padding-left: 30px;
+		position: absolute;
+		
+		font-family: breamcatcher;
+		font-size: 130px;
+		letter-spacing: 17px;
+		color: #FFFFFF;
+		text-align: center;
+
+		-webkit-transition: all 0.5s ease-in-out;
+		-moz-transition: all 0.5s ease-in-out;
+		-o-transition: all 0.5s ease-in-out;
+		-ms-transition: all 0.5s ease-in-out;
+		transition: all 0.5s ease-in-out;
+	}
+	
+	.button:hover {
+		opacity: 0.8;
+		letter-spacing: 25px;
+	}
+	
+	#lostb.button {
+		background-color: #88CCAA;
+		top: 130px;
+		position: absolute;
+	}
+
+	#foundb.button {
+		background-color: #F0C062;
+		top: 410px;
+		position: absolute;
+	}
+
+	#topb.button {
+		width: 200px;
+		height: 76px;
+		top: -5px;
+		right: 0px;
+		padding: 0px;
+
+		background-image: url("file:FBloginbutton.png");
+		position: absolute;
+	}
+	
+	#and {
+		width: 470px;
+		height: 120px;
+		top: 290px;
+		right: 100px;
+		position: absolute;
+		
+		font-family: breamcatcher;
+		font-size: 90px;
+		text-align: center;
+		color: #000000;
+	}
+	
+	#credits {
+		bottom: 15px;
+		right: 15px;
+		position: absolute;
+		
+		font-family: courier new;
+		font-size: 11px;
+		color: #000000;
+	}
+	
+</style>
+
 <head>
-<meta http-equiv="refresh" content="0;url=pages/index.html">
-<title>SB Admin 2</title>
-<script language="javascript">
-    window.location.href = "pages/index.html"
-</script>
 </head>
+
 <body>
-Go to <a href="pages/index.html">/pages/index.html</a>
+
+	<a href="">
+		<div id ="lostb" class="button"> lost </div>
+	</a>
+	
+	<div id ="and"> & </div>
+	
+	<a href="">
+		<div id ="foundb" class="button"> found </div>
+	</a>
+	
+	<div id ="credits"> &copy 2015 Furious 7. </div>
+
+	<a href="">
+		<div id ="topb" class="button"></div>
+	</a>
 </body>
-</html>

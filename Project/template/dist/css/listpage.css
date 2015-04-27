@@ -1,6 +1,13 @@
 
 body {
-    background-color: #f3f3f3;
+    background-color: #ccc;
+}
+
+.container {
+    width: 85%;
+    margin-top: 20px;
+    background-color: #ddd;
+    padding: 20px 35px 20px 20px;
 }
 
 .head h1 {
@@ -16,10 +23,49 @@ body {
 }
 
 #sidebar {
+/*
     background: url(../../img/listpage_sidebar_border.png) top right repeat-y;
+*/
 }
 
-#sidebar .nav {
-    margin-right: 4px;
+#sidebar li {
+}
+
+#list {
+    border-left: solid 1px;
+    padding-left: 20px;
+}
+
+#list li a {
+    min-height: 200px;
+    font-size: 20px;
+    margin: 15px 10px 15px 10px;
+    background-color: #eee;
+    border: solid 3px;
+    box-shadow: 10px 10px 0px #888;
+    padding: 20px 25px 20px 25px;
+}
+
+#list li:hover {
+    background: transparent;
+}
+
+.placeholder {
+    height: 100px;
+}
+
+#bottom h6 {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+}
+
+a#newpost {
+    background: url(../../img/listpage_newpost_button.png) no-repeat center center;
+    height: 70px;
+    width: 70px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
 }
 

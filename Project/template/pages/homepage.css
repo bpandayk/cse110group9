@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html lang="en-US">
-
-<title>Lost & Found</title>
-
-<style type ="text/css">
 	body {
 		background-color: 0xFFFFFF;
-		background-image: url("http://www.designbolts.com/wp-content/uploads/2012/12/Silver-scale-White-Seamless-Texture-For-Website-Background.jpg");
-		background-attachment:fixed;
+		background-image: url("../img/background.jpg");
+		background-attachment: fixed;
+	}
+
+	.geiselImg {
+		background-image: url("../img/geisel.png");
+		background-repeat: no-repeat;
+		background-position: bottom left;
+		background-attachment: fixed;
+		overflow: hidden;
+
+		bottom: -50px;
+		padding: 0;
+		height: 660px;
+
 	}
 	
 	a {
@@ -17,7 +24,7 @@
 	
 	@font-face {
 		font-family: 'breamcatcher';
-		src: url('bream_catcher-webfont.eot'),
+		src: url("../bream_catcher-webfont.eot"),
 	}
 	
 	.button {
@@ -27,7 +34,7 @@
 		padding-top: 0px;
 		padding-bottom: 45px;
 		padding-left: 30px;
-		position: absolute;
+		position: relative;
 		
 		font-family: breamcatcher;
 		font-size: 130px;
@@ -50,24 +57,13 @@
 	#lostb.button {
 		background-color: #88CCAA;
 		top: 130px;
-		position: absolute;
+		position: fixed;
 	}
 
 	#foundb.button {
 		background-color: #F0C062;
 		top: 410px;
-		position: absolute;
-	}
-
-	#topb.button {
-		width: 200px;
-		height: 76px;
-		top: -5px;
-		right: 0px;
-		padding: 0px;
-
-		background-image: url("file:FBloginbutton.png");
-		position: absolute;
+		position: fixed;
 	}
 	
 	#and {
@@ -75,7 +71,7 @@
 		height: 120px;
 		top: 290px;
 		right: 100px;
-		position: absolute;
+		position: fixed;
 		
 		font-family: breamcatcher;
 		font-size: 90px;
@@ -86,33 +82,10 @@
 	#credits {
 		bottom: 15px;
 		right: 15px;
-		position: absolute;
+		position: fixed;
 		
 		font-family: courier new;
 		font-size: 11px;
 		color: #000000;
 	}
 	
-</style>
-
-<head>
-</head>
-
-<body>
-
-	<a href="">
-		<div id ="lostb" class="button"> lost </div>
-	</a>
-	
-	<div id ="and"> & </div>
-	
-	<a href="">
-		<div id ="foundb" class="button"> found </div>
-	</a>
-	
-	<div id ="credits"> &copy 2015 Furious 7. </div>
-
-	<a href="">
-		<div id ="topb" class="button"></div>
-	</a>
-</body>

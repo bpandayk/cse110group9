@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Need CSS -->
+    <title>LOST FORM</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/lostform.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+  <!-- ADD BACKGROUND SO IT DOES NOT LOOK PLAIN -->
+  <div id="page-wrapper">
+      <div class="row">
+          <!-- /.col-lg-12 -->
+      </div>
+      <!-- /.row -->
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="panel panel-default">
+                  <div class="panel-body">
+                      <h3>Lost Form </h3>
+                      <p>Please fill this in so we can help find your lost item.</p>
+                      <div class="table-responsive">
+                          <table class="table table-bordered table-striped">
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>
+                                          <!-- Title for the columns-->
+                                      </th>
+
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <th>Name</th>
+                                      <td>First, Last</td>
+
+                                  </tr>
+
+                                  <tr>
+                                      <th> Item Lost </th>
+                                      <td> Name of item (general name) </td>
+
+                                  </tr>
+
+                                  <tr>
+                                      <th>Location last seen </th>
+                                      <td> somewhere in UCSD </td>
+
+                                  </tr>
+
+
+                                  <tr>
+                                      <th>Item Description</th>
+                                      <td> In less than 100 words describe your item. </td>
+                                  </tr>
+
+                              </tbody>
+                          </table>
+                      </div>
+                      <p>Press submit when you are done. When your item is found someone will contact you. Feel free to search our Found Inventory for your item also.
+                      </p>
+
+                  </div>
+              </div>
+          </div>
+          <!-- /.col-lg-12 -->
+      </div>
+      <!-- /.row -->
+
+
+      <div class="panel-body">
+          <p>
+              <button type="button" class="btn btn-primary">SUBMIT</button>
+          </p>
+      </div>
+
+      <div class="forms">
+        <form class="form-horizontal" method="post" id="alwaysEnabledButtonForm">
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Name</label>
+            <div class = "col-sm-4">
+              <input type="text" class="form-control" id="lostname" placeholder="First Last">
+            </div>
+          </div>
+
+
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Item Name</label>
+            <div class = "col-sm-4">
+              <select class="form-control" id="item">
+                <option> Bag Pack </option>
+                <option> Camera and Camcoders </option>
+                <option> Cell Phone </option>
+                <option> Checkbook </option>
+                <option> Credit Card </option>
+                <option> Driver License </option>
+                <option> Headphone </option>
+                <option> Jewelry </option>
+                <option> Keys </option>
+                <option> Laptop </option>
+                <option> Purse </option>
+                <option> School Id </option>
+                <option> Text Book </option>
+                <option> Wallet</option>
+                <option> Other </option>
+              </select>
+            </div>
+          </div>
+
+
+
+
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Email</label>
+            <div class = "col-sm-4">
+              <input type="email" class="form-control" id="lostemail" placeholder="abc@email.com">
+            </div>
+          </div>
+
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Lost Date</label>
+            <div class = "col-sm-4">
+              <input type="date" class="form-control" id="lostdate" placeholder="mm/dd/yyyy">
+            </div>
+          </div>
+
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Phone</label>
+            <div class = "col-sm-4">
+              <input type="tel" class="form-control" id="phone" placeholder="000-000-0000">
+            </div>
+          </div>
+
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Last Location</label>
+            <div class = "col-sm-4">
+              <input type="text" class="form-control" id="lastloc" placeholder="Last location seen">
+            </div>
+          </div>
+
+
+          <div class = "form-group">
+            <label for="lostform" class="col-sm-2 control-label">Description</label>
+            <div class = "col-sm-4">
+              <textarea class="form-control" id="itemdesc" rows="3" placeholder="Item Description">
+              </textarea>
+            </div>
+          </div>
+
+          <div class = "form-group">
+            <div class = "col-sm-2"></div>
+            <div class="col-sm-1">
+              <button type="button" class="btn btn-primary" id="submit">Submit</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <script src="../js/lostform.js">
+      </script>
+  </body>
+</html>

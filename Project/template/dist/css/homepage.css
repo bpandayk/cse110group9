@@ -70,13 +70,8 @@
 		height: 120px;
 		top: 290px;
 		right: 100px;
-<<<<<<< HEAD:Project/template/pages/homepage.css
 		position: fixed;
-		
-=======
-		position: absolute;
 
->>>>>>> c1b37a918240901d258fb31125b56140b902d49b:Project/template/index.html
 		font-family: breamcatcher;
 		font-size: 90px;
 		text-align: center;
@@ -86,13 +81,8 @@
 	#credits {
 		bottom: 15px;
 		right: 15px;
-<<<<<<< HEAD:Project/template/pages/homepage.css
 		position: fixed;
-		
-=======
-		position: absolute;
 
->>>>>>> c1b37a918240901d258fb31125b56140b902d49b:Project/template/index.html
 		font-family: courier new;
 		font-size: 11px;
 		color: #000000;

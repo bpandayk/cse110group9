@@ -1,21 +1,9 @@
 	body {
+		background-image: url('../img/background.jpg');
 		background-color: 0xFFFFFF;
-		background-image: url("../img/background.jpg");
 		background-attachment: fixed;
 	}
 
-	.geiselImg {
-		background-image: url("../img/geisel.png");
-		background-repeat: no-repeat;
-		background-position: bottom left;
-		background-attachment: fixed;
-		overflow: hidden;
-
-		bottom: -50px;
-		padding: 0;
-		height: 660px;
-
-	}
 
 	a {
 		color: #FFFFFF;
@@ -88,7 +76,7 @@
 		color: #000000;
 	}
 <<<<<<< HEAD:Project/template/pages/homepage.css
-	
+
 =======
 
 </style>

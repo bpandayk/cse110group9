@@ -2,11 +2,13 @@ $(document).ready(function() {
 
 });
 
+  //displays the calender and allows to pick a date
   $(function()  {
     $("#lostdate").datepicker();
   });
 
 
+  //function to hide and show the input box if item name is other than the listed
   $(function(){
     //initially hide the textbox
     $("#othername").hide();
@@ -28,6 +30,7 @@ $(document).ready(function() {
   });
 
 
+  //post the data to parse app after submit is clicked
   $("#submit").click(function() {
     console.log("Submit");
    var x= $("#phone").val();
@@ -62,7 +65,11 @@ $(document).ready(function() {
       "data":data,
       "contentType":"application/json",
       "dataType":"json",
-      "headers":headers
+      "headers":headers,
+      success:function(data) {
+        alert("Data Loaded Sucessfully");
+        document.location.href = '../pages/listall.html';
+      }
 
     });
   });

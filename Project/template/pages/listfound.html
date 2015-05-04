@@ -47,9 +47,22 @@
 
 <body>
    <div class="container">
-    <div class = "col-sm-3"></div>
+    <div class = "col-sm-2"></div>
+   <div class = "col-sm-2">
+     <div class= "panel panel-primary">
+       <div class="panel-body">
+         <ul class="nav nav-pills nav-stacked">
+           <li role="presentation"><a href="index.html">Home</a></li>
+           <li role="presentation"><a href="listall.html">View Lost</a></li>
+           <li role="presentation"><a href="lostform.html">Report Lost</a></li>
+           <li role="presentation" class="active"><a href="listfound.html">View Found</a></li>
+           <li role="presentation"><a href="foundform.html">Report Found</a></li>
+         </ul>
+       </div>
+     </div>
+   </div>
     <div class = "col-sm-6", id="panels">
-      <div class = "panel panel-primary", id=scrollpanel>
+      <div class = "panel panel-primary", id=scrollpanel, style="overflow: scroll">
         <div class="panel-heading">Lost and Found</div>
         <div class="panel-body", id ="feed">
 

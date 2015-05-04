@@ -2,7 +2,6 @@ $(document).ready(function() {
 
 });
 
-
   //displays the calender and allows to pick a date
   $(function()  {
     $("#lostdate").datepicker();
@@ -31,12 +30,6 @@ $(document).ready(function() {
   });
 
 
-  var headers = {
-          "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-          "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
-       };
-
-
   //post the data to parse app after submit is clicked
   $("#submit").click(function() {
     console.log("Submit");
@@ -51,6 +44,11 @@ $(document).ready(function() {
    var o = $("#lostdate").val();
    var p = $("#itemdesc").val();
    var q = $("#lastloc").val();
+
+   var headers = {
+           "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+           "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
+        };
     var userData = {"phone": Number(x),
     "name":String(y),
     "item":String(m),
@@ -61,24 +59,19 @@ $(document).ready(function() {
 
 
 
-
     var data = JSON.stringify(userData);
 
     $.ajax({
       "type":"POST",
-      "url":"https://api.parse.com/1/classes/Lost",
+      "url":"https://api.parse.com/1/classes/Found",
       "data":data,
       "contentType":"application/json",
       "dataType":"json",
       "headers":headers,
       success:function(data) {
         alert("Data Loaded Sucessfully");
-        document.location.href = '../pages/listall.html';
+        document.location.href = '../pages/listfound.html';
       }
 
     });
   });
-
-
-
-        

@@ -1,10 +1,28 @@
-	body{
+body{
 
 		background-image: url('../../img/bg2.jpg');
+}
 
-	}
-
+<<<<<<< HEAD
 	#scrollpanel {
 	  overflow: scroll;
 	  height: 100%; // explicit height to make scrolling work
 	}
+=======
+
+h1 {
+
+}
+
+.head h1 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 18pt;
+}
+
+.head {
+    padding: 10px;
+    background-color: #505050;
+    color: #bbb;
+}
+>>>>>>> e32e9ea9b22281f372d48495ede9f311e0357e85

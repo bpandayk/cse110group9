@@ -4,9 +4,7 @@
 
 	}
 
-
-h1 {
-
-
-
-}
+	#scrollpanel {
+	  overflow: scroll;
+	  height: 100%; // explicit height to make scrolling work
+	}

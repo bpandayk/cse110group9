@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 });
 
-
+var flag=true;
 var createTable = function(data) {
         // Empty the table so it doesn't show old data
          $('#feed').empty();
@@ -11,15 +11,39 @@ var createTable = function(data) {
         $.each(data.results, function(index, value) {
            console.log(value);
            var $col = $('<div class="well well-lg">');
+           var ids = "each" + index;
+           $col.append('<p>' + "Name:" + value.name +'</p>');
+           $col.append('<p>' + "Lost Item: " + value.item + '</p>');
+           $col.append('<p>' + "Lost Date: " + value.lostdate + '</p>');
+           $col.append('<p>' + "Last Location: " + value.loc + '</p>');
+           if(value.phone != null)
+             $col.append('<p>' + "Phone :" + value.phone + '</p>');
+           $col.append('<p class="hide1">' + "Email :" + value.email + '</p>');
+           $col.append('<p class = "hide2">' + "Description :" + value.descp + '</p>');
+           $col.append('</div> </div>');
 
-           $col.append('<p>' + index + '</p>');
-           $col.append('<p>' + value.name + '</p>');
-           $col.append('<p>' + value.item + '</p>');
-           $col.append('<p>' + value.phone + '</p>');
-
+          // $('#feed').addClass(ids);
            $('#feed').prepend($col);
+           $(".hide1").hide();
+           $(".hide2").hide();
+           flag=false;
         });
      }
+
+
+     $("#feed").click(function(e){
+       var id = $(this).attr('id');
+       $("#feed").append("<p>"+id+'</p>')
+       if(flag==false) {
+         $(".hide2").show();
+         flag = true;
+       } else if(flag = true) {
+         $(".hide2").hide();
+         flag = false;
+       }
+
+
+     });
 
      // mybtn
      $(function() {
@@ -38,6 +62,8 @@ var createTable = function(data) {
         });
 
      });
+
+
 
 
 

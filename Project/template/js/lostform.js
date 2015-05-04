@@ -43,6 +43,7 @@ $(document).ready(function() {
    var n = $("#lostemail").val();
    var o = $("#lostdate").val();
    var p = $("#itemdesc").val();
+   var q = $("#lastloc").val();
 
    var headers = {
            "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
@@ -52,8 +53,9 @@ $(document).ready(function() {
     "name":String(y),
     "item":String(m),
     "email":String(n),
-    "loc":String(o),
-    "descp":String(p)};
+    "loc":String(q),
+    "descp":String(p),
+    "lostdate":Date(o)};
 
 
 

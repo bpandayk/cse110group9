@@ -1,32 +1,31 @@
 $(document).ready(function() {
-
-        });
+});
 
 //displays the calender and allows to pick a date
 $(function()  {
-        $("#lostdate").datepicker();
-        });
+    $("#lostdate").datepicker();
+});
 
-    //function to hide and show the input box if item name is other than the listed
-    $(function(){
-        //initially hide the textbox
-        $("#othername").hide();
-        $('#item').change(function() {
-            if($(this).find('option:selected').val() == "Other"){
+//function to hide and show the input box if item name is other than the listed
+$(function(){
+    //initially hide the textbox
+    $("#othername").hide();
+    $('#item').change(function() {
+        if($(this).find('option:selected').val() == "Other"){
             $("#othername").show();
-            }else{
+        }else{
             $("#othername").hide();
-            }
-            });
-        $("#othername").keyup(function(ev){
-            var othersOption = $('#item').find('option:selected');
-            if(othersOption.val() == "Other"){
+        }
+    });
+    $("#othername").keyup(function(ev){
+        var othersOption = $('#item').find('option:selected');
+        if(othersOption.val() == "Other"){
             ev.preventDefault();
             //change the selected drop down text
             $(othersOption).html($("#othername").val());
-            }
-            });
-        });
+        }
+    });
+});
 
 
 //post the data to parse app after submit is clicked
@@ -45,13 +44,13 @@ $("#submit").click(function() {
 
         // input data validations
         if ( validate_name(y, 'Please enter your name!') == false ) {
-            $('#lostname').focus();
-            return false
+        $('#lostname').focus();
+        return false
         }
 
         if ( validate_email(n, 'Not a valid e-mail address!') == false ) {
-            $('#lostemail').focus();
-            return false
+        $('#lostemail').focus();
+        return false
         }
 
         if ( validate_date(o, 'Please select a date!') == false ) {
@@ -65,16 +64,16 @@ $("#submit").click(function() {
         }
 
         var headers = {
-        "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-        "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
+            "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+            "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
         };
         var userData = {"phone": Number(x),
-        "name":String(y),
-        "item":String(m),
-        "email":String(n),
-        "loc":String(q),
-        "descp":String(p),
-        "lostdate":Date(o)};
+            "name":String(y),
+            "item":String(m),
+            "email":String(n),
+            "loc":String(q),
+            "descp":String(p),
+            "lostdate":Date(o)};
 
         var data = JSON.stringify(userData);
 
@@ -86,11 +85,10 @@ $("#submit").click(function() {
                 "dataType":"json",
                 "headers":headers,
                 success:function(data) {
-                alert("Data Loaded Sucessfully");
-                document.location.href = '../pages/listall.html';
+                    alert("Data Loaded Sucessfully");
+                    document.location.href = '../pages/listall.html';
                 }
-
-                });
+        });
 });
 
 function validate_name(val,alerttxt) {

@@ -48,17 +48,27 @@
 
 <body >
 
-<<<<<<< HEAD
-      <div class = "jumbotron"></div>
-=======
       <div class = "jumbotron">
         <div id="wrapper">
             <div class="head">
                 <h1>LOST & FOUND</h1>
-            </div>
->>>>>>> e32e9ea9b22281f372d48495ede9f311e0357e85
+            </div></div></div>
 
-    <div class="col-sm-3"></div>
+    <div class=container>
+      <div class = "col-sm-2"></div>
+     <div class = "col-sm-2">
+       <div class= "panel panel-primary">
+         <div class="panel-body">
+           <ul class="nav nav-pills nav-stacked">
+             <li role="presentation"><a href="index.html">Home</a></li>
+             <li role="presentation" ><a href="listall.html">View Lost</a></li>
+             <li role="presentation" class="active"><a href="lostform.html">Report Lost</a></li>
+             <li role="presentation"><a href="listfound.html">View Found</a></li>
+             <li role="presentation"><a href="foundform.html">Report Found</a></li>
+           </ul>
+         </div>
+       </div>
+     </div>
       <div class="col-sm-6">
      <div class = "panel panel-primary">
        <div class="panel-heading">Report Found</div>
@@ -136,6 +146,14 @@
 
 
           <div class = "form-group">
+            <label for="lostform" class="col-sm-4 control-label">Upload Image</label>
+            <div class = "col-sm-6">
+              <input type="file" class="btn btn-default btn-file" id="img" placeholder=" Upload Image">
+            </div>
+          </div>
+
+
+          <div class = "form-group">
             <label for="lostform" class="col-sm-4 control-label">Description</label>
             <div class = "col-sm-6">
               <textarea class="form-control" id="itemdesc" rows="3" maxlength = "300" placeholder="Maximum of 300 characters">
@@ -155,6 +173,8 @@
      </div>
    </div>
  </div>
+ </div>
+
 
       <script src="../js/lostform.js">
       </script>

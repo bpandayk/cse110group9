@@ -10,15 +10,15 @@ var createTable = function(data) {
         // JQuery for each loop
         $.each(data.results, function(index, value) {
            console.log(value);
-           var $col = $('<div class="well well-lg">');
-           $col.append('<p>' + "Name:" + value.name +'</p>');
+           var $col = $('<div class="well well-lg" id ="' + index + '">');
+           $col.append('<p id ="' + index + '">' + "Name:" + value.name +'</p>');
            $col.append('<p>' + "Lost Item: " + value.item + '</p>');
            $col.append('<p>' + "Lost Date: " + value.lostdate + '</p>');
            $col.append('<p>' + "Last Location: " + value.loc + '</p>');
            if(value.phone != null)
              $col.append('<p>' + "Phone :" + value.phone + '</p>');
-           $col.append('<p class="hide1">' + "Email :" + value.email + '</p>');
-           $col.append('<p class = "hide2">' + "Description :" + value.descp + '</p>');
+           $col.append('<p class="hide1" id = "' + index + 'email">' + "Email :" + value.email + '</p>');
+           $col.append('<p class = "hide2" id = "' + index + 'details">' + "Description :" + value.descp + '</p>');
            $col.append('</div> </div>');
 
           // $('#feed').addClass(ids);
@@ -27,9 +27,17 @@ var createTable = function(data) {
            $(".hide2").hide();
            flag=false;
         });
+
+        $.each(data.results, function(index) {
+          $("#" + index).click(function(){
+            $("#" + index + "details").toggle();
+            $("#" + index + "email").toggle();
+          });
+        });
+
      }
 
-
+/*
      $("#feed").click(function(e){
        var id = $(this).attr('id');
        $("#feed").append("<p>"+id+'</p>')
@@ -43,6 +51,9 @@ var createTable = function(data) {
 
 
      });
+     */
+
+
 
      // mybtn
      $(function() {

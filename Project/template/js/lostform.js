@@ -92,7 +92,7 @@ $("#submit").click(function() {
 });
 
 function validate_name(val,alerttxt) {
-    if( val='' ) {
+    if( val=='' ) {
         alert(alerttxt);
         return false
     } else {

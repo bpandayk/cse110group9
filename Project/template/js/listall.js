@@ -11,7 +11,6 @@ var createTable = function(data) {
         $.each(data.results, function(index, value) {
            console.log(value);
            var $col = $('<div class="well well-lg">');
-           var ids = "each" + index;
            $col.append('<p>' + "Name:" + value.name +'</p>');
            $col.append('<p>' + "Lost Item: " + value.item + '</p>');
            $col.append('<p>' + "Lost Date: " + value.lostdate + '</p>');

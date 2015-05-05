@@ -45,23 +45,33 @@ $("#submit").click(function() {
         // input data validations
         if ( validate_name(y, 'Please enter your name!') == false ) {
         $('#lostname').focus();
-        return false
+
+        //return false;
         }
 
         if ( validate_email(n, 'Not a valid e-mail address!') == false ) {
         $('#lostemail').focus();
-        return false
+        //return false;
         }
 
         if ( validate_date(o, 'Please select a date!') == false ) {
             $('#lostdate').focus();
-            return false
+            //return false;
         }
 
         if ( validate_phone(x, 'Not a valid phone number!') == false ) {
             $('#phone').focus();
-            return false
+            //return false;
         }
+
+
+        if(( validate_name(y, 'Please enter your name!') == false )||
+        ( validate_email(n, 'Not a valid e-mail address!') == false )||
+        ( validate_date(o, 'Please select a date!') == false )||
+        ( validate_phone(x, 'Not a valid phone number!') == false ) ) {
+          return false;
+        }
+
 
         var headers = {
             "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
@@ -93,7 +103,7 @@ $("#submit").click(function() {
 
 function validate_name(val,alerttxt) {
     if( val=='' ) {
-        alert(alerttxt);
+        //alert(alerttxt);
         return false
     } else {
         return true
@@ -104,7 +114,7 @@ function validate_email(val,alerttxt) {
     atpos = val.indexOf('@');
     dotpos = val.lastIndexOf('.');
     if( atpos<1 || dotpos-atpos<2 ) {
-        alert(alerttxt);
+        //alert(alerttxt);
         return false
     } else {
         return true
@@ -114,7 +124,7 @@ function validate_email(val,alerttxt) {
 function validate_date(val,alerttxt) {
     var reg = /\d\d\/\d\d\/\d\d\d\d/;
     if( !reg.test(val) ) {
-        alert(alerttxt);
+        //alert(alerttxt);
         return false
     } else {
         return true
@@ -124,10 +134,9 @@ function validate_date(val,alerttxt) {
 function validate_phone(val,alerttxt) {
     var reg = /(\d{3}[ -]?){2}\d{4}/;
     if( !reg.test(val) ) {
-        alert(alerttxt);
+        //alert(alerttxt);
         return false
     } else {
         return true
     }
 }
-

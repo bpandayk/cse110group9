@@ -63,13 +63,22 @@
     </div>
     <div class = "col-sm-6", id="panels">
       <div class = "panel panel-primary", id="scrollpanel">
-        <div class="panel-heading">Lost and Found</div>
+        <div class="panel-heading">Lost and Found
+          <input type="text" id="myText" value="">
+          <button onclick="myFunction()" id = "listallSearch">Search</button>
+          <p id="demo"></p></div>
         <div class="panel-body", id ="feed">
 
         </div>
       </div>
     </div>
     <script src = "../js/listall.js"></script>
+    <script>
+    function myFunction() {
+      var x = document.getElementById("myText").value;
+      document.getElementById("demo").innerHTML = x;
+    }
+    </script>
 </body>
 
 </html>

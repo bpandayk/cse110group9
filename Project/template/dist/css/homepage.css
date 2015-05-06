@@ -1,0 +1,50 @@
+body {
+	background-color: #FFFFFF;
+	background-image: url("../../img/background.jpg");
+	background-attachment: fixed;
+}
+
+.geiselImg {
+	background-image: url("../../img/triton.png");
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	background-attachment: fixed;
+
+	height: 660px;
+}
+
+a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+
+.button {
+	width: 450px;
+	height: 100px;
+	right: 100px;
+	padding-top: 20px;
+	padding-bottom: 30px;
+	padding-left: 20px;
+	position: fixed;
+
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 100px;
+	letter-spacing: 14px;
+	text-transform: uppercase;
+	color: #FFFFFF;
+	text-align: center;
+
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+.button:hover {
+	letter-spacing: 20px;
+}
+
+#lostb.button {
+	background-color: #88CCAA;

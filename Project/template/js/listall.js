@@ -37,23 +37,6 @@ var createTable = function(data) {
 
      }
 
-/*
-     $("#feed").click(function(e){
-       var id = $(this).attr('id');
-       $("#feed").append("<p>"+id+'</p>')
-       if(flag==false) {
-         $(".hide2").show();
-         flag = true;
-       } else if(flag = true) {
-         $(".hide2").hide();
-         flag = false;
-       }
-
-
-     });
-     */
-
-
 
      // mybtn
      $(function() {

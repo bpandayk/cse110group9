@@ -1,16 +1,41 @@
 $(document).ready(function() {
-
+  document.getElementById("searchLost").value = "";
 });
 
+
+function enterPressed(e){
+    if (!e) e = window.event;
+    var pressedKey = e.keyCode || e.which;
+    if (pressedKey == '13'){
+      // pressed enter
+      searchFunction();
+      return false;
+    }
+  }
+
+
+function foundMatch(text,value) {
+  if (value.name.toLowerCase().indexOf(text) > -1 || value.item.toLowerCase().indexOf(text) > -1 ||
+    value.loc.toLowerCase().indexOf(text) > -1 || value.lostdate.toLowerCase().indexOf(text) > -1 ||
+    value.email.toLowerCase().indexOf(text) > -1 || value.descp.toLowerCase().indexOf(text) > -1/* ||
+    value.phone.indexOf(text) > -1 */) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 var flag=true;
+var searchText = "";
+var newSearchText = "";
 var createTable = function(data) {
         // Empty the table so it doesn't show old data
          $('#feed').empty();
-
         // JQuery for each loop
         $.each(data.results, function(index, value) {
            console.log(value);
-           var $col = $('<div class="well well-lg" id ="' + index + '">');
+           var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');
            $col.append('<p id ="' + index + '">' + "Name:" + value.name +'</p>');
            $col.append('<p>' + "Lost Item: " + value.item + '</p>');
            $col.append('<p>' + "Lost Date: " + value.lostdate + '</p>');
@@ -21,8 +46,16 @@ var createTable = function(data) {
            $col.append('<p class = "hide2" id = "' + index + 'details">' + "Description :" + value.descp + '</p>');
            $col.append('</div> </div>');
 
-          // $('#feed').addClass(ids);
-           $('#feed').prepend($col);
+           if (newSearchText) {
+             if (foundMatch(newSearchText, value)) {
+               $('#feed').prepend($col);
+             }
+           }
+           else {
+             $('#feed').prepend($col);
+
+           }
+
            $(".hide1").hide();
            $(".hide2").hide();
            flag=false;
@@ -30,13 +63,32 @@ var createTable = function(data) {
 
         $.each(data.results, function(index) {
           $("#" + index).click(function(){
-            $("#" + index + "details").toggle();
-            $("#" + index + "email").toggle();
+            $("#" + index + "details").show();
+            $("#" + index + "email").show();
           });
         });
 
      }
 
+     function searchFunction() {
+       newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
+       $('#feed').empty();
+       //document.getElementById("searchLost").value = "";$("#demo").innerHTML = newSearchText;
+       var headers = {
+          "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+          "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
+       };
+
+       $.ajax({
+          "type": "GET",
+          "url": "https://api.parse.com/1/classes/Lost",
+          "contentType": "application/json",
+          "dataType": "json",
+          "headers": headers,
+          success: createTable
+       });
+
+     }
 
      // mybtn
      $(function() {

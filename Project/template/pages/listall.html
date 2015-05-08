@@ -42,10 +42,10 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
+
    <div class="container">
      <div class = "col-sm-2"></div>
     <div class = "col-sm-2">
@@ -63,22 +63,17 @@
     </div>
     <div class = "col-sm-6", id="panels">
       <div class = "panel panel-primary", id="scrollpanel">
-        <div class="panel-heading">Lost and Found
-          <input type="text" id="myText" value="">
-          <button onclick="myFunction()" id = "listallSearch">Search</button>
-          <p id="demo"></p></div>
+        <div class="panel-heading">   Lost and Found
+          <input type="text" class = "black-font" id="searchLost" value="" size = 40
+            onkeypress="return enterPressed(event)">
+          <button onclick="searchFunction()" class = "black-font">Search</button>
+<!--          <p id = "demo" ></p>   -->
         <div class="panel-body", id ="feed">
 
         </div>
       </div>
     </div>
     <script src = "../js/listall.js"></script>
-    <script>
-    function myFunction() {
-      var x = document.getElementById("myText").value;
-      document.getElementById("demo").innerHTML = x;
-    }
-    </script>
 </body>
 
 </html>

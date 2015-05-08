@@ -3,6 +3,10 @@ body{
 	background-color: #B0E0E6;
 }
 
+.black-font{
+	color:black;
+}
+
 .container{
 	display: flex;
 	overflow: hidden;
@@ -34,12 +38,4 @@ body{
     padding: 10px;
     background-color: #505050;
     color: #bbb;
-}
-
-#myText {
-	color:blue;
-}
-
-#listallSearch {
-	color:black;
 }

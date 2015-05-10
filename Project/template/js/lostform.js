@@ -1,10 +1,14 @@
 $(document).ready(function() {
+
 });
 
 //displays the calender and allows to pick a date
 $(function()  {
     $("#lostdate").datepicker();
 });
+
+
+var objectID;
 
 //function to hide and show the input box if item name is other than the listed
 $(function(){
@@ -27,6 +31,13 @@ $(function(){
     });
 });
 
+
+  var file;
+  $('#img').bind('change', function(e){
+    var files = e.target.files || e.dataTransfer.files;
+    file = files[0];
+    console.log(file.name);
+  });
 
 //post the data to parse app after submit is clicked
 $("#submit").click(function() {
@@ -89,17 +100,77 @@ $("#submit").click(function() {
 
         $.ajax({
                 "type":"POST",
-                "url":"https://api.parse.com/1/classes/Lost",
+                "url":"https://api.parse.com/1/classes/Lost/",
                 "data":data,
                 "contentType":"application/json",
                 "dataType":"json",
                 "headers":headers,
                 success:function(data) {
+                    console.log(data);
+                   $.each(data, function(index, value){
+                     objectID = data.objectId;
+
+                    });
+                    console.log(objectID);
                     alert("Data Loaded Sucessfully");
-                    document.location.href = '../pages/listall.html';
+                    //document.location.href = '../pages/listall.html';
                 }
         });
-});
+
+
+
+    if(file.name != null) {
+        var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+
+            $.ajax({
+               type: "POST",
+               "headers": headers,
+               url: serverUrl,
+               data: file,
+               processData: false,
+               contentType: false,
+               success: successUpload,
+               error: function(data) {
+                  var obj = jQuery.parseJSON(data);
+                  console.error("Error: ");
+                  console.log(obj)
+               }
+            });
+          }
+         });
+
+
+
+         function successUpload(data) {
+          console.log(data);
+
+          var headers = {
+              "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+              "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
+          };
+          $('#uploadedLink').append(data.url);
+          $.ajax({
+            'type': "PUT",
+            'headers': headers,
+            'url': "https://api.parse.com/1/classes/Lost/"+objectID,
+            "contentType": "application/json",
+            "dataType": "json",
+            'success': function(data) {
+               console.log("Success Add.");
+            },
+            'error': function(data) {
+               console.log("Error Add.");
+            },
+              "data": JSON.stringify({
+                 "myfile": {
+                  "name": data.name,
+                  "__type": "File"
+                }
+              })
+           });
+          };
+
+//});
 
 function validate_name(val,alerttxt) {
     if( val=='' ) {

@@ -30,6 +30,7 @@ var flag=true;
 var searchText = "";
 var newSearchText = "";
 var createTable = function(data) {
+  console.log(data);
         // Empty the table so it doesn't show old data
          $('#feed').empty();
         // JQuery for each loop
@@ -63,8 +64,8 @@ var createTable = function(data) {
 
         $.each(data.results, function(index) {
           $("#" + index).click(function(){
-            $("#" + index + "details").show();
-            $("#" + index + "email").show();
+            $("#" + index + "details").toggle();
+            $("#" + index + "email").toggle();
           });
         });
 
@@ -89,6 +90,9 @@ var createTable = function(data) {
        });
 
      }
+
+
+
 
      // mybtn
      $(function() {

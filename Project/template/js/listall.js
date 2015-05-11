@@ -40,16 +40,15 @@ var createTable = function(data) {
 
 
 
-          $col.append(  '<div class = "row">');
+           $col.append(  '<div class = "row">');
            $col.append(  '<div class = "col-sm-12">');
            $col.append(  '<div class = "row">');
-           $col.append(  '<div class = "col-sm-5">');
            $col.append("<a href="+value.myfile.url + 'class="thumbnail">');
-           $col.append("<img src="+ value.myfile.url+ ">");
-           $col.append("</a></div>");
+           $col.append("<img src="+ value.myfile.url+ " height='150' width='150'>");
+           $col.append("</a>");
 
 
-           $col.append("<div class='col-sm-7'");
+           $col.append("<div class='col-sm-4'");
            $col.append('<p id ="' + index + '">' + "Name:" + value.name +'</p>');
            $col.append('<p>' + "Lost Item: " + value.item + '</p>');
            $col.append('<p>' + "Lost Date: " + value.lostdate + '</p>');
@@ -58,9 +57,7 @@ var createTable = function(data) {
              $col.append('<p>' + "Phone :" + value.phone + '</p>');
            $col.append('<p class="hide1" id = "' + index + 'email">' + "Email :" + value.email + '</p>');
            $col.append('<p class = "hide2" id = "' + index + 'details">' + "Description :" + value.descp + '</p>');
-           $col.append('</div> </div></div></div>');
-
-           //$col.append("<img src="+ value.myfile.url + 'class="img-rounded" alt="Cinque Terre" width="304" height="236">');
+           $col.append('</div> </div></div></div></div></div>');
 
            console.log($col);
 

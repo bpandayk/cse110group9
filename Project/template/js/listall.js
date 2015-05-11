@@ -13,20 +13,6 @@ function enterPressed(e){
     }
   }
 
-/*
-function foundMatch(text,value) {
-  if (value.name.toLowerCase().indexOf(text) > -1 || value.item.toLowerCase().indexOf(text) > -1 ||
-    value.loc.toLowerCase().indexOf(text) > -1 || value.lostdate.toLowerCase().indexOf(text) > -1 ||
-    value.email.toLowerCase().indexOf(text) > -1 || value.descp.toLowerCase().indexOf(text) > -1 ||
-    value.phone.indexOf(text) > -1 ) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-*/
-
 
 var createCertainTable = function(objects, newSearchText){
   //alert("CREATED CERTAIN TABLE" );
@@ -71,13 +57,26 @@ var createCertainTable = function(objects, newSearchText){
 var searchText = "";
 var newSearchText = "";
 var createTable = function(data) {
+  console.log(data);
+
         // Empty the table so it doesn't show old data
          $('#feed').empty();
         // JQuery for each loop
         $.each(data.results, function(index, value) {
            console.log(value);
            var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');
+           $col.append(  '<div class = "row">');
+           $col.append(  '<div class = "col-sm-12">');
+           $col.append(  '<div class = "row">');
+
+           //$col.append("<a href="+value.myfile.url + 'class="thumbnail">');
+
+           //$col.append("<img src="+ value.myfile.url+ " height='150' width='150'>");
+           //$col.append("</a>");
+
+           $col.append("<div class='col-sm-4'");
            $col.append('<p id ="' + index + 'name">' + "Name:" + value.name +'</p>');
+
            $col.append('<p>' + "Lost Item: " + value.item + '</p>');
            $col.append('<p>' + "Lost Date: " + value.lostdate + '</p>');
            $col.append('<p>' + "Last Location: " + value.loc + '</p>');
@@ -85,16 +84,23 @@ var createTable = function(data) {
              $col.append('<p>' + "Phone :" + value.phone + '</p>');
            $col.append('<p class="hide1" id = "' + index + 'email">' + "Email :" + value.email + '</p>');
            $col.append('<p class = "hide2" id = "' + index + 'details">' + "Description :" + value.descp + '</p>');
+
+
+           $col.append('</div> </div></div></div></div></div>');
+
            $col.append('</div> </div>');
            $('#feed').prepend($col);
+           console.log($col);
+
            $(".hide1").hide();
            $(".hide2").hide();
+
         });
 
         $.each(data.results, function(index) {
           $("#" + index).click(function(){
-            $("#" + index + "details").show();
-            $("#" + index + "email").show();
+            $("#" + index + "details").toggle();
+            $("#" + index + "email").toggle();
           });
         });
 
@@ -165,6 +171,9 @@ var createTable = function(data) {
 ////////////////!!!!!!! DOES not find by phone and date and description
        }
 
+
+
+
      // mybtn
      $(function() {
         var headers = {
@@ -182,34 +191,3 @@ var createTable = function(data) {
         });
 
      });
-
-
-
-
-
-
-
-
-
-      /*$.ajax({
-        type : "get",
-        url : 'https://api.parse.com/1/classes/Lost',
-        beforeSend : function(request){
-          request.setRequestHeader("X-Parse-Application-Id",'NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc');
-          request.setRequestHeader("X-Parse-REST-API-key",'RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y');
-        }
-        }).done(function(data){
-          //console.log(data);
-          $('#feedbox').append(JSON.stringify(data));
-          var output="<ul>";
-          var out = JSON.stringify(data);
-          var obj = JSON.parse(out);
-          for(var i in obj) {
-            output+="<li>" + obj[i].item+", "+ obj[i].item + "</li>";
-          }
-
-           output+="<li>";
-           $("#feedbox").append(output);
-        });
-  });
-*/

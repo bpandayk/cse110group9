@@ -30,6 +30,11 @@ $(function(){
 
 //post the data to parse app after submit is clicked
 $("#submit").click(function() {
+        Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+        "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
+        var Lost = Parse.Object.extend("Lost");
+        var myLost = new Lost();
+
         console.log("Submit");
         var x= $("#phone").val();
         var y = $("#lostname").val();
@@ -72,7 +77,25 @@ $("#submit").click(function() {
           return false;
         }
 
+        myLost.set("phone", Number(x));
+        myLost.set("name", String(y).toLowerCase());
+        myLost.set("item", String(m).toLowerCase());
+        myLost.set("email", String(n).toLowerCase());
+        myLost.set("loc", String(q).toLowerCase());
+        myLost.set("descp", String(p).toLowerCase());
+        myLost.set("lostdate", Date(o).toLowerCase());
+        myLost.save(null, {
+        success: function(myLost) {
+          alert("Data Loaded Sucessfully");
+          },
+        error: function(myLost, error) {
+          }
+        });
 
+
+
+
+/*
         var headers = {
             "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
             "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
@@ -99,6 +122,8 @@ $("#submit").click(function() {
                     document.location.href = '../pages/listall.html';
                 }
         });
+
+        */
 });
 
 function validate_name(val,alerttxt) {

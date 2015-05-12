@@ -88,7 +88,7 @@ $("#submit").click(function() {
           return false;
         }
 
-        myLost.set("phone", Number(x));
+        myLost.set("phone", String(x));
         myLost.set("name", String(y).toLowerCase());
         myLost.set("item", String(m).toLowerCase());
         myLost.set("email", String(n).toLowerCase());
@@ -102,7 +102,6 @@ $("#submit").click(function() {
         error: function(myLost, error) {
           }
         });
-});
 
 
 

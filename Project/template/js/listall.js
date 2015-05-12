@@ -99,8 +99,8 @@ var createTable = function(data) {
 
         $.each(data.results, function(index) {
           $("#" + index).click(function(){
-            $("#" + index + "details").toggle();
-            $("#" + index + "email").toggle();
+            $("#" + index + "details").show();
+            $("#" + index + "email").show();
           });
         });
 
@@ -108,10 +108,31 @@ var createTable = function(data) {
 
 
        function searchFunction() {
+         newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
+//////////////!!!!!!!!!!!! CODE DUPLICATION - HOW TO CREATE A CREATETABLE
+         if (!newSearchText) {
+           $(function() {
+              var headers = {
+                 "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+                 "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
+              };
 
+              $.ajax({
+                 "type": "GET",
+                 "url": "https://api.parse.com/1/classes/Lost",
+                 "contentType": "application/json",
+                 "dataType": "json",
+                 "headers": headers,
+                 success: createTable
+              });
+
+           });
+
+           exit();
+         }
          Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
          "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
-         newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
+
          $('#feed').empty();
 
 
@@ -119,6 +140,7 @@ var createTable = function(data) {
          // 2. Create a Parse Query for Post objects
          var query = new Parse.Query("Lost");
          //alert("PRESSED SEARCH STEP 1" );
+         /*
          query.containedIn("name", [newSearchText]);
          query.find({
             success: createCertainTable,
@@ -126,6 +148,14 @@ var createTable = function(data) {
               alert("error occurred when searching name");
             }
           });
+          */
+          query.contains("name", newSearchText);
+          query.find({
+             success: createCertainTable,
+             error: function() {
+               alert("error occurred when searching name");
+             }
+           });
          query = new Parse.Query("Lost");
          //alert("PRESSED SEARCH STEP 2" );
          query.containedIn("item", [newSearchText]);
@@ -168,7 +198,8 @@ var createTable = function(data) {
             success: createCertainTable
           });
 
-////////////////!!!!!!! DOES not find by phone and date and description
+////////////////!!!!!!! DOES not find by date. SHould I keep the phone field as Number?
+///////////////!!!!!! IF so why? Then have to figure out how to search by Number........
        }
 
 

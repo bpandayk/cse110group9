@@ -1,8 +1,26 @@
 $(document).ready(function() {
   document.getElementById("searchLost").value = "";
 });
+/* Problem 1
+ prepends twice the same div if they keyword matches,
+for example, name and item keys........ this if statement below
+  "if ($('#' + index).length == 0) {  " lets this crap happen
+
+Problem 2
+Case insensetive but all the information is shown now with lowerCase which kind of sucks
+
+Problem 3
+DOES not find by date. SHould I keep the phone field as Number? (I changed it yo String...)
+IF so why? Then have to figure out how to search by Number........
+
+Problem 4
+*/
 
 
+
+/**
+ * Takes care of the enter key function when entering the search word
+ */
 function enterPressed(e){
     if (!e) e = window.event;
     var pressedKey = e.keyCode || e.which;
@@ -13,14 +31,14 @@ function enterPressed(e){
     }
   }
 
-
-var createCertainTable = function(objects, newSearchText){
-  //alert("CREATED CERTAIN TABLE" );
+/**
+ * Creates table of items specified by query's settings
+ */
+var createCertainTable = function(objects){
   // JQuery for each loop
   $.each(objects, function(index, value) {
      console.log(value);
 
-     //if ($('#' + index).length == 0) {
      var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');
      $col.append('<p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
      $col.append('<p>' + "Lost Item: " + value.get("item") + '</p>');
@@ -31,15 +49,9 @@ var createCertainTable = function(objects, newSearchText){
      $col.append('<p class="hide1" id = "' + index + 'email">' + "Email :" + value.get("email") + '</p>');
      $col.append('<p class = "hide2" id = "' + index + 'details">' + "Description :" + value.get("descp") + '</p>');
      $col.append('</div> </div>');
-     //alert("GOES HERE");
-     ////////////!!!!!!!!!!!1 prepends twice the same div if they keyword matches,
-     /////////// !!!!!!! for example, name and item keys........ this if statement below
-     //////////!!!!!!  "if ($('#' + index).length == 0) {  " lets this crap happen
 
 
-       alert("prepends " + index);
        $('#feed').prepend($col);
-    //}
      $(".hide1").hide();
      $(".hide2").hide();
   });
@@ -53,10 +65,11 @@ var createCertainTable = function(objects, newSearchText){
 }
 
 
-
+//////////////////////////////////    PRETTY SURE I Dont need createTable anymore..., image part is needed.
 var searchText = "";
 var newSearchText = "";
 var createTable = function(data) {
+  alert("called createTable");
   console.log(data);
 
         // Empty the table so it doesn't show old data
@@ -106,119 +119,68 @@ var createTable = function(data) {
 
      }
 
-
+       /**
+	* Search function, searches by keyword
+	*/
        function searchFunction() {
+	 if (typeof document.getElementById("searchLost").value == 'number')
+		alert("I WAS RIGHT");
          newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
-//////////////!!!!!!!!!!!! CODE DUPLICATION - HOW TO CREATE A CREATETABLE
-         if (!newSearchText) {
-           $(function() {
-              var headers = {
-                 "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-                 "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
-              };
-
-              $.ajax({
-                 "type": "GET",
-                 "url": "https://api.parse.com/1/classes/Lost",
-                 "contentType": "application/json",
-                 "dataType": "json",
-                 "headers": headers,
-                 success: createTable
-              });
-
-           });
-
-           exit();
-         }
          Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
          "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
 
          $('#feed').empty();
-
-
-         /////////////!!!!!! returns only 100% matches, no substirng matching
-         // 2. Create a Parse Query for Post objects
-         var query = new Parse.Query("Lost");
-         //alert("PRESSED SEARCH STEP 1" );
-         /*
-         query.containedIn("name", [newSearchText]);
-         query.find({
-            success: createCertainTable,
-            error: function() {
-              alert("error occurred when searching name");
-            }
-          });
-          */
-          query.contains("name", newSearchText);
-          query.find({
-             success: createCertainTable,
-             error: function() {
-               alert("error occurred when searching name");
-             }
+         if (!newSearchText) {
+           var query = new Parse.Query("Lost");
+           query.limit(10);
+           query.ascending("createdAt");
+           query.contains("name", "");
+           query.find({
+              success: createCertainTable,
+              error: function() {
+                alert("error occurred when searching latest items");
+              }
            });
-         query = new Parse.Query("Lost");
-         //alert("PRESSED SEARCH STEP 2" );
-         query.containedIn("item", [newSearchText]);
-         query.find({
-           success: createCertainTable,
-           error: function() {
-             alert("error occurred when searching ITEM");
-           }
-          });
-         query = new Parse.Query("Lost");
-          //alert("PRESSED SEARCH STEP 3" );
-         query.containedIn("email", [newSearchText]);
-         query.find({
-            success: createCertainTable,
-            error: function() {
-              alert("error occurred when searching EMAIL");
-            }
-          });
-         query = new Parse.Query("Lost");
-         query.containedIn("phone", [newSearchText]);
-         query.find({
-            success: createCertainTable
-         });
-         query = new Parse.Query("Lost");
-         query.containedIn("loc", [newSearchText]);
-         query.find({
-            success: createCertainTable
-          });
-         query = new Parse.Query("Lost");
-         query.containedIn("descp", [newSearchText]);
-         query.find({
-            success: createCertainTable,
-            error: function() {
-              alert("error occurred when searching EMAIL");
-            }
-          });
+         }
+         else {
+         // 2. Create a Parse Query for Post objects
+         fieldArray = ["name", "item", "email", "phone", "loc", "descp"];
+         for (var i = 0; i < fieldArray.length; i++) {
+           var query = new Parse.Query("Lost");
+           query.ascending("createdAt");
+           query.contains(fieldArray[i], newSearchText);
+           query.find({
+              success: createCertainTable,
+              error: function() {
+                alert("error occurred when searching " + fieldArray[i]);
+              }
+           });
+         }
          query = new Parse.Query("Lost");
          query.containedIn("lostDate", [newSearchText]);
          query.find({
             success: createCertainTable
           });
+        }
+     }
 
-////////////////!!!!!!! DOES not find by date. SHould I keep the phone field as Number?
-///////////////!!!!!! IF so why? Then have to figure out how to search by Number........
-       }
-
-
-
-
-     // mybtn
+     /**
+      * After Refresh Downloads 10 latest posted lost items
+      */
      $(function() {
-        var headers = {
-           "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-           "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
-        };
+        Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+        "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
 
-        $.ajax({
-           "type": "GET",
-           "url": "https://api.parse.com/1/classes/Lost",
-           "contentType": "application/json",
-           "dataType": "json",
-           "headers": headers,
-           success: createTable
-        });
+        $('#feed').empty();
+          var query = new Parse.Query("Lost");
 
+          query.limit(10);
+          query.ascending("createdAt");
+          query.contains("name", "");
+          query.find({
+             success: createCertainTable,
+             error: function() {
+               alert("error occurred when searching name");
+             }
+          });
      });

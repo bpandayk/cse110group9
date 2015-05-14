@@ -46,6 +46,11 @@
 </head>
 
 <body>
+  <div id="wrapper">
+      <div class="head">
+          <h1>LOST & FOUND</h1>
+      </div></div></div>
+      
    <div class="container">
     <div class = "col-sm-2"></div>
    <div class = "col-sm-2">
@@ -62,13 +67,42 @@
      </div>
    </div>
     <div class = "col-sm-6", id="panels">
-      <div class = "panel panel-primary", id=scrollpanel, style="overflow: scroll">
-        <div class="panel-heading">Lost and Found</div>
+      <div class = "panel panel-primary black-font">
+        <div class="panel-heading">Lost and Found
+          <input type="text" class = "black-font" id="searchFound" value="" size = 40
+            onkeypress="return enterPressed(event)">
+          <button class = "black-font" onclick="searchFunction()" id = "listfoundSearch">Search</button>
+
         <div class="panel-body", id ="feed">
 
         </div>
       </div>
     </div>
+
+<!--
+
+    <div class = "col-sm-6", id="panels">
+      <div class = "panel panel-primary", id="scrollpanel">
+        <div class="panel-heading">   Lost and Found
+          <input type="text" class = "black-font" id="searchLost" value="" size = 40
+            onkeypress="return enterPressed(event)">
+          <button onclick="searchFunction()" id = "listallSearch">Search</button>
+  <!--          <p id = "demo" ></p>   -->
+      <!--  <div class="panel-body", id ="feed">
+
+        </div>
+      </div>
+    </div>
+
+  -->
+
+
+
+
+
+
+
+
     <script src = "../js/listfound.js"></script>
 </body>
 

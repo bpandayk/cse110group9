@@ -88,7 +88,7 @@ $("#submit").click(function() {
           return false;
         }
 
-        myLost.set("phone", String(x));
+        myLost.set("phone", Number(x));
         myLost.set("name", String(y).toLowerCase());
         myLost.set("item", String(m).toLowerCase());
         myLost.set("email", String(n).toLowerCase());
@@ -98,8 +98,6 @@ $("#submit").click(function() {
         myLost.save(null, {
         success: function(myLost) {
           alert("Data Loaded Sucessfully");
-          var ID = myLost.id;
-          uploadPhoto(ID);
           },
         error: function(myLost, error) {
           }
@@ -107,14 +105,49 @@ $("#submit").click(function() {
 
 
 
-    function uploadPhoto(id) {
-        var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+
+/*
         var headers = {
             "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
             "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
         };
-        var objID = id;
+        var userData = {"phone": Number(x),
+            "name":String(y),
+            "item":String(m),
+            "email":String(n),
+            "loc":String(q),
+            "descp":String(p),
+            "lostdate":Date(o)};
 
+        var data = JSON.stringify(userData);
+
+        $.ajax({
+                "type":"POST",
+                "url":"https://api.parse.com/1/classes/Lost/",
+                "data":data,
+                "contentType":"application/json",
+                "dataType":"json",
+                "headers":headers,
+                success:function(data) {
+                    console.log(data);
+                   $.each(data, function(index, value){
+                     objectID = data.objectId;
+
+                    });
+                    console.log(objectID);
+                    alert("Data Loaded Sucessfully");
+                    //document.location.href = '../pages/listall.html';
+                }
+        });
+
+<<<<<<< HEAD
+        */
+});
+=======
+
+
+    if(file.name != null) {
+        var serverUrl = 'https://api.parse.com/1/files/' + file.name;
 
             $.ajax({
                type: "POST",
@@ -123,14 +156,11 @@ $("#submit").click(function() {
                data: file,
                processData: false,
                contentType: false,
-               success: function(data) {
-                 console.log(objID);
-                 successUpload(data, objID);
-               },
+               success: successUpload,
                error: function(data) {
                   var obj = jQuery.parseJSON(data);
                   console.error("Error: ");
-
+                  console.log(obj)
                }
             });
           }
@@ -138,10 +168,8 @@ $("#submit").click(function() {
 
 
 
-         function successUpload(data, ObjID) {
+         function successUpload(data) {
           console.log(data);
-          var obj = ObjID;
-          console.log(obj);
 
           var headers = {
               "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
@@ -151,7 +179,7 @@ $("#submit").click(function() {
           $.ajax({
             'type': "PUT",
             'headers': headers,
-            'url': "https://api.parse.com/1/classes/Lost/"+obj,
+            'url': "https://api.parse.com/1/classes/Lost/"+objectID,
             "contentType": "application/json",
             "dataType": "json",
             'success': function(data) {
@@ -169,8 +197,8 @@ $("#submit").click(function() {
            });
           };
 
-
-
+//});
+>>>>>>> 6472b42c5bfba019bbd2916bdd3e2c77ee2ed2b1
 
 function validate_name(val,alerttxt) {
     if( val=='' ) {

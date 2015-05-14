@@ -47,4 +47,38 @@ a {
 }
 
 #lostb.button {
-	background-color: #88CCAA;
+    background-color: #88CCAA;
+    top: 130px;
+    top: 130px;
+    sition: fixed;
+}
+
+#foundb.button {
+    background-color: #F0C062;
+    top: 410px;
+    position: fixed;
+}
+
+#and {
+    width: 470px;
+    height: 120px;
+    top: 290px;
+    right: 100px;
+    position: fixed;
+
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 90px;
+    text-align: center;
+    color: #000000;
+}
+
+#credits {
+    bottom: 15px;
+    right: 15px;
+    position: fixed;
+
+    font-family: courier new;
+    font-size: 11px;
+    color: #000000;
+}
+

@@ -3,6 +3,10 @@ body{
 	background-color: #B0E0E6;
 }
 
+.black-font{
+	color:black;
+}
+
 .container{
 	display: flex;
 	overflow: hidden;

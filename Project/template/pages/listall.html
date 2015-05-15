@@ -72,6 +72,33 @@
             onkeypress="return enterPressed(event)">
           <button onclick="searchFunction()" class = "black-font">Search</button>
 <!--          <p id = "demo" ></p>   -->
+	   <div class = "col-sm-2" id="selectDate1">
+               <select class="form-control" id="selectMonth">
+                 <option> Jan </option>
+                 <option> Feb </option>
+                 <option> March </option>
+                 <option> April </option>
+                 <option> May </option>
+                 <option> June </option>
+                 <option> July </option>
+                 <option> August </option>
+                 <option> September </option>
+                 <option> October </option>
+                 <option> November </option>
+                 <option> December </option>
+               </select>
+             </div>
+	   <div class = "col-sm-2" id="selectDate2">
+               <select class="form-control" id="selectDay">
+		 <script>
+/* 
+	   	 for (var i = 31; i >= 0; i++) {
+		     $('#selectDay').prepend('<option>' + i + '</option>');
+		 }
+*/
+		 </script>
+               </select>
+             </div>
         <div class="panel-body">
           <div class="row", id='feed'>
 

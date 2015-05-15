@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  document.getElementById("searchLost").value = "";
+//  document.getElementById("searchLost").value = "";
 });
 /* 
 Problem 1
@@ -124,8 +124,6 @@ var createTable = function(data) {
 	* Search function, searches by keyword
 	*/
        function searchFunction() {
-	 if (typeof document.getElementById("searchLost").value == 'number')
-		alert("I WAS RIGHT");
          newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
          Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
          "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");

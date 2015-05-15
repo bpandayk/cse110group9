@@ -8,7 +8,6 @@ $(function()  {
 });
 
 
-var objectID;
 
 //function to hide and show the input box if item name is other than the listed
 $(function(){
@@ -98,6 +97,8 @@ $("#submit").click(function() {
         myLost.save(null, {
         success: function(myLost) {
           alert("Data Loaded Sucessfully");
+          var ID = myLost.id;
+          uploadPhoto(ID);
           },
         error: function(myLost, error) {
           }
@@ -105,8 +106,14 @@ $("#submit").click(function() {
 
 
 
-    if(file.name != null) {
+    function uploadPhoto(id) {
         var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+        var headers = {
+            "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+            "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
+        };
+        var objID = id;
+
 
             $.ajax({
                type: "POST",
@@ -115,11 +122,14 @@ $("#submit").click(function() {
                data: file,
                processData: false,
                contentType: false,
-               success: successUpload,
+               success: function(data) {
+                 console.log(objID);
+                 successUpload(data, objID);
+               },
                error: function(data) {
                   var obj = jQuery.parseJSON(data);
                   console.error("Error: ");
-                  console.log(obj)
+
                }
             });
           }
@@ -127,8 +137,10 @@ $("#submit").click(function() {
 
 
 
-         function successUpload(data) {
+         function successUpload(data, ObjID) {
           console.log(data);
+          var obj = ObjID;
+          console.log(obj);
 
           var headers = {
               "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
@@ -138,7 +150,7 @@ $("#submit").click(function() {
           $.ajax({
             'type': "PUT",
             'headers': headers,
-            'url': "https://api.parse.com/1/classes/Lost/"+objectID,
+            'url': "https://api.parse.com/1/classes/Lost/"+obj,
             "contentType": "application/json",
             "dataType": "json",
             'success': function(data) {

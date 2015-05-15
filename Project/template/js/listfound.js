@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  document.getElementById("searchFound").value = "";
+  //document.getElementById("searchFound").value = "";
 });
 
 function enterPressed(e){

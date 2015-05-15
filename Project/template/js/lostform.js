@@ -8,7 +8,6 @@ $(function()  {
 });
 
 
-var objectID;
 
 //function to hide and show the input box if item name is other than the listed
 $(function(){

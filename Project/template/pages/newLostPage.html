@@ -53,14 +53,14 @@
            <li class="sidebar-brand"><a href="newIndex.html">LOST & FOUND</a></li>
       </ul>
         <ul class="sidebar-nav" id="sidebar">
-            <li><a href="newLostPage.html">Browse Lost</a></li>
-            <li><a href="#">Report Lost</a></li>
+            <<li><a href="newLostPage.html">Browse Lost</a></li>
+            <li><a href="newLostForm.html">Report Lost</a></li>
             <li><a href="newFoundPage.html">Browse Found</a></li>
-            <li><a href="#">Report Found</a></li>
+            <li><a href="newFoundForm.html">Report Found</a></li>
         </ul>
         </ul>
       </div>
-          
+
     <!-- Page content -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
@@ -72,15 +72,20 @@
                     </div>
                     <div style="padding-top:80px">
                         <div class="col-md-3"></div>
-                        <p class="well lead col-md-6" style="font-size:16px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in neque ac nunc suscipit auctor ut a quam. Praesent tempor ornare odio, id consectetur arcu posuere sed. Etiam nisi tortor, ornare et nulla quis, venenatis tristique turpis. In lobortis vitae est et egestas. Morbi tincidunt dapibus mollis. Mauris sit amet sem sit amet nibh hendrerit gravida non eu elit. Praesent tempus blandit erat, in fringilla lectus ornare sed.
+                        <div class="well lead col-md-6" >
+                          <div class = "panel panel-primary black-font">
+                            <div class="panel-heading">Lost and Found
+                              <input type="text" class = "black-font" id="searchFound" value="" size = 40
+                                onkeypress="return enterPressed(event)">
+                              <button class = "black-font" onclick="searchFunction()" id = "listfoundSearch">Search</button>
 
-                        Integer imperdiet, risus a dignissim vulputate, velit arcu mattis felis, ut cursus ante felis et mi. Fusce nec risus consectetur dui porttitor bibendum eget porta purus. Pellentesque scelerisque nisl dolor, eget bibendum justo consectetur vitae. Pellentesque fermentum sollicitudin urna ut placerat. Suspendisse orci lorem, tempus eu rutrum mattis, eleifend sed nulla. Nam id leo id ipsum imperdiet ultrices. Nam sollicitudin hendrerit risus, eget pellentesque ex finibus ut. Morbi quis bibendum dui. Suspendisse efficitur tincidunt rhoncus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam elit sapien, tempus quis est non, scelerisque vestibulum dolor. Maecenas quis vulputate ligula, vel dictum nisl. Ut laoreet tempus tristique. Phasellus quis enim ut ante volutpat pellentesque. Curabitur luctus aliquet lacinia. Proin suscipit mi lectus, non aliquet augue maximus sit amet.
+                            <div class="panel-body", id ="feed">
 
-                        Nam viverra sem tortor, non accumsan nibh sodales eu. Fusce lobortis ligula nec ligula viverra condimentum. Proin accumsan turpis metus, porttitor mattis ex molestie et. Sed vestibulum, turpis vitae euismod blandit, turpis felis mollis dui, suscipit venenatis nibh tellus sed mi. Phasellus vestibulum malesuada nisi vitae facilisis. Phasellus lacinia posuere nibh, in malesuada turpis mattis sed. Nullam quis blandit lorem, at gravida arcu. Pellentesque suscipit orci ut tellus ultricies iaculis. Quisque id urna accumsan, euismod sapien eget, blandit nunc. Integer suscipit metus orci, ac semper metus semper ac. Duis eget diam est. Sed aliquet rutrum urna id aliquet.
+                            </div>
+                          </div>
+                        </div>
 
-                        Aenean id ligula commodo, dapibus massa sit amet, fringilla ante. Vivamus condimentum justo nec leo finibus, eget consectetur enim blandit. Vestibulum laoreet velit ullamcorper consectetur suscipit. Ut vitae dictum augue, eget sollicitudin arcu. Fusce posuere massa sit amet metus pellentesque efficitur. Nam iaculis lectus vitae lorem laoreet gravida. Vivamus ac urna ac erat elementum rutrum dictum blandit lorem. Nulla pulvinar, libero nec aliquam rhoncus, ligula enim interdum libero, sed dignissim neque arcu eget odio. Curabitur facilisis ultricies malesuada.
-
-                        Proin consectetur malesuada lorem, eget pellentesque mi sodales a. Quisque placerat, dolor a malesuada cursus, nibh velit hendrerit ex, et aliquet risus nibh et lacus. Proin non suscipit felis. Morbi maximus at eros tempor fermentum. Fusce elementum nec augue id feugiat. Cras fermentum felis eu aliquam feugiat. Fusce congue, ligula vitae placerat interdum, elit ex porttitor lacus, vitae suscipit massa dolor at tellus.</p>
+                        </div>
 
                         <div id ="credits"> &copy 2015 Furious 7. </div>
 
@@ -90,7 +95,9 @@
         </div>
     </div>
 </div>
-                        
+
+<script src = "../js/listall.js"></script>
+
 </body>
 
 </html>

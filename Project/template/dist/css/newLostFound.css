@@ -3,6 +3,7 @@ body{
     background-image: url("../../img/newBackground.jpg");
     background-attachment: fixed;
 	font-family: Century Gothic, sans-serif;
+
 }
 
 .topBar{
@@ -188,4 +189,9 @@ body{
     left: 175px;
     width: 175px;
     transition: all .4s ease 0s;
+}
+
+p{
+	font-color: BLACK;
+	font-size: 8px;
 }

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  document.getElementById("searchLost").value = "";
+//  document.getElementById("searchLost").value = "";
 });
 /* Problem 1
  prepends twice the same div if they keyword matches,

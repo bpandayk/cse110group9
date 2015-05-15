@@ -1,7 +1,8 @@
 $(document).ready(function() {
   document.getElementById("searchLost").value = "";
 });
-/* Problem 1
+/* 
+Problem 1
  prepends twice the same div if they keyword matches,
 for example, name and item keys........ this if statement below
   "if ($('#' + index).length == 0) {  " lets this crap happen
@@ -163,6 +164,10 @@ var createTable = function(data) {
           });
         }
      }
+
+	function pageLister() {
+	  
+	}
 
      /**
       * After Refresh Downloads 10 latest posted lost items

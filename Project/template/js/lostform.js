@@ -142,21 +142,30 @@ Description.prototype.validate = function() {
 // --------------------------------------------------
 
 // Image implements Field
-function Image(obj) { 
-    this.obj = obj; 
-    /*this.value = obj.val();*/
-    this.bindFile();
-}
 extend(Image,Field);
 Image.prototype.bindFile = function() {
+    console.log('binding file...');
+    /*
+    var file = this.file;
     this.obj.bind('change', function(e) {
         var files = e.target.files || e.dataTransfer.files;
-        this.file = files[0];
+        file = files[0];
         console.log('image file is '+file.name);
     });
+    */
+    this.file = file;
+    console.log(file);
+    console.log('done');
 }
 Image.prototype.validate = function() {
     return true;
+}
+
+function Image(obj) { 
+    this.obj = obj; 
+    /*this.value = obj.val();*/
+    this.file = {};
+    this.bindFile();
 }
 // end of Image
 
@@ -210,7 +219,7 @@ ItemSpec.prototype.validate = function() {
 // Uploader
 
 function Uploader() {}
-Uploader.prototype.upload = function(){};
+Uploader.prototype.upload = function(data){};
 
 // ======================================================================
 // ParseUploader
@@ -221,7 +230,7 @@ extend(ParseUploader,Uploader);
 // --------------------------------------------------
 // upload
 
-Uploader.prototype.upload = function(item){
+ParseUploader.prototype.upload = function(item){
     console.log('entered ParseUploader.prototype.upload...');
 
     // parameter has to be an ItemSpec
@@ -241,7 +250,7 @@ Uploader.prototype.upload = function(item){
     // set data of myLost
     // notice image is NOT in the list and will be handled at uploading
     console.log('setting new Lost obj...');
-    myLost.set("name",     String(item.report.value).toLowerCase());
+    myLost.set("name",     String(item.reporter.value).toLowerCase());
     myLost.set("item",     String(item.itemName.value).toLowerCase());
     myLost.set("email",    String(item.email.value).toLowerCase());
     myLost.set("lostdate", Date(item.reportDate.value).toLowerCase());
@@ -255,7 +264,10 @@ Uploader.prototype.upload = function(item){
     myLost.save(null, {
         success: function(myLost) {
             console.log('data saved sucessfully');
+            console.log('start uploading photo');
+            console.log('photo is', item.img.file.name );
             ParseUploader.prototype.uploadFile(item.img.file,myLost.id);
+            console.log('done');
         },
         error: function(myLost, error) {
             console.log('data did NOT save sucessfully');
@@ -275,7 +287,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
     console.log('entered ParseUploader.prototype.uploadFile');
 
     // setups
-    var serverUrl = 'https://api.parse.com/1/files/' + file.name;
+    var serverUrl = 'https://api.parse.com/1/files/'+file.name;
     var headers = {
         "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
         "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
@@ -292,7 +304,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
         success: function(data) {
             console.log('successfully uploaded file '+file+' to '+objID);
             // link the newly added file to related parse obj
-            LinkDataTo(data, objID);
+            ParseUploader.prototype.linkDataTo(data, objID);
         },
         error: function(data) {
             var obj = jQuery.parseJSON(data);
@@ -304,7 +316,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
 // --------------------------------------------------
 // link data (esp. files) to a parse obj.
 
-ParseUploader.prototype.LinkDataTo = function(data, ObjID) {
+ParseUploader.prototype.linkDataTo = function(data, objID) {
     console.log(data);
     console.log(objID);
 
@@ -342,19 +354,22 @@ ParseUploader.prototype.LinkDataTo = function(data, ObjID) {
 function FormManager() {}
 FormManager.prototype.drawForm = function(){};
 FormManager.prototype.callback = function(){};
-FormManager.prototype.upload   = function(){};
+FormManager.prototype.upload   = function(currItem){};
 
 // ======================================================================
 // FormManager
 
 function LostForm(uploader) { 
-    var items = [];
     if ( !( uploader && "isA" in uploader && uploader.isA(Uploader) ) )
         alert('LostForm has to have an Uploader!');
-    var uploader = uploader;
+    this.uploader = uploader;
 }
 extend(LostForm,FormManager);
-LostForm.prototype.upload = function() { this.uploader.upload(); };
+LostForm.prototype.upload = function(currItem) {
+    console.log('entered LostForm.prototype.upload');
+    //this.uploader.upload(currItem);
+    console.log('left LostForm.prototype.upload');
+};
 LostForm.prototype.callback = function() {
     console.log('entering LostForm.prototype.callback');
     var currItem = new ItemSpec(
@@ -377,7 +392,9 @@ LostForm.prototype.callback = function() {
     var fieldsNotPass = currItem.validate();
     if ( fieldsNotPass.length === 0 ) {
         // success
-        LostForm.prototype.upload();
+        console.log('all inputs are valid! start uploading...');
+        this.upload(currItem);
+        console.log('done');
     } else {
         // oops, some info. was not correctly entered
         // change focus on first field failed
@@ -396,7 +413,7 @@ LostForm.prototype.callback = function() {
 var main = function() {
     var uploader = new ParseUploader();
     var lostForm = new LostForm(uploader);
-    $('#submit').click(lostForm.callback);
+    $('#submit').click(function() {lostForm.callback()});
 
 }
 
@@ -442,7 +459,7 @@ var file;
 $('#img').bind('change', function(e) {
     var files = e.target.files || e.dataTransfer.files;
     file = files[0];
-    console.log(file.name);
+    console.log('image file is'+file.name);
 });
 
 //post the data to parse app after submit is clicked

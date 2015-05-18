@@ -1,5 +1,9 @@
 $(document).ready(function() {
-//  document.getElementById("searchLost").value = "";
+  document.getElementById("searchLost").value = "";
+  document.getElementById("day").value = "1";
+  document.getElementById("month").value = "Jan";
+  document.getElementById("year").value = new Date().getFullYear();
+  document.getElementById("checkDate").checked = false;
 });
 /* 
 Problem 1
@@ -125,15 +129,27 @@ var createTable = function(data) {
 	*/
        function searchFunction() {
          newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
+	 var checked = false;
+	 var requestedDate;
          Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
          "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
-
+	 if (document.getElementById("checkDate").checked == true) {
+	   monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jne", "Jly", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	   checked = true;
+  	   var day = document.getElementById("day").value;
+	   var month = monthArray.indexOf(document.getElementById("month").value);
+	   var year = document.getElementById("year").value;
+	   requestedDate = new Date(year, month, day);
+	 } 
          $('#feed').empty();
          if (!newSearchText) {
            var query = new Parse.Query("Lost");
            query.limit(10);
-           query.ascending("createdAt");
+           query.descending("createdAt");
            query.contains("name", "");
+	   if (checked) {
+	     query.greaterThan("createdAt", requestedDate);
+	   }
            query.find({
               success: createCertainTable,
               error: function() {
@@ -146,8 +162,11 @@ var createTable = function(data) {
          fieldArray = ["name", "item", "email", "phone", "loc", "descp"];
          for (var i = 0; i < fieldArray.length; i++) {
            var query = new Parse.Query("Lost");
-           query.ascending("createdAt");
+           query.descending("createdAt");
            query.contains(fieldArray[i], newSearchText);
+	   if (checked) {
+	     query.greaterThanOrEqualTo("createdAt", requestedDate);
+	   }
            query.find({
               success: createCertainTable,
               error: function() {

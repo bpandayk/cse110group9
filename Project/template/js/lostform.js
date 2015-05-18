@@ -143,29 +143,25 @@ Description.prototype.validate = function() {
 
 // Image implements Field
 extend(Image,Field);
-Image.prototype.bindFile = function() {
-    console.log('binding file...');
-    /*
-    var file = this.file;
-    this.obj.bind('change', function(e) {
-        var files = e.target.files || e.dataTransfer.files;
-        file = files[0];
-        console.log('image file is '+file.name);
-    });
-    */
-    this.file = file;
-    console.log(file);
-    console.log('done');
-}
 Image.prototype.validate = function() {
     return true;
+}
+
+Image.prototype.trackFile = function() {
+    console.log('entered Image.trackFile');
+    this.obj.bind('change', function(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        this.file = files[0];
+        console.log('image file is '+this.file.name);
+    });
+    console.log('left Image.trackFile');
 }
 
 function Image(obj) { 
     this.obj = obj; 
     /*this.value = obj.val();*/
     this.file = {};
-    this.bindFile();
+    this.trackFile();
 }
 // end of Image
 
@@ -231,7 +227,7 @@ extend(ParseUploader,Uploader);
 // upload
 
 ParseUploader.prototype.upload = function(item){
-    console.log('entered ParseUploader.prototype.upload...');
+    console.log('entered ParseUploader.upload...');
 
     // parameter has to be an ItemSpec
     if (!item || !item instanceof ItemSpec) return;
@@ -277,14 +273,14 @@ ParseUploader.prototype.upload = function(item){
     });
     console.log('done');
 
-    console.log('left ParseUploader.prototype.upload.');
+    console.log('left ParseUploader.upload.');
 };
 
 // --------------------------------------------------
 // upload file
 
 ParseUploader.prototype.uploadFile = function(file,objID) {
-    console.log('entered ParseUploader.prototype.uploadFile');
+    console.log('entered ParseUploader.uploadFile');
 
     // setups
     var serverUrl = 'https://api.parse.com/1/files/'+file.name;
@@ -304,7 +300,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
         success: function(data) {
             console.log('successfully uploaded file '+file+' to '+objID);
             // link the newly added file to related parse obj
-            ParseUploader.prototype.linkDataTo(data, objID);
+            ParseUploader.linkDataTo(data, objID);
         },
         error: function(data) {
             var obj = jQuery.parseJSON(data);
@@ -363,16 +359,8 @@ function LostForm(uploader) {
     if ( !( uploader && "isA" in uploader && uploader.isA(Uploader) ) )
         alert('LostForm has to have an Uploader!');
     this.uploader = uploader;
-}
-extend(LostForm,FormManager);
-LostForm.prototype.upload = function(currItem) {
-    console.log('entered LostForm.prototype.upload');
-    //this.uploader.upload(currItem);
-    console.log('left LostForm.prototype.upload');
-};
-LostForm.prototype.callback = function() {
-    console.log('entering LostForm.prototype.callback');
-    var currItem = new ItemSpec(
+
+    this.currItem = new ItemSpec(
         $("#lostname"),
         ($('#item').val() === "Other") ? 
             $("#othername") : $("#item"),
@@ -383,34 +371,65 @@ LostForm.prototype.callback = function() {
         $("#img"),
         $("#itemdesc")
     );
+}
+extend(LostForm,FormManager);
+
+// --------------------------------------------------
+// upload item to db
+
+LostForm.prototype.upload = function() {
+    console.log('entered LostForm.upload');
+    this.uploader.upload(this.currItem);
+    console.log('left LostForm.upload');
+};
+
+// --------------------------------------------------
+// what to do when some inputs are invalid?
+
+LostForm.prototype.dealWithInvalidInput = function(fieldsNotPass) {
+    console.log('entered LostForm.dealWithInvalidInput');
+    // change focus onto first field failed
+    fieldsNotPass[0].focus();
+    // mark fields as not valid
+    fieldsNotPass.forEach(
+        function(val,index,arr) {
+            val.addClass('notValid');
+            console.log('not valid field:\n'+val);
+        }
+    );
+    console.log('left LostForm.dealWithInvalidInput');
+}
+
+// --------------------------------------------------
+// call back function of submit button
+
+LostForm.prototype.callback = function() {
+    console.log('entered LostForm.callback');
 
     // remove the not valid tag on all fields first
-    currItem.forEach(function(field) {
+    this.currItem.forEach(function(field) {
         field.obj.removeClass('notValid');
     });
 
-    var fieldsNotPass = currItem.validate();
+    var fieldsNotPass = this.currItem.validate();
     if ( fieldsNotPass.length === 0 ) {
         // success
         console.log('all inputs are valid! start uploading...');
-        this.upload(currItem);
+        this.upload();
         console.log('done');
     } else {
         // oops, some info. was not correctly entered
-        // change focus on first field failed
-        fieldsNotPass[0].focus();
-        // mark fields as not valid
-        fieldsNotPass.forEach(
-            function(val,index,arr) {
-                val.addClass('notValid');
-                console.log('not valid field:\n'+val);
-            }
-        );
+        console.log('detected invalid input');
+        this.dealWithInvalidInput(fieldsNotPass);
     }
-    console.log('leaving LostForm.prototype.callback');
+    console.log('left LostForm.callback');
 };
 
+// ==================================================
+// main function
+
 var main = function() {
+
     var uploader = new ParseUploader();
     var lostForm = new LostForm(uploader);
     $('#submit').click(function() {lostForm.callback()});
@@ -419,15 +438,15 @@ var main = function() {
 
 $(document).ready(main);
 
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
+// **********************************************************************
+
 //displays the calender and allows to pick a date
 $(function()  {
     $("#lostdate").datepicker();
 });
-
-// **********************************************************************
-// **********************************************************************
-// **********************************************************************
-// **********************************************************************
 
 
 var objectID;

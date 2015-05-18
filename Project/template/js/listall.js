@@ -1,11 +1,11 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
   document.getElementById("searchLost").value = "";
   document.getElementById("day").value = "1";
   document.getElementById("month").value = "Jan";
   document.getElementById("year").value = new Date().getFullYear();
   document.getElementById("checkDate").checked = false;
 });
-/* 
+/*
 Problem 1
  prepends twice the same div if they keyword matches,
 for example, name and item keys........ this if statement below
@@ -26,7 +26,9 @@ Problem 4
 /**
  * Takes care of the enter key function when entering the search word
  */
-function enterPressed(e){
+
+////////////////////////
+/*function enterPressed(e){
     if (!e) e = window.event;
     var pressedKey = e.keyCode || e.which;
     if (pressedKey == '13'){
@@ -39,7 +41,7 @@ function enterPressed(e){
 /**
  * Creates table of items specified by query's settings
  */
-var createCertainTable = function(objects){
+/*var createCertainTable = function(objects){
   // JQuery for each loop
   $.each(objects, function(index, value) {
      console.log(value);
@@ -126,7 +128,7 @@ var createTable = function(data) {
 
        /**
 	* Search function, searches by keyword
-	*/
+	/////////////////////////////////////////
        function searchFunction() {
          newSearchText = searchText.concat(document.getElementById("searchLost").value).toLowerCase();
 	 var checked = false;
@@ -140,7 +142,7 @@ var createTable = function(data) {
 	   var month = monthArray.indexOf(document.getElementById("month").value);
 	   var year = document.getElementById("year").value;
 	   requestedDate = new Date(year, month, day);
-	 } 
+	 }
          $('#feed').empty();
          if (!newSearchText) {
            var query = new Parse.Query("Lost");
@@ -183,12 +185,12 @@ var createTable = function(data) {
      }
 
 	function pageLister() {
-	  
+
 	}
 
      /**
       * After Refresh Downloads 10 latest posted lost items
-      */
+
      $(function() {
         Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
         "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
@@ -206,3 +208,113 @@ var createTable = function(data) {
              }
           });
      });
+*/
+/////////////////////New code?//////////////
+
+
+
+/* This js file list all the lost and found post in the page. */
+
+//
+var ListManager = function(results) {
+  this.results = results;
+}
+
+ListManager.prototype.drawList= function() {
+  $.each(this.results, function(index, value) {
+     console.log(value);
+     $('#feed').empty();
+
+     var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');
+     $col.append('<p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
+     $col.append('<p>' + "Lost Item: " + value.get("item") + '</p>');
+     $col.append('<p>' + "Lost Date: " + value.get("lostdate") + '</p>');
+     $col.append('<p>' + "Last Location: " + value.get("loc") + '</p>');
+     if(value.get("phone") != null)
+       $col.append('<p>' + "Phone :" + value.get("phone") + '</p>');
+     $col.append('<p class="hide1" id = "' + index + 'email">' + "Email :" + value.get("email") + '</p>');
+     $col.append('<p class = "hide2" id = "' + index + 'details">' + "Description :" + value.get("descp") + '</p>');
+     $col.append('</div> </div>');
+
+
+       $('#feed').prepend($col);
+     $(".hide1").hide();
+     $(".hide2").hide();
+  });
+  console.log(this.results.length);
+  //for(var i = 0; i<this.)
+}
+
+
+///////////////////////////////////////////////////////////////
+
+var Downloader = function(className){
+  this.className = className;
+}
+
+Downloader.prototype.download = function() {
+  Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
+
+  var query = new Parse.Query(this.className);
+
+  query.find({
+    success:function(results){
+      var list = new ListManager(results);
+      list.drawList();
+
+      }
+
+  });
+}
+
+Downloader.prototype.queryDownload = function(keyword) {
+  Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
+
+  var query1 = new Parse.Query(this.className);
+  query1.equalTo('name', keyword);
+
+  var query2 = new Parse.Query(this.className);
+  query2.equalTo('item', keyword);
+
+  var query3 = new Parse.Query(this.className);
+  query3.equalTo('phone', keyword);
+
+  var query4 = new Parse.Query(this.className);
+  query4.equalTo('email', keyword);
+
+  var query5 = new Parse.Query(this.className);
+  query5.equalTo('loc', keyword);
+
+  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+
+  mainQuery.find({
+    success: function(results){
+      var list1 = new ListManager(results);
+      list1.drawList();
+    }
+
+  });
+
+
+}
+
+
+/////////////////////////////////////////////////////////////
+//$(document).ready(function() {
+
+if(location.pathname == "/pages/newLostPage.html") {
+  var lost = new Downloader("Lost");
+  var res = lost.download();
+
+} else if(location.pathname == "/pages/newFoundPage.html") {
+  var found = new Downloader("Found");
+  //found.download();
+  found.queryDownload("Bag Pack");
+
+}
+
+
+
+//});

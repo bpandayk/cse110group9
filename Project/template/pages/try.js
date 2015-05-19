@@ -9,7 +9,7 @@ var Vechicle = function(year) {
  //this.model = model;
 }
 
-Vechicle.prototype.old= function(yr){
+Vechicle.prototype.old= function(yr) {
  var old = yr- this.year;
     return old;
 }

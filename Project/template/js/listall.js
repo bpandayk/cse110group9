@@ -223,7 +223,7 @@ var ListManager = function(results) {
 ListManager.prototype.drawList= function() {
   $('#feed').empty();
   $.each(this.results, function(index, value) {
-     console.log(value);
+     console.log(value.id);
 
      var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');
      $col.append('<p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
@@ -241,6 +241,13 @@ ListManager.prototype.drawList= function() {
      $(".hide1").hide();
      $(".hide2").hide();
   });
+
+/*$.each(this.results, function(index) {
+ $("#" + index).click(function(){
+   $("#" + index + "details").show();
+   $("#" + index + "email").show();
+ });
+});*/
   console.log(this.results.length);
   //for(var i = 0; i<this.)
 }
@@ -270,13 +277,11 @@ Downloader.prototype.download = function() {
 
 
 
-
 Downloader.prototype.queryDownload = function(keyword) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
   keyword = keyword.toLowerCase();
-  console.log(keyword);
 
   var query1 = new Parse.Query(this.className);
   query1.equalTo('LCname', keyword);
@@ -303,8 +308,31 @@ Downloader.prototype.queryDownload = function(keyword) {
 
   });
 
+}
+
+
+/*onclick on individual fees, this method opens up the detail pop up window of
+ *that specific post feed.
+ */
+
+Downloader.prototype.onClickDownload = function(objectID) {
+  Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
+
+  var query = new Parse.Query(this.className);
+  query.get(objectID, {
+    success: function(results){
+      var list1 = new ListManager(results);
+      var $col = $('<div class="well well-lg black-font">');
+      $col.append('<p> name:'+results.name +'</p>');
+      $col.append('</div>');
+
+      $('#feed').prepend($col);
+    }
+  });
 
 }
+
 
 
 /////////////////////////////////////////////////////////////
@@ -313,14 +341,19 @@ Downloader.prototype.queryDownload = function(keyword) {
 if(location.pathname == "/pages/newLostPage.html") {
   var lost = new Downloader("Lost");
   var res = lost.download();
+  //lost.onClickDownload('YmaJuHzo4Y');
+  $( "*", document.body ).click(function( event ) {
+  event.stopPropagation();
+  var domElement = $( this ).get( 0 );
+  $( "span:first" ).text( "Clicked on - " + domElement.nodeName );
+});
+
 
 } else if(location.pathname == "/pages/newFoundPage.html") {
   var found = new Downloader("Found");
   //found.download();
-  found.queryDownload("Bag Pack");
-
+  found.queryDownload("cell Phone");
 }
-
 
 
 //});

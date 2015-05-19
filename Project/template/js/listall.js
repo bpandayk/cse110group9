@@ -1,25 +1,15 @@
-/*$(document).ready(function() {
+/*
+$(document).ready(function() {
   document.getElementById("searchLost").value = "";
   document.getElementById("day").value = "1";
   document.getElementById("month").value = "Jan";
   document.getElementById("year").value = new Date().getFullYear();
   document.getElementById("checkDate").checked = false;
 });
-/*
-Problem 1
- prepends twice the same div if they keyword matches,
-for example, name and item keys........ this if statement below
-  "if ($('#' + index).length == 0) {  " lets this crap happen
-
-Problem 2
-Case insensetive but all the information is shown now with lowerCase which kind of sucks
-
-Problem 3
-DOES not find by date. SHould I keep the phone field as Number? (I changed it yo String...)
-IF so why? Then have to figure out how to search by Number........
-
-Problem 4
 */
+
+
+
 
 
 
@@ -220,7 +210,7 @@ var ListManager = function(results) {
   this.results = results;
 }
 
-ListManager.prototype.drawList= function() {
+ListManager.prototype.drawList= function(tooMany, numberOfPages) {
   $('#feed').empty();
   $.each(this.results, function(index, value) {
      console.log(value.id);
@@ -241,6 +231,12 @@ ListManager.prototype.drawList= function() {
      $(".hide1").hide();
      $(".hide2").hide();
   });
+ /* 
+     for (var i = 0; i < numberOfPages; i++) {
+
+          $('#feed').prepend('<button id= "page'+ i +'">''</button>');
+      }
+*/
 
 /*$.each(this.results, function(index) {
  $("#" + index).click(function(){
@@ -262,16 +258,16 @@ var Downloader = function(className){
 Downloader.prototype.download = function() {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
-
+  var tooMany = false;
+  var numberOfPages = 1;
   var query = new Parse.Query(this.className);
 
+  //query.limit(10);
   query.find({
     success:function(results){
       var list = new ListManager(results);
-      list.drawList();
-
+      list.drawList(true, 1);
       }
-
   });
 }
 
@@ -303,7 +299,7 @@ Downloader.prototype.queryDownload = function(keyword) {
   mainQuery.find({
     success: function(results){
       var list1 = new ListManager(results);
-      list1.drawList();
+      list1.drawList(false, 1);
     }
 
   });

@@ -221,9 +221,9 @@ var ListManager = function(results) {
 }
 
 ListManager.prototype.drawList= function() {
+  $('#feed').empty();
   $.each(this.results, function(index, value) {
      console.log(value);
-     $('#feed').empty();
 
      var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');
      $col.append('<p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
@@ -268,24 +268,30 @@ Downloader.prototype.download = function() {
   });
 }
 
+
+
+
 Downloader.prototype.queryDownload = function(keyword) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
+  keyword = keyword.toLowerCase();
+  console.log(keyword);
+
   var query1 = new Parse.Query(this.className);
-  query1.equalTo('name', keyword);
+  query1.equalTo('LCname', keyword);
 
   var query2 = new Parse.Query(this.className);
-  query2.equalTo('item', keyword);
+  query2.equalTo('LCitem', keyword);
 
   var query3 = new Parse.Query(this.className);
   query3.equalTo('phone', keyword);
 
   var query4 = new Parse.Query(this.className);
-  query4.equalTo('email', keyword);
+  query4.equalTo('LCemail', keyword);
 
   var query5 = new Parse.Query(this.className);
-  query5.equalTo('loc', keyword);
+  query5.equalTo('LCloc', keyword);
 
   var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
 

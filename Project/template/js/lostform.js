@@ -92,7 +92,10 @@ Email.prototype.validate = function() {
 // --------------------------------------------------
 
 // ReportDate implements Field
-function ReportDate(obj) { this.obj = obj; }
+function ReportDate(obj) {
+    this.obj = obj;
+    this.obj.datepicker(); // enable datepiker
+}
 extend(ReportDate,Field);
 ReportDate.prototype.validate = function() {
     var reg = /\d\d\/\d\d\/\d\d\d\d/;
@@ -426,6 +429,29 @@ LostForm.prototype.callback = function() {
     console.log('left LostForm.callback');
 };
 
+// function to hide and show the input box if item name is other than the listed
+$(function() {
+    //initially hide the textbox
+    $("#othername").hide();
+    $('#item').change(function() {
+        if($(this).find('option:selected').val() == "Other"){
+            $("#othername").show();
+        } else {
+            $("#othername").hide();
+        }
+    });
+    /*
+    $("#othername").keyup(function(ev){
+        var othersOption = $('#item').find('option:selected');
+        if(othersOption.val() == "Other"){
+            ev.preventDefault();
+            //change the selected drop down text
+            $(othersOption).html($("#othername").val());
+        }
+    });
+    */
+});
+
 // ==================================================
 // main function
 
@@ -436,38 +462,4 @@ var main = function() {
 }
 
 $(document).ready(main);
-
-// **********************************************************************
-// **********************************************************************
-// **********************************************************************
-// **********************************************************************
-
-//displays the calender and allows to pick a date
-$(function()  {
-    $("#lostdate").datepicker();
-});
-
-
-var objectID;
-
-//function to hide and show the input box if item name is other than the listed
-$(function(){
-    //initially hide the textbox
-    $("#othername").hide();
-    $('#item').change(function() {
-        if($(this).find('option:selected').val() == "Other"){
-            $("#othername").show();
-        }else{
-            $("#othername").hide();
-        }
-    });
-    $("#othername").keyup(function(ev){
-        var othersOption = $('#item').find('option:selected');
-        if(othersOption.val() == "Other"){
-            ev.preventDefault();
-            //change the selected drop down text
-            $(othersOption).html($("#othername").val());
-        }
-    });
-});
 

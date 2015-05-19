@@ -244,9 +244,9 @@ ListManager.prototype.drawList= function() {
 
   $.each(this.results, function(index, value) {
     console.log(value.id);
-  $("#" + this.value.id).click(function(){
-   $("#" + this.value.id + "details").show();
-   $("#" + this.value.id + "email").show();
+  $("#" + value.id).click(function(){
+   $("#" + value.id + "details").show();
+   $("#" + value.id + "email").show();
   });
  });
   console.log(this.results.length);

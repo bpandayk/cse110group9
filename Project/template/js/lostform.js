@@ -375,6 +375,11 @@ function LostForm(uploader) {
         $("#img"),
         $("#itemdesc")
     );
+    // if focus is REMOVED from a text input field, remove the notification of
+    // invalidness until the next submission
+    this.currItem.forEach(function(field) {
+        field.obj.focusout(function() {field.obj.removeClass('notValid');});
+    });
 }
 extend(LostForm,FormManager);
 

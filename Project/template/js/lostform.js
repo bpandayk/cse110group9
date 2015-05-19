@@ -43,14 +43,15 @@ function deepCopy(p, c) {
 
 function Field() {}
 Field.prototype.validate = function() {};
+Field.prototype.getValue = function() { return this.obj.val(); }
 
 // --------------------------------------------------
 
 // Name implements Field
-function Name(obj) { this.obj = obj; this.value = obj.val(); }
+function Name(obj) { this.obj = obj; }
 extend(Name,Field);
 Name.prototype.validate = function() {
-    if( this.value == '' ) {
+    if( this.getValue() == '' ) {
         return false;
     } else {
         return true;
@@ -61,10 +62,10 @@ Name.prototype.validate = function() {
 // --------------------------------------------------
 
 // ItemName implements Field
-function ItemName(obj) { this.obj = obj; this.value = obj.val(); }
+function ItemName(obj) { this.obj = obj; }
 extend(ItemName,Field);
 ItemName.prototype.validate = function() {
-    if( this.value == '' ) {
+    if( this.getValue() == '' ) {
         return false;
     } else {
         return true;
@@ -75,11 +76,11 @@ ItemName.prototype.validate = function() {
 // --------------------------------------------------
 
 // Email implements Field
-function Email(obj) { this.obj = obj; this.value = obj.val(); }
+function Email(obj) { this.obj = obj; }
 extend(Email,Field);
 Email.prototype.validate = function() {
-    atpos =  this.value.indexOf('@');
-    dotpos = this.value.lastIndexOf('.');
+    atpos =  this.getValue().indexOf('@');
+    dotpos = this.getValue().lastIndexOf('.');
     if( atpos<1 || dotpos-atpos<2 ) {
         return false;
     } else {
@@ -91,11 +92,11 @@ Email.prototype.validate = function() {
 // --------------------------------------------------
 
 // ReportDate implements Field
-function ReportDate(obj) { this.obj = obj; this.value = obj.val(); }
+function ReportDate(obj) { this.obj = obj; }
 extend(ReportDate,Field);
 ReportDate.prototype.validate = function() {
     var reg = /\d\d\/\d\d\/\d\d\d\d/;
-    if( !reg.test(this.value) ) {
+    if( !reg.test(this.getValue()) ) {
         return false;
     } else {
         return true;
@@ -106,12 +107,12 @@ ReportDate.prototype.validate = function() {
 // --------------------------------------------------
 
 // Phone implements Field
-function Phone(obj) { this.obj = obj; this.value = obj.val(); }
+function Phone(obj) { this.obj = obj; }
 extend(Phone,Field);
 Phone.prototype.validate = function() {
     var correct_phone_num_reg = /(\d{3}[ -]?){2}\d{4}/;
-    var empty = this.value === '';
-    if( !correct_phone_num_reg.test(this.value) && !empty ) {
+    var empty = this.getValue() === '';
+    if( !correct_phone_num_reg.test(this.getValue()) && !empty ) {
         return false;
     } else {
         return true;
@@ -122,7 +123,7 @@ Phone.prototype.validate = function() {
 // --------------------------------------------------
 
 // Location implements Field
-function Location(obj) { this.obj = obj; this.value = obj.val(); }
+function Location(obj) { this.obj = obj; }
 extend(Location,Field);
 Location.prototype.validate = function() {
     return true;
@@ -132,7 +133,7 @@ Location.prototype.validate = function() {
 // --------------------------------------------------
 
 // Description implements Field
-function Description(obj) { this.obj = obj; this.value = obj.val(); }
+function Description(obj) { this.obj = obj; }
 extend(Description,Field);
 Description.prototype.validate = function() {
     return true;
@@ -142,26 +143,24 @@ Description.prototype.validate = function() {
 // --------------------------------------------------
 
 // Image implements Field
-extend(Image,Field);
-Image.prototype.validate = function() {
-    return true;
-}
-
-Image.prototype.trackFile = function() {
-    console.log('entered Image.trackFile');
-    this.obj.bind('change', function(e) {
-        var files = e.target.files || e.dataTransfer.files;
-        this.file = files[0];
-        console.log('image file is '+this.file.name);
-    });
-    console.log('left Image.trackFile');
-}
-
 function Image(obj) { 
     this.obj = obj; 
-    /*this.value = obj.val();*/
-    this.file = {};
+    //this.file = 'default_file';
     this.trackFile();
+}
+extend(Image,Field);
+// re-define getValue func of Image
+Image.prototype.getValue = function() { return this.file; }
+Image.prototype.validate = function() { return true; }
+Image.prototype.trackFile = function() {
+    console.log('entered Image.trackFile');
+    var img = this;
+    img.obj.bind('change', function(e) {
+        var files = e.target.files || e.dataTransfer.files;
+        img.file = files[0];
+        console.log('image file is',img.getValue());
+    });
+    console.log('left Image.trackFile');
 }
 // end of Image
 
@@ -246,13 +245,13 @@ ParseUploader.prototype.upload = function(item){
     // set data of myLost
     // notice image is NOT in the list and will be handled at uploading
     console.log('setting new Lost obj...');
-    myLost.set("name",     String(item.reporter.value).toLowerCase());
-    myLost.set("item",     String(item.itemName.value).toLowerCase());
-    myLost.set("email",    String(item.email.value).toLowerCase());
-    myLost.set("lostdate", Date(item.reportDate.value).toLowerCase());
-    myLost.set("phone",    String(item.phone.value));
-    myLost.set("loc",      String(item.loc.value).toLowerCase());
-    myLost.set("descp",    String(item.description.value).toLowerCase());
+    myLost.set("name",     String(item.reporter.getValue()).toLowerCase());
+    myLost.set("item",     String(item.itemName.getValue()).toLowerCase());
+    myLost.set("email",    String(item.email.getValue()).toLowerCase());
+    myLost.set("lostdate", Date(item.reportDate.getValue()).toLowerCase());
+    myLost.set("phone",    String(item.phone.getValue()));
+    myLost.set("loc",      String(item.loc.getValue()).toLowerCase());
+    myLost.set("descp",    String(item.description.getValue()).toLowerCase());
     console.log('done');
 
     // save myLost to parse
@@ -261,7 +260,7 @@ ParseUploader.prototype.upload = function(item){
         success: function(myLost) {
             console.log('data saved sucessfully');
             console.log('start uploading photo');
-            console.log('photo is', item.img.file.name );
+            console.log('photo is', item.img.getValue() );
             ParseUploader.prototype.uploadFile(item.img.file,myLost.id);
             console.log('done');
         },
@@ -300,7 +299,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
         success: function(data) {
             console.log('successfully uploaded file '+file+' to '+objID);
             // link the newly added file to related parse obj
-            ParseUploader.linkDataTo(data, objID);
+            ParseUploader.prototype.linkDataTo(data, objID);
         },
         error: function(data) {
             var obj = jQuery.parseJSON(data);
@@ -328,10 +327,12 @@ ParseUploader.prototype.linkDataTo = function(data, objID) {
         "contentType": "application/json",
         "dataType": "json",
         'success': function(data) {
-            console.log("Success Add.");
+            console.log("post uploaded successfully");
+            // TODO what to do?
         },
         'error': function(data) {
-            console.log("Error Add.");
+            console.log("an error occured during post upload");
+            // TODO what to do?
         },
         "data": JSON.stringify({
             "myfile": {
@@ -394,7 +395,7 @@ LostForm.prototype.dealWithInvalidInput = function(fieldsNotPass) {
     fieldsNotPass.forEach(
         function(val,index,arr) {
             val.addClass('notValid');
-            console.log('not valid field:\n'+val);
+            console.log('field not valid: ',val);
         }
     );
     console.log('left LostForm.dealWithInvalidInput');
@@ -429,11 +430,9 @@ LostForm.prototype.callback = function() {
 // main function
 
 var main = function() {
-
     var uploader = new ParseUploader();
     var lostForm = new LostForm(uploader);
     $('#submit').click(function() {lostForm.callback()});
-
 }
 
 $(document).ready(main);
@@ -471,112 +470,4 @@ $(function(){
         }
     });
 });
-
-
-/*
-var file;
-$('#img').bind('change', function(e) {
-    var files = e.target.files || e.dataTransfer.files;
-    file = files[0];
-    console.log('image file is'+file.name);
-});
-
-//post the data to parse app after submit is clicked
-$("#submit").click(function() {
-    Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-        "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt");
-    var Lost = Parse.Object.extend("Lost");
-    var myLost = new Lost();
-
-    console.log("Submit");
-    var x= $("#phone").val();
-    var y = $("#lostname").val();
-    var m = $("#item").val();
-    if(m == "Other")
-    m = $("#othername").val();
-
-    var n = $("#lostemail").val();
-    var o = $("#lostdate").val();
-    var p = $("#itemdesc").val();
-    var q = $("#lastloc").val();
-
-    // input data validations
-    if ( validate_name(y, 'Please enter your name!') == false ) {
-        $('#lostname').focus();
-
-        //return false;
-    }
-
-    if ( validate_email(n, 'Not a valid e-mail address!') == false ) {
-        $('#lostemail').focus();
-        //return false;
-    }
-
-    if ( validate_date(o, 'Please select a date!') == false ) {
-        $('#lostdate').focus();
-        //return false;
-    }
-
-    if ( validate_phone(x, 'Not a valid phone number!') == false ) {
-        $('#phone').focus();
-        //return false;
-    }
-
-
-    if(( validate_name(y, 'Please enter your name!') == false )||
-            ( validate_email(n, 'Not a valid e-mail address!') == false )||
-            ( validate_date(o, 'Please select a date!') == false )||
-            ( validate_phone(x, 'Not a valid phone number!') == false ) ) {
-                return false;
-            }
-
-    myLost.set("phone", String(x));
-    myLost.set("name", String(y).toLowerCase());
-    myLost.set("item", String(m).toLowerCase());
-    myLost.set("email", String(n).toLowerCase());
-    myLost.set("loc", String(q).toLowerCase());
-    myLost.set("descp", String(p).toLowerCase());
-    myLost.set("lostdate", Date(o).toLowerCase());
-    myLost.save(null, {
-        success: function(myLost) {
-            alert("Data Loaded Sucessfully");
-            var ID = myLost.id;
-            uploadPhoto(ID);
-        },
-        error: function(myLost, error) {
-        }
-    });
-
-
-function uploadPhoto(id) {
-    var serverUrl = 'https://api.parse.com/1/files/' + file.name;
-    var headers = {
-        "X-Parse-Application-Id": "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-        "X-Parse-REST-API-Key": "RHHtZvYCPb4AOiy2psXnkLlf1uyuD7RJQxUDoQ1Y"
-    };
-    var objID = id;
-
-
-    $.ajax({
-        type: "POST",
-        "headers": headers,
-        url: serverUrl,
-        data: file,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            console.log(objID);
-            successUpload(data, objID);
-        },
-        error: function(data) {
-            var obj = jQuery.parseJSON(data);
-            console.error("Error: ");
-
-        }
-    });
-}
-});
-*/
-
-
 

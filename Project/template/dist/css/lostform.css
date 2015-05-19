@@ -48,3 +48,9 @@ body{
     background-color: #505050;
     color: #bbb;
 }
+
+/* text input fields failed the validation */
+.notValid {
+    box-shadow: 0px 0px 10px #f00;
+}
+

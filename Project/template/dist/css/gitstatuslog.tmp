@@ -1,0 +1,135 @@
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 2 and 4 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+
+Changes to be committed:
+
+	new file:   .listall.css.swp
+	new file:   newHomepage.css
+	new file:   newLostFound.css
+	new file:   ../../img/newBackground.jpg
+	modified:   ../../index.html
+	modified:   ../../js/listall.js
+	modified:   ../../js/listfound.js
+	modified:   ../../js/lostform.js
+	deleted:    ../../pages/bg.jpg
+	deleted:    ../../pages/blank.html
+	deleted:    ../../pages/buttons.html
+	deleted:    ../../pages/flot.html
+	deleted:    ../../pages/forms.html
+	deleted:    ../../pages/foundform.html
+	deleted:    ../../pages/grid.html
+	deleted:    ../../pages/icons.html
+	deleted:    ../../pages/index.html
+	deleted:    ../../pages/listall.html
+	deleted:    ../../pages/listfound.html
+	deleted:    ../../pages/listpage.html
+	deleted:    ../../pages/login.html
+	deleted:    ../../pages/lostform.html
+	deleted:    ../../pages/main.html
+	deleted:    ../../pages/morris.html
+	new file:   ../../pages/newFoundForm.html
+	new file:   ../../pages/newIndex.html
+	new file:   ../../pages/newLostForm.html
+	new file:   ../../pages/newLostPage.html
+	deleted:    ../../pages/notifications.html
+	deleted:    ../../pages/panels-wells.html
+	deleted:    ../../pages/tables.html
+	deleted:    ../../pages/typography.html
+
+Unmerged paths:
+  (use "git add/rm <file>..." as appropriate to mark resolution)
+
+	deleted by them:    ../../pages/.listall.html.swp
+	both modified:      ../../pages/newFoundPage.html
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    ../../js/.lostform.js.swp
+	modified:   ../../js/listall.js
+	deleted:    ../../npm-debug.log
+	deleted:    ../../pages/.listall.html.swo
+	modified:   ../../pages/newLostPage.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	gitstatuslog.tmp
+	../../js/.listall.js.swn
+	../../pages/.newFoundPage.html.swp
+	../../pages/.newLostPage.html.swo
+
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 2 and 4 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+
+Changes to be committed:
+
+	new file:   .listall.css.swp
+	new file:   newHomepage.css
+	new file:   newLostFound.css
+	new file:   ../../img/newBackground.jpg
+	modified:   ../../index.html
+	modified:   ../../js/listall.js
+	modified:   ../../js/listfound.js
+	modified:   ../../js/lostform.js
+	deleted:    ../../pages/bg.jpg
+	deleted:    ../../pages/blank.html
+	deleted:    ../../pages/buttons.html
+	deleted:    ../../pages/flot.html
+	deleted:    ../../pages/forms.html
+	deleted:    ../../pages/foundform.html
+	deleted:    ../../pages/grid.html
+	deleted:    ../../pages/icons.html
+	deleted:    ../../pages/index.html
+	deleted:    ../../pages/listall.html
+	deleted:    ../../pages/listfound.html
+	deleted:    ../../pages/listpage.html
+	deleted:    ../../pages/login.html
+	deleted:    ../../pages/lostform.html
+	deleted:    ../../pages/main.html
+	deleted:    ../../pages/morris.html
+	new file:   ../../pages/newFoundForm.html
+	new file:   ../../pages/newIndex.html
+	new file:   ../../pages/newLostForm.html
+	new file:   ../../pages/newLostPage.html
+	deleted:    ../../pages/notifications.html
+	deleted:    ../../pages/panels-wells.html
+	deleted:    ../../pages/tables.html
+	deleted:    ../../pages/typography.html
+
+Unmerged paths:
+  (use "git add/rm <file>..." as appropriate to mark resolution)
+
+	deleted by them:    ../../pages/.listall.html.swp
+	both modified:      ../../pages/newFoundPage.html
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    ../../js/.lostform.js.swp
+	modified:   ../../js/listall.js
+	deleted:    ../../npm-debug.log
+	deleted:    ../../pages/.listall.html.swo
+	modified:   ../../pages/newLostPage.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.gitstatuslog.tmp.swp
+	gitstatuslog.tmp
+	../../js/.listall.js.swn
+	../../pages/.newFoundPage.html.swp
+	../../pages/.newLostPage.html.swo
+

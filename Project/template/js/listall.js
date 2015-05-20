@@ -238,21 +238,28 @@ ListManager.prototype.drawList= function() {
 
 
        $('#feed').prepend($col);
-     $(".hide1").hide();
-     $(".hide2").hide();
+
   });
 
   $.each(this.results, function(index, value) {
     console.log(value.id);
   $("#" + value.id).click(function(){
-   $("#" + value.id + "details").show();
-   $("#" + value.id + "email").show();
+     drawFeed(value.id);
+
   });
  });
   console.log(this.results.length);
   //for(var i = 0; i<this.)
 }
 
+
+var drawFeed = function(value) {
+  $('#element_to_pop_up').empty();
+  var $add = ("<p>"+value+"</p>");
+  $('#element_to_pop_up').append($add);
+  $('#element_to_pop_up').bPopup();
+
+}
 
 ///////////////////////////////////////////////////////////////
 
@@ -324,11 +331,7 @@ Downloader.prototype.onClickDownload = function(objectID) {
   query.get(objectID, {
     success: function(results){
       var list1 = new ListManager(results);
-      var $col = $('<div class="well well-lg black-font">');
-      $col.append('<p> name:'+results.name +'</p>');
-      $col.append('</div>');
 
-      $('#feed').prepend($col);
     }
   });
 
@@ -343,11 +346,7 @@ if(location.pathname == "/pages/newLostPage.html") {
   var lost = new Downloader("Lost");
   var res = lost.download();
   //lost.onClickDownload('YmaJuHzo4Y');
-  $( "*", document.body ).click(function( event ) {
-  event.stopPropagation();
-  var domElement = $( this ).get( 0 );
-  $( "span:first" ).text( "Clicked on - " + domElement.nodeName );
-});
+
 
 
 } else if(location.pathname == "/pages/newFoundPage.html") {

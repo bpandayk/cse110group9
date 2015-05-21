@@ -10,22 +10,39 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
   $('#feed').empty();
   $.each(this.results, function(index, value) {
 
-     console.log(value);
-
-     var $col = $('<div class="well well-lg black-font" id = '+ value.id + '>');
-     $col.append('<p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
-     $col.append('<p>' + "Lost Item: " + value.get("item") + '</p>');
-     $col.append('<p>' + "Lost Date: " + value.get("lostdate") + '</p>');
-     $col.append('<p>' + "Last Location: " + value.get("loc") + '</p>');
-     if(value.get("phone") != null)
-       $col.append('<p>' + "Phone :" + value.get("phone") + '</p>');
-     $col.append('<p class="hide1" id = "' + value.id + 'email">' + "Email :" + value.get("email") + '</p>');
-     $col.append('<p class = "hide2" id = "' + value.id + 'details">' + "Description :" + value.get("descp") + '</p>');
-     $col.append('</div> </div>');
 
 
-       $('#feed').prepend($col);
+     //var $col = $('<div class="well well-lg black-font" id = '+ value.id + '>');
+     //$col.append('<table style = width:100%>');
+     //$col.append('<tr>');
 
+     var phto = value.get("myfile");
+
+     var miniImg = new Image;
+     miniImg.src = phto.url;
+      var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
+                '<table style = width:100%>'+
+                '<tr>'+
+                '<td>'+
+                '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
+                '</td>'+
+                '<td> <p> Lost Item:' + value.get("item") + '</p>'+
+                '<p class = "hide2" id = "' + value.id + 'details">' +
+                "Description :" + value.get("descp") + '</p>'+ '</td>'+
+                '</tr></table></div>';
+
+       $('#feed').prepend(mol);
+
+
+       /*
+       $col.append('<td> <p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
+       $col.append('<p>' + "Lost Item: " + value.get("item") + '</p>');
+       $col.append('<p>' + "Lost Date: " + value.get("lostdate") + '</p>');
+       $col.append('<p>' + "Last Location: " + value.get("loc") + '</p>');
+       if(value.get("phone") != null)
+         $col.append('<p>' + "Phone :" + value.get("phone") + '</p>');
+       $col.append('<p class="hide1" id = "' + value.id + 'email">' + "Email :" + value.get("email") + '</p>');
+       */
   });
  /* 
      for (var i = 0; i < numberOfPages; i++) {
@@ -145,19 +162,22 @@ Downloader.prototype.onClickDownload = function(objectID) {
 
 /////////////////////////////////////////////////////////////
 //$(document).ready(function() {
+var main = function(){
+  if(location.pathname == "/pages/newLostPage.html") {
+    var lost = new Downloader("Lost");
+    var res = lost.download();
+    //lost.onClickDownload('YmaJuHzo4Y');
 
-if(location.pathname == "/pages/newLostPage.html") {
-  var lost = new Downloader("Lost");
-  var res = lost.download();
-  //lost.onClickDownload('YmaJuHzo4Y');
 
 
-
-} else if(location.pathname == "/pages/newFoundPage.html") {
-  var found = new Downloader("Found");
-  found.download();
-  //found.queryDownload("cell Phone");
+  } else if(location.pathname == "/pages/newFoundPage.html") {
+    var found = new Downloader("Found");
+    found.download();
+    //found.queryDownload("cell Phone");
+  }
 }
+
+$(document).ready(main);
 
 
 //});

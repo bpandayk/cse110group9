@@ -146,8 +146,8 @@ Description.prototype.validate = function() {
 // --------------------------------------------------
 
 // Image implements Field
-function Image(obj) { 
-    this.obj = obj; 
+function Image(obj) {
+    this.obj = obj;
     //this.file = 'default_file';
     this.trackFile();
 }
@@ -161,6 +161,10 @@ Image.prototype.trackFile = function() {
     img.obj.bind('change', function(e) {
         var files = e.target.files || e.dataTransfer.files;
         img.file = files[0];
+        if(files[0] == undefined) {
+          console.log("img undefined");
+        
+        }
         console.log('image file is',img.getValue());
     });
     console.log('left Image.trackFile');
@@ -359,14 +363,14 @@ FormManager.prototype.upload   = function(currItem){};
 // ======================================================================
 // FormManager
 
-function LostForm(uploader) { 
+function LostForm(uploader) {
     if ( !( uploader && "isA" in uploader && uploader.isA(Uploader) ) )
         alert('LostForm has to have an Uploader!');
     this.uploader = uploader;
 
     this.currItem = new ItemSpec(
         $("#lostname"),
-        ($('#item').val() === "Other") ? 
+        ($('#item').val() === "Other") ?
             $("#othername") : $("#item"),
         $("#lostemail"),
         $("#lostdate"),
@@ -467,4 +471,3 @@ var main = function() {
 }
 
 $(document).ready(main);
-

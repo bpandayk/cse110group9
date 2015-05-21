@@ -57,20 +57,40 @@ ListManager.prototype.drawList= function() {
     img.width = 600;
     img.height = 400;
     //var $col = ("<p> Name:"+ photo.url()+"</p>");
-    var col = ("<a class='b-close'>X<a/>");
+    var col = ("<a class='b-close'>x<a/>");
     var sol = (img);
     console.log(col);
 
 
-    var info = '<div id = "info">'+
-               '<p>Lost Item    : ' + value.get("item") +'</p>' +
-               '<p>Lost Date    : ' + value.get("lostdate") + '</p>' +
-               '<p>Lost Location: ' + value.get("loc") + '</p>' +
-               '<p>Description  : ' + value.get("descp") + '</p></div>' ;
+    var info = '<div class = "iteminfo">'+
+               '<p> </p>'+
+               '<table class = "table table-hover">'+
+               '<tr class = "info">'+
+               '<td><p>Lost Item </p></td> <td><p> ' + value.get("item") +'</p></td></tr>' +
+               '<tr class = "info"> '+
+               '<td><p>Lost Date </p></td> <td><p> ' + value.get("lostdate") + '</p></td></tr>' +
+               '<tr class = "info">'+
+               '<td><p>Lost Location </p></td> <td><p> ' + value.get("loc") + '</p></td></tr>' +
+               '<tr class = "info">'+
+               '<td><p>Description  </p></td> <td><p> ' + value.get("descp") + '</p></td></tr>' ;
+               '</table></div>';
+
+   var contact = '<div class = "contact">'+
+                  '<table class = "table table-hover">'+
+                  '<tr class = "danger">'+
+                  'Contact Owner or Founder </tr>' +
+                  '<tr class = "warning">'+
+                  '<td><p> Contact Name </p></td> <td><p> ' + value.get("name") + '</p></td></tr>' +
+                  '<tr class = "warning">'+
+                  '<td><p> Contact Phone </p></td> <td><p> ' + value.get("phone") + '</p></td></tr>' +
+                  '<tr class = "warning">'+
+                  '<td><p> Contact Email </p></td> <td><p> ' + value.get("email") + '</p></td></tr>' +
+                  '</table></div>';
 
     $('#element_to_pop_up').append(col);
     $('#element_to_pop_up').append(sol);
     $('#element_to_pop_up').append(info);
+    $('#element_to_pop_up').append(contact);
     $('#element_to_pop_up').bPopup();
 
 

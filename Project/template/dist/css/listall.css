@@ -46,12 +46,17 @@ body{
     color:#000;
     display:none;
     padding:40px;
-    min-width:800px;
-    min-height: 800px;
+    min-width:900px;
+    min-height: 850px;
 }
 .b-close{
     cursor:pointer;
     position:absolute;
     right:10px;
     top:5px;
+}
+
+td{
+	padding: 10px;
+
 }

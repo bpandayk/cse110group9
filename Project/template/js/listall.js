@@ -54,15 +54,26 @@ ListManager.prototype.drawList= function() {
 
     var img = new Image;
     img.src = photo.url;
-    img.width = 400;
+    img.width = 600;
     img.height = 400;
     //var $col = ("<p> Name:"+ photo.url()+"</p>");
     var col = ("<a class='b-close'>X<a/>");
     var sol = (img);
     console.log(col);
+
+
+    var info = '<div id = "info">'+
+               '<p>Lost Item    : ' + value.get("item") +'</p>' +
+               '<p>Lost Date    : ' + value.get("lostdate") + '</p>' +
+               '<p>Lost Location: ' + value.get("loc") + '</p>' +
+               '<p>Description  : ' + value.get("descp") + '</p></div>' ;
+
     $('#element_to_pop_up').append(col);
     $('#element_to_pop_up').append(sol);
+    $('#element_to_pop_up').append(info);
     $('#element_to_pop_up').bPopup();
+
+
 
 
   });
@@ -134,6 +145,10 @@ Downloader.prototype.queryDownload = function(keyword) {
 }
 
 
+Downloader.prototype.downloadByDate = function(object) {
+  //UAN WRITE CODE IN THIS METHOD....
+}
+
 /*onclick on individual fees, this method opens up the detail pop up window of
  *that specific post feed.
  */
@@ -155,23 +170,27 @@ Downloader.prototype.onClickDownload = function(objectID) {
 
 
 /////////////////////////////////////////////////////////////
-//$(document).ready(function() {
 var main = function(){
   if(location.pathname == "/pages/newLostPage.html") {
     var lost = new Downloader("Lost");
     var res = lost.download();
-    //lost.onClickDownload('YmaJuHzo4Y');
+    $('#listLostSearch').click(function(){
+      var keyword = $('#searchLost').val();
+      if(keyword.length == 0){
+        lost.download();
+      } else {
+      lost.queryDownload(keyword);
+      }
+    });
+
 
 
 
   } else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");
     found.download();
-    //found.queryDownload("cell Phone");
+    found.queryDownload();
   }
 }
 
 $(document).ready(main);
-
-
-//});

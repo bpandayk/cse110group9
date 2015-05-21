@@ -163,7 +163,7 @@ Image.prototype.trackFile = function() {
         img.file = files[0];
         if(files[0] == undefined) {
           console.log("img undefined");
-        
+
         }
         console.log('image file is',img.getValue());
     });
@@ -252,13 +252,17 @@ ParseUploader.prototype.upload = function(item){
     // set data of myLost
     // notice image is NOT in the list and will be handled at uploading
     console.log('setting new Lost obj...');
-    myLost.set("name",     String(item.reporter.getValue()).toLowerCase());
-    myLost.set("item",     String(item.itemName.getValue()).toLowerCase());
-    myLost.set("email",    String(item.email.getValue()).toLowerCase());
-    myLost.set("lostdate", Date(item.reportDate.getValue()).toLowerCase());
+    myLost.set("name",     String(item.reporter.getValue()));
+    myLost.set("item",     String(item.itemName.getValue()));
+    myLost.set("email",    String(item.email.getValue()));
+    myLost.set("lostdate", Date(item.reportDate.getValue()));
     myLost.set("phone",    String(item.phone.getValue()));
-    myLost.set("loc",      String(item.loc.getValue()).toLowerCase());
-    myLost.set("descp",    String(item.description.getValue()).toLowerCase());
+    myLost.set("loc",      String(item.loc.getValue()));
+    myLost.set("descp",    String(item.description.getValue()));
+    myLost.set("LCname",   String(item.reporter.getValue()).toLowerCase());
+    myLost.set("LCemail",  String(item.email.getValue()).toLowerCase());
+    myLost.set("LCloc",    String(item.loc.getValue()).toLowerCase());
+    myLost.set("LCitem",   String(item.itemName.getValue()).toLowerCase());
     console.log('done');
 
     // save myLost to parse

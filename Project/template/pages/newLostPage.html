@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
     <script src = "../bower_components/bpopup/jquery.bpopup.min.js"></script>
-    
+
     <script src = "../bower_components/bpopup/jquery.bpopup.js"></script>
 
     <!-- Custom Fonts -->
@@ -79,19 +79,14 @@
                     </div>
                     <div style="padding-top:80px">
                         <div class="col-md-3"></div>
-                        <div class="well lead col-md-6">
+                        <div class="well lead col-md-5">
                           <div class = "panel panel-primary black-font">
                             <div class="panel-heading">
-                              <input type="text" class = "black-font" id="searchLost" size = 26
-                                onkeypress="return enterPressed(event)">
-                              <button class = "black-font" onclick="searchFunction()" id = "listLostSearch">Search</button>
+                              <input type="text" class = "black-font" id="searchLost" size = 26>
+                              <button class = "black-font"  id = "listLostSearch">Search</button>
 			      <div id = "selectDate">
                                <select class = 'black-font' id ="day">
-			        <script>
-				    for (var i = 1; i <=31; i++){
-	 				$('#day').append('<option>' + i + '</option>');
-				    }
-				   </script>
+
                    	        </select>
                                  <select class = "black-font" id="month">
 			        <script>
@@ -129,7 +124,9 @@
         </div>
     </div>
 </div>
-<div id = "element_to_pop_up"> </div>
+<div id = "element_to_pop_up">
+
+</div>
 <script src = "../js/listall.js"></script>
 
 </body>

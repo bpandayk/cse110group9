@@ -46,8 +46,9 @@ body{
     color:#000;
     display:none;
     padding:40px;
-    min-width:900px;
-    min-height: 850px;
+    min-width:680px;
+    min-height: 870px;
+		font-size: 20pt;
 }
 .b-close{
     cursor:pointer;
@@ -58,5 +59,9 @@ body{
 
 td{
 	padding: 10px;
+}
 
+
+p{
+	font-size:10pt;
 }

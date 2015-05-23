@@ -60,15 +60,46 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
 
     var img = new Image;
     img.src = photo.url;
-    img.width = 400;
+    img.width = 600;
     img.height = 400;
     //var $col = ("<p> Name:"+ photo.url()+"</p>");
-    var col = ("<a class='b-close'>X<a/>");
+    var col = ("<a class='b-close'>x<a/>");
     var sol = (img);
     console.log(col);
+
+
+    var info = '<div class = "iteminfo">'+
+               '<p> </p>'+
+               '<table class = "table table-hover">'+
+               '<tr class = "info">'+
+               '<td><p>Lost Item </p></td> <td><p> ' + value.get("item") +'</p></td></tr>' +
+               '<tr class = "info"> '+
+               '<td><p>Lost Date </p></td> <td><p> ' + value.get("lostdate") + '</p></td></tr>' +
+               '<tr class = "info">'+
+               '<td><p>Lost Location </p></td> <td><p> ' + value.get("loc") + '</p></td></tr>' +
+               '<tr class = "info">'+
+               '<td><p>Description  </p></td> <td><p> ' + value.get("descp") + '</p></td></tr>' ;
+               '</table></div>';
+
+   var contact = '<div class = "contact">'+
+                  '<table class = "table table-hover">'+
+                  '<tr class = "danger">'+
+                  'Contact Owner or Founder </tr>' +
+                  '<tr class = "warning">'+
+                  '<td><p> Contact Name </p></td> <td><p> ' + value.get("name") + '</p></td></tr>' +
+                  '<tr class = "warning">'+
+                  '<td><p> Contact Phone </p></td> <td><p> ' + value.get("phone") + '</p></td></tr>' +
+                  '<tr class = "warning">'+
+                  '<td><p> Contact Email </p></td> <td><p> ' + value.get("email") + '</p></td></tr>' +
+                  '</table></div>';
+
     $('#element_to_pop_up').append(col);
     $('#element_to_pop_up').append(sol);
+    $('#element_to_pop_up').append(info);
+    $('#element_to_pop_up').append(contact);
     $('#element_to_pop_up').bPopup();
+
+
 
 
   });
@@ -140,6 +171,10 @@ Downloader.prototype.queryDownload = function(keyword) {
 }
 
 
+Downloader.prototype.downloadByDate = function(object) {
+  //UAN WRITE CODE IN THIS METHOD....
+}
+
 /*onclick on individual fees, this method opens up the detail pop up window of
  *that specific post feed.
  */
@@ -161,23 +196,27 @@ Downloader.prototype.onClickDownload = function(objectID) {
 
 
 /////////////////////////////////////////////////////////////
-//$(document).ready(function() {
 var main = function(){
   if(location.pathname == "/pages/newLostPage.html") {
     var lost = new Downloader("Lost");
     var res = lost.download();
-    //lost.onClickDownload('YmaJuHzo4Y');
+    $('#listLostSearch').click(function(){
+      var keyword = $('#searchLost').val();
+      if(keyword.length == 0){
+        lost.download();
+      } else {
+      lost.queryDownload(keyword);
+      }
+    });
+
 
 
 
   } else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");
     found.download();
-    //found.queryDownload("cell Phone");
+    found.queryDownload();
   }
 }
 
 $(document).ready(main);
-
-
-//});

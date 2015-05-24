@@ -10,21 +10,20 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
   $('#feed').empty();
   $.each(this.results, function(index, value) {
 
-
-
+     //alert(value.get("name"));
+     // alert(value.get("myfile").url);
      //var $col = $('<div class="well well-lg black-font" id = '+ value.id + '>');
      //$col.append('<table style = width:100%>');
      //$col.append('<tr>');
+     //var phto = value.get("myfile");
 
-     var phto = value.get("myfile");
-
-     var miniImg = new Image;
-     miniImg.src = phto.url;
+     //var miniImg = new Image;
+     //miniImg.src = phto.url;
       var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
                 '<table style = width:100%>'+
                 '<tr>'+
                 '<td>'+
-                '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
+       //         '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
                 '</td>'+
                 '<td> <p> Lost Item:' + value.get("item") + '</p>'+
                 '<p class = "hide2" id = "' + value.id + 'details">' +
@@ -43,27 +42,29 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
          $col.append('<p>' + "Phone :" + value.get("phone") + '</p>');
        $col.append('<p class="hide1" id = "' + value.id + 'email">' + "Email :" + value.get("email") + '</p>');
        */
-  });
+ // });
  /* 
      for (var i = 0; i < numberOfPages; i++) {
 
           $('#feed').prepend('<button id= "page'+ i +'">''</button>');
       }
 */
-  $.each(this.results, function(index, value) {
+
+  //$.each(this.results, function(index, value) {
+//   alert(value.get("name"));
   //  console.log(value.id);
   $("#" + value.id).click(function(){
     $('#element_to_pop_up').empty();
-    var photo = value.get("myfile");
-    var url = photo.url;
+    //var photo = value.get("myfile");
+   // var url = photo.url;
 
-    var img = new Image;
-    img.src = photo.url;
-    img.width = 600;
-    img.height = 400;
+   // var img = new Image;
+   // img.src = photo.url;
+   // img.width = 600;
+   // img.height = 400;
     //var $col = ("<p> Name:"+ photo.url()+"</p>");
     var col = ("<a class='b-close'>x<a/>");
-    var sol = (img);
+  //  var sol = (img);
     console.log(col);
 
 
@@ -93,7 +94,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
                   '</table></div>';
 
     $('#element_to_pop_up').append(col);
-    $('#element_to_pop_up').append(sol);
+    //$('#element_to_pop_up').append(sol);
     $('#element_to_pop_up').append(info);
     $('#element_to_pop_up').append(contact);
     $('#element_to_pop_up').bPopup();
@@ -127,7 +128,7 @@ Downloader.prototype.download = function() {
 
   //query.limit(10);
   query.find({
-    success:function(results){
+    success: function(results){
       var list = new ListManager(results);
       list.drawList(true, 1);
       }
@@ -138,24 +139,24 @@ Downloader.prototype.download = function() {
 
 Downloader.prototype.queryDownload = function(keyword) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
+  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs", "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
   keyword = keyword.toLowerCase();
 
   var query1 = new Parse.Query(this.className);
-  query1.equalTo('LCname', keyword);
+  query1.contains('LCname', keyword);
 
   var query2 = new Parse.Query(this.className);
-  query2.equalTo('LCitem', keyword);
+  query2.contains('LCitem', keyword);
 
   var query3 = new Parse.Query(this.className);
-  query3.equalTo('phone', keyword);
+  query3.contains('phone', keyword);
 
   var query4 = new Parse.Query(this.className);
-  query4.equalTo('LCemail', keyword);
+  query4.contains('LCemail', keyword);
 
   var query5 = new Parse.Query(this.className);
-  query5.equalTo('LCloc', keyword);
+  query5.contains('LCloc', keyword);
 
   var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
 
@@ -164,7 +165,6 @@ Downloader.prototype.queryDownload = function(keyword) {
       var list1 = new ListManager(results);
       list1.drawList(false, 1);
     }
-
   });
 
 }
@@ -206,15 +206,17 @@ Downloader.prototype.onClickDownload = function(objectID) {
 
 /////////////////////////////////////////////////////////////
 var main = function(){
-  if(location.pathname == "/pages/newLostPage.html") {
+  if(location.pathname == "/pages/testUanPage.html") {
     var lost = new Downloader("Lost");
     var res = lost.download();
     $('#listLostSearch').click(function(){
       var keyword = $('#searchLost').val();
       if(keyword.length == 0){
         lost.download();
+      //} else if (date.getTime() != (new Date("01/01/2015")).getTime()) {
+	//  lost.downloadByDate(date);
       } else {
-      lost.queryDownload(keyword);
+        lost.queryDownload(keyword);
       }
     });
 
@@ -239,5 +241,7 @@ $(document).ready(function(){
     }
   });
 });
+
+
 
 

@@ -174,7 +174,6 @@ Downloader.prototype.downloadByDate = function(date) {
    Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
    "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
    var query = new Parse.Query(this.className);
-   alert("GOES HERE  " + date);
    query.greaterThanOrEqualTo("createdAt", date);
    query.find({
     success: function(results){

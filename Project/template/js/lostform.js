@@ -38,6 +38,15 @@ function LostForm(uploader) {
 }
 extend(LostForm,FormManager);
 
+// --------------------------------------------------
+// upload item to db
+
+LostForm.prototype.upload = function() {
+    console.log('entered FormManager.upload');
+    this.uploader.upload(this.currItem,PARSEUPLOAD_CODE_LOST);
+    console.log('left FormManager.upload');
+};
+
 // function to hide and show the input box if item name is other than the listed
 $(function() {
     //initially hide the textbox

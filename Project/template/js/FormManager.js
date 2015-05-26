@@ -7,11 +7,7 @@ function FormManager() {}
 // --------------------------------------------------
 // upload item to db
 
-FormManager.prototype.upload = function() {
-    console.log('entered FormManager.upload');
-    this.uploader.upload(this.currItem);
-    console.log('left FormManager.upload');
-};
+FormManager.prototype.upload = function() {}
 
 // --------------------------------------------------
 // what to do when some inputs are invalid?

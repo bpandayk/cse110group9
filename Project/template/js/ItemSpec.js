@@ -109,7 +109,6 @@ Description.prototype.validate = function() {
 // Image implements Field
 function Image(obj) {
     this.obj = obj;
-    this.file = '../img/Noimage.png';
     this.trackFile();
 }
 extend(Image,Field);
@@ -124,7 +123,6 @@ Image.prototype.trackFile = function() {
         img.file = files[0];
         if(files[0] == undefined) {
           console.log("img undefined");
-
         }
         console.log('image file is',img.getValue());
     });

@@ -13,7 +13,9 @@ extend(ParseUploader,Uploader);
 
 // --------------------------------------------------
 // upload
-ParseUploader.prototype.upload = function(item){
+var PARSEUPLOAD_CODE_LOST = 0;
+var PARSEUPLOAD_CODE_FOUND = 1;
+ParseUploader.prototype.upload = function(item,obj_type){
     console.log('entered ParseUploader.upload...');
 
     // parameter has to be an ItemSpec
@@ -27,36 +29,47 @@ ParseUploader.prototype.upload = function(item){
             "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt"
             );
     console.log('done');
-    var Lost = Parse.Object.extend("Lost");
-    var myLost = new Lost();
+    var upload_obj;
+    if (obj_type === PARSEUPLOAD_CODE_LOST) {
+        console.log('upload type: LOST');
+        var Lost = Parse.Object.extend("Lost");
+        upload_obj = new Lost();
+    } else if (obj_type === PARSEUPLOAD_CODE_FOUND) {
+        console.log('upload type: FOUND');
+        var Found = Parse.Object.extend("FOUND");
+        upload_obj = new Found();
+    } else {
+        console.log('Wrong obj_code for ParseUploader.upload');
+    }
 
-    // set data of myLost
+    // set data of upload_obj
     // notice image is NOT in the list and will be handled at uploading
-    console.log('setting new Lost obj...');
-    myLost.set("name",     String(item.reporter.getValue()));
-    myLost.set("item",     String(item.itemName.getValue()));
-    myLost.set("email",    String(item.email.getValue()));
-    myLost.set("lostdate", Date(item.reportDate.getValue()));
-    myLost.set("phone",    String(item.phone.getValue()));
-    myLost.set("loc",      String(item.loc.getValue()));
-    myLost.set("descp",    String(item.description.getValue()));
-    myLost.set("LCname",   String(item.reporter.getValue()).toLowerCase());
-    myLost.set("LCemail",  String(item.email.getValue()).toLowerCase());
-    myLost.set("LCloc",    String(item.loc.getValue()).toLowerCase());
-    myLost.set("LCitem",   String(item.itemName.getValue()).toLowerCase());
+    console.log('setting new upload_obj...');
+    upload_obj.set("name",     String(item.reporter.getValue()));
+    upload_obj.set("item",     String(item.itemName.getValue()));
+    upload_obj.set("email",    String(item.email.getValue()));
+    upload_obj.set("lostdate", Date(item.reportDate.getValue()));
+    upload_obj.set("phone",    String(item.phone.getValue()));
+    upload_obj.set("loc",      String(item.loc.getValue()));
+    upload_obj.set("descp",    String(item.description.getValue()));
+    upload_obj.set("LCname",   String(item.reporter.getValue()).toLowerCase());
+    upload_obj.set("LCemail",  String(item.email.getValue()).toLowerCase());
+    upload_obj.set("LCloc",    String(item.loc.getValue()).toLowerCase());
+    upload_obj.set("LCitem",   String(item.itemName.getValue()).toLowerCase());
     console.log('done');
 
     // save myLost to parse
     console.log('uploading data to parse...');
-    myLost.save(null, {
-        success: function(myLost) {
+    upload_obj.save(null, {
+        success: function(upload_obj) {
             console.log('data saved sucessfully');
             console.log('start uploading photo');
             console.log('photo is', item.img.getValue() );
-            ParseUploader.prototype.uploadFile(item.img.file,myLost.id);
+            if (item.img.file)
+            ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id);
             console.log('done');
         },
-        error: function(myLost, error) {
+        error: function(upload_obj, error) {
             console.log('data did NOT save sucessfully');
             // TODO what to say / do?
             alert('Some error occured, please try later!');

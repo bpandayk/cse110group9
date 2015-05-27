@@ -10,5 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "browser-sync": "^2.6.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "jasmine-core": "^2.3.4",
+    "karma-jasmine": "^0.2.2"
   }
 }

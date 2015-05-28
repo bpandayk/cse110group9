@@ -34,17 +34,9 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
        $('#feed').prepend(mol);
 
 
-       /*
-       $col.append('<td> <p id ="' + index + 'name">' + "Name:" + value.get("name") +'</p>');
-       $col.append('<p>' + "Lost Item: " + value.get("item") + '</p>');
-       $col.append('<p>' + "Lost Date: " + value.get("lostdate") + '</p>');
-       $col.append('<p>' + "Last Location: " + value.get("loc") + '</p>');
-       if(value.get("phone") != null)
-         $col.append('<p>' + "Phone :" + value.get("phone") + '</p>');
-       $col.append('<p class="hide1" id = "' + value.id + 'email">' + "Email :" + value.get("email") + '</p>');
-       */
+
   });
- /* 
+ /*
      for (var i = 0; i < numberOfPages; i++) {
 
           $('#feed').prepend('<button id= "page'+ i +'">''</button>');
@@ -140,7 +132,7 @@ Downloader.prototype.queryDownload = function(keyword) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
-  keyword = keyword.toLowerCase();
+  //keyword = keyword.toLowerCase();
 
   var query1 = new Parse.Query(this.className);
   query1.equalTo('LCname', keyword);
@@ -227,9 +219,11 @@ var main = function(){
   }
 }
 
-$(document).ready(function(){
+$(document).ready(main);
+
+/*$(document).ready(function(){
   window["main"]();
-  document.getElementById("searchLost").value = ""; 
+  document.getElementById("searchLost").value = "";
   $('#searchByDate').datepicker({
     onSelect: function() {
     var lost = new Downloader("Lost");
@@ -237,6 +231,4 @@ $(document).ready(function(){
     lost.downloadByDate(date);
     }
   });
-});
-
-
+});*/

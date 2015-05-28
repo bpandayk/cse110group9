@@ -36,7 +36,7 @@ ParseUploader.prototype.upload = function(item,obj_type){
         upload_obj = new Lost();
     } else if (obj_type === PARSEUPLOAD_CODE_FOUND) {
         console.log('upload type: FOUND');
-        var Found = Parse.Object.extend("FOUND");
+        var Found = Parse.Object.extend("Found");
         upload_obj = new Found();
     } else {
         console.log('Wrong obj_code for ParseUploader.upload');
@@ -48,7 +48,7 @@ ParseUploader.prototype.upload = function(item,obj_type){
     upload_obj.set("name",     String(item.reporter.getValue()));
     upload_obj.set("item",     String(item.itemName.getValue()));
     upload_obj.set("email",    String(item.email.getValue()));
-    upload_obj.set("lostdate", Date(item.reportDate.getValue()));
+    upload_obj.set("lostdate", String(item.reportDate.getValue()));
     upload_obj.set("phone",    String(item.phone.getValue()));
     upload_obj.set("loc",      String(item.loc.getValue()));
     upload_obj.set("descp",    String(item.description.getValue()));
@@ -65,8 +65,10 @@ ParseUploader.prototype.upload = function(item,obj_type){
             console.log('data saved sucessfully');
             console.log('start uploading photo');
             console.log('photo is', item.img.getValue() );
-            if (item.img.file)
-            ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id);
+            if (item.img.file && obj_type === PARSEUPLOAD_CODE_FOUND )
+              ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id, "Found");
+            else if (item.img.file && obj_type === PARSEUPLOAD_CODE_LOST )
+                ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id, "Lost");
             console.log('done');
         },
         error: function(upload_obj, error) {
@@ -83,7 +85,7 @@ ParseUploader.prototype.upload = function(item,obj_type){
 // --------------------------------------------------
 // upload file
 
-ParseUploader.prototype.uploadFile = function(file,objID) {
+ParseUploader.prototype.uploadFile = function(file,objID, classes) {
     console.log('entered ParseUploader.uploadFile');
 
     // setups
@@ -104,7 +106,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
         success: function(data) {
             console.log('successfully uploaded file '+file+' to '+objID);
             // link the newly added file to related parse obj
-            ParseUploader.prototype.linkDataTo(data, objID);
+            ParseUploader.prototype.linkDataTo(data, objID, classes);
         },
         error: function(data) {
             var obj = jQuery.parseJSON(data);
@@ -116,7 +118,7 @@ ParseUploader.prototype.uploadFile = function(file,objID) {
 // --------------------------------------------------
 // link data (esp. files) to a parse obj.
 
-ParseUploader.prototype.linkDataTo = function(data, objID) {
+ParseUploader.prototype.linkDataTo = function(data, objID, classes) {
     console.log(data);
     console.log(objID);
 
@@ -128,7 +130,7 @@ ParseUploader.prototype.linkDataTo = function(data, objID) {
     $.ajax({
         'type': "PUT",
         'headers': headers,
-        'url': "https://api.parse.com/1/classes/Lost/"+objID,
+        'url': "https://api.parse.com/1/classes/"+classes+"/"+objID,
         "contentType": "application/json",
         "dataType": "json",
         'success': function(data) {
@@ -149,4 +151,3 @@ ParseUploader.prototype.linkDataTo = function(data, objID) {
 };
 
 // --------------------------------------------------
-

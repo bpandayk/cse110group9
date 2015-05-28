@@ -37,7 +37,6 @@ describe("Test extend in lib for OOP", function() {
 	expect(fuji.superClass.brand).toBe(undefined);
 	});
 
-});
 
 describe("deepCopy should really create a new Obj", function() {
 	var Country = {};
@@ -60,4 +59,7 @@ describe("deepCopy should really create a new Obj", function() {
 	    expect(Country.states[0]).not.toEqual('Xian');
 	   });
 
-});
+});// deepCopy
+
+
+}); // main testlib

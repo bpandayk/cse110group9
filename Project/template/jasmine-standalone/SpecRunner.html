@@ -12,23 +12,34 @@
   <script src="lib/jasmine-2.3.4/boot.js"></script>
 
   <!-- include source files here... -->
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="src/Player.js"></script>
   <script src="src/Song.js"></script>
   <script src="src/Helloworld.js"></script>
   <script src="src/ListManager.js"></script>
-  <script src="../js/lostForm.js"></script>
   <script src="../js/lib.js"></script>
+  <script src="../js/ItemSpec.js"></script>
+  <script src="../js/Uploaders.js"></script>
+  <script src="../js/FormManager.js"></script>
+  <script src="../js/lostform.js"></script>
 
   <!-- include spec files here... -->
   <script src="spec/SpecHelper.js"></script>
   <script src="spec/PlayerSpec.js"></script>
   <script src="spec/HelloworldSpec.js"></script>
   <script src="spec/testListManager.js"></script>
-  <script src="spec/testlostForm.js"></script>
   <script src="spec/testlib.js"></script>
-
+  <script src="spec/testlostForm.js"></script>
 </head>
 
 <body>
+
+	<div>
+	<input type="text" id="lostdate" placeholder="mm/dd/yy">
+	<script $("#lostdate").datepicker()></script>
+	</div>
+
 </body>
+
 </html>

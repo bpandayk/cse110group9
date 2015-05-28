@@ -41,6 +41,9 @@ FormManager.prototype.dealWithInvalidInput = function(fieldsNotPass) {
 FormManager.prototype.callback = function() {
     console.log('entered FormManager.callback');
 
+    if (this.currItem.itemName.getValue() === "Other")
+        this.currItem.itemName = new ItemName($("#othername"));
+
     // remove the not valid tag on all fields first
     this.currItem.forEach(function(field) {
         field.obj.removeClass('notValid');

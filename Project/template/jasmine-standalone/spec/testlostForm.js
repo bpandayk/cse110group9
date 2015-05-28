@@ -17,5 +17,6 @@ describe("LostForm functionality test", function() {
  	//'LostForm has to have an Uploader!');
  	expect(window.alert).not.toHaveBeenCalled();
  	});
+
 });
 

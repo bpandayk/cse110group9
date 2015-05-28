@@ -143,7 +143,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
               $("#Esubmit").click(function(){
                 $('#smss').empty();
                 var Sname = $("#Sname").val();
-                var Sphone = $('#Semail').val();
+                var Sphone = $('#SEmail').val();
                 var smsbody = $("#smsbody").val();
                 console.log(smsbody);
                 var validatesms = new Validator();
@@ -239,6 +239,8 @@ var sendSMS = function(toPhone, name,frmPhone,msg) {
       $('#element_to_pop_up').append("<p>SMS Sent Successfully to " +
        phone1+"</p>");
       document.getElementById("smsform").reset();
+      var bPopup = $('#element_to_pop_up').bPopup();
+      bPopup.close();
 
     },
     error: function(error) {
@@ -364,9 +366,6 @@ if(keyword!='' && date != '') {
     } else if(results.length == 0) {
       //$("#feed").empty();
       $(window).off('scroll');
-      /*$('#feed').append('<div class="well well-lg black-font" >'+
-      "<p>Your search - <font color = 'RED'>"+keyword+
-      " </font> No matches</p> <p>Try with another keyword</p>");*/
 
     }
   }
@@ -404,6 +403,7 @@ Validator.prototype.validEmail=function(Email){
 Validator.prototype.validSmsform = function(Name, Phone, Body){
 
    var phn = this.validPhone(Phone);
+   console.log(phn)
 
 
   if(Name!='' && phn && Body == '') {
@@ -521,7 +521,7 @@ var main = function(){
       date = $('#searchdate').val();
       $(".hideout").hide();
       hide = true;
-      console.log(date);
+
       if(keyword.length == 0 && date == ''){
         scrll();
         $('#feed').empty();
@@ -550,7 +550,7 @@ var main = function(){
            }
 
           if(queryFeed==true) {
-            lost.queryDownload(keyword,date,dateto);
+            lost.queryDownload(keyword,date);
           }
 
 
@@ -628,7 +628,7 @@ scrll();
            }
 
           if(queryFeed==true) {
-            found.queryDownload(keyword, date, dateto);
+            found.queryDownload(keyword, date);
             console.log(found.qCounter);
           }
        }

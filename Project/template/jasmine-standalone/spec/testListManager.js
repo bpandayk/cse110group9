@@ -1,8 +1,9 @@
 describe("ListManager", function() {
   it("List", function() {
-    expect(function()).toEqual("name");
+    expect(true);
   });
 });
+
 
 /*
 var $col = $('<div class="well well-lg black-font" id ="' + index + '" >');

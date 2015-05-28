@@ -7,15 +7,16 @@ describe("Test extend in lib for OOP", function() {
 	}
 	Fruit.prototype.category = "Food";
     function Apple(brand) {
-	this.name = "Apple";
 	this.brand = brand;
 	}
+        Apple.prototype.name = "Apple";
 
 	extend(Apple,Fruit);
 	var fuji = new Apple("Fuji");
 
 	it("subclass should extend superclass", function() {
 	expect(Apple.prototype.superClass).toEqual(Fruit.prototype);
+	expect(fuji instanceof Fruit).not.toBeTruthy();
 	});
 
 	it("var in same class should share public property", function() {

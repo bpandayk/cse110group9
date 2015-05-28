@@ -20,9 +20,9 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
                 '<td>'+
                 '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
                 '</td>'+
-                '<td> <p> Lost Item:' + value.get("item") + '</p>'+
+                '<td> <p> Lost Item: ' + value.get("item") + '</p>'+
                 '<p class = "hide2" id = "' + value.id + 'details">' +
-                "Description :" + value.get("descp") + '</p>'+ '</td>'+
+                "Description: " + value.get("descp") + '</p>'+ '</td>'+
                 '</tr></table></div>';
 
        $('#feed').prepend(mol);

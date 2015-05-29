@@ -36,12 +36,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
 
 
   });
- /*
-     for (var i = 0; i < numberOfPages; i++) {
 
-          $('#feed').prepend('<button id= "page'+ i +'">''</button>');
-      }
-*/
   $.each(this.results, function(index, value) {
   //  console.log(value.id);
   $("#" + value.id).click(function(){
@@ -53,7 +48,6 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
     img.src = photo.url;
     img.width = 600;
     img.height = 400;
-    //var $col = ("<p> Name:"+ photo.url()+"</p>");
     var col = ("<a class='b-close'>x<a/>");
     var sol = (img);
     console.log(col);
@@ -75,13 +69,15 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
    var contact = '<div class = "contact">'+
                   '<table class = "table table-hover">'+
                   '<tr class = "danger">'+
-                  'Contact Owner or Founder </tr>' +
+                  'Contact Owner or Finder </tr>' +
                   '<tr class = "warning">'+
-                  '<td><p> Contact Name </p></td> <td><p> ' + value.get("name") + '</p></td></tr>' +
+                  '<td><p> Contact Name </p></td> <td><p> ' + value.get("name") + '</p></td><td></td></tr>' +
                   '<tr class = "warning">'+
-                  '<td><p> Contact Phone </p></td> <td><p> ' + value.get("phone") + '</p></td></tr>' +
+                  '<td><p> Contact Phone </p></td> <td><p> ' + value.get("phone") + '</p></td> <td>' +
+                  '<p><a class="btn btn-primary btn-sm" href="#" role="button">Send SMS</a></p></td></tr>' +
                   '<tr class = "warning">'+
-                  '<td><p> Contact Email </p></td> <td><p> ' + value.get("email") + '</p></td></tr>' +
+                  '<td><p> Contact Email </p></td> <td><p> ' + value.get("email") + '</p></td> <td>' +
+                  '<p><a class="btn btn-primary btn-sm" href="#" role="button">Send Email</a></p></td></tr>'+
                   '</table></div>';
 
     $('#element_to_pop_up').append(col);

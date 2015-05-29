@@ -3,7 +3,7 @@
 // @output_file_name default.js
 // ==/ClosureCompiler==
 
-var Vechicle = function(year) {
+/*var Vechicle = function(year) {
  //this.Name = Name;
  this.year = year;
  //this.model = model;
@@ -41,7 +41,7 @@ console.log(amm.engine());*/
 
 
 ///////////////////////////////////////
-var passanger = function(driver, Name, yr, model, com) {
+/*var passanger = function(driver, Name, yr, model, com) {
   this.driver = driver;
   this.ccar = new Car(Name,yr,model,com);
 
@@ -61,6 +61,45 @@ passanger.prototype.eng = function() {
   console.log(j);
 }
 
+
+
 var n = new passanger('Bibek', 'Honda', 2013, 'accord', 'japanese' );
 n.currDriver();
-n.eng();
+n.eng();*/
+
+$(document).ready({
+
+});
+
+
+  Parse.initialize(
+          "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+          "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
+          );
+
+  var to1 = "bibekkshetri@gmail.com" ;
+  var subject1 = "wats up";
+  var body1 = "kfjjdhfkjdfdfjkdshakjfhdhfdskfdsfdfi4o4kjdhfe";
+  console.log(to1);
+
+  Parse.Cloud.run('sendEmail', {to:to1, subject:subject1,text:body1},{
+    success:function() {
+      console.log("sent");
+    },
+    error:function(error) {
+      console.log("not sent");
+    }
+  });
+
+Parse.initialize(
+        "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+        "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
+        );
+
+Parse.Cloud.run('hello', {}, {
+  success: function(result) {
+    console.log(result);
+  },
+  error: function(error) {
+  }
+});

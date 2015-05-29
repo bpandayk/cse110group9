@@ -25,8 +25,7 @@ ParseUploader.prototype.upload = function(item,obj_type){
     console.log('initializing parse account...');
     Parse.initialize(
             "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-            "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs",
-            "sqkMsAkDsXmqyA5lffaUP8NQLFYPkC4cJKwlvhFt"
+            "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
             );
     console.log('done');
     var upload_obj;

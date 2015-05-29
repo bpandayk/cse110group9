@@ -11,11 +11,6 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
   $.each(this.results, function(index, value) {
 
 
-
-     //var $col = $('<div class="well well-lg black-font" id = '+ value.id + '>');
-     //$col.append('<table style = width:100%>');
-     //$col.append('<tr>');
-
      var phto = value.get("myfile");
 
      var miniImg = new Image;
@@ -48,7 +43,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
     img.src = photo.url;
     img.width = 600;
     img.height = 400;
-    var col = ("<a class='b-close'>x<a/>");
+    var col = ("<a class='b-close'>X<a/>");
     var sol = (img);
     console.log(col);
 
@@ -73,11 +68,11 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
                   '<tr class = "warning">'+
                   '<td><p> Contact Name </p></td> <td><p> ' + value.get("name") + '</p></td><td></td></tr>' +
                   '<tr class = "warning">'+
-                  '<td><p> Contact Phone </p></td> <td><p> ' + value.get("phone") + '</p></td> <td>' +
-                  '<p><a class="btn btn-primary btn-sm" href="#" role="button">Send SMS</a></p></td></tr>' +
+                  '<td><p> Contact Phone </p></td> <td><p>'  + value.get("phone") + '</p></td> <td>' +
+                  '<p><a class="btn btn-primary btn-sm" id ='+'S'+value.id +' role="button">Send  SMS</a></p></td></tr>' +
                   '<tr class = "warning">'+
                   '<td><p> Contact Email </p></td> <td><p> ' + value.get("email") + '</p></td> <td>' +
-                  '<p><a class="btn btn-primary btn-sm" href="#" role="button">Send Email</a></p></td></tr>'+
+                  '<p><a class="btn btn-primary btn-sm"  id =' +'E'+value.id +' role="button">Send Email</a></p></td></tr>'+
                   '</table></div>';
 
     $('#element_to_pop_up').append(col);
@@ -86,17 +81,82 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
     $('#element_to_pop_up').append(contact);
     $('#element_to_pop_up').bPopup();
 
+    $("#E"+value.id).click(function(){
+
+      $('#element_to_pop_up').empty();
+
+      var Emailform =  '<div class = "panel panel-primary">'+
+         '<div class="panel-heading">Email Form</div>'+
+         '<div class="panel-body">'+
+          '<div class="forms">'+
+            '<form >'+
+              '<div class = "form-group">'+
+                '<label for="lostform">Name</label>'+
+                  '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
+              '</div> <div class="form-group">' +
+               '<label for="exampleInputEmail1">From: Email address</label>' +
+               '<input type="email" class="form-control" id="SEmail" placeholder="Enter your contact email"></div>' +
+             '<div class="form-group">'+
+           '<label for="exampleInputEmail1">Subject</label>'+
+               '<input type="text" class="form-control" id="subject" placeholder="Enter Subject">'+
+             '</div> <div class="form-group">'+
+               '<textarea class="form-control" placeholder="Email Body" id = "emailbody" rows="20"></textarea>'+
+             '</div><div class = "left">'+
+               '<button type="button" class="btn btn-primary" id="EBack">Back</button></div>'+
+               '<div class = "right">'+
+               '<button type="button" class="btn btn-primary" id="Esubmit">Send Email</button></div>'+
+             '</div></div>  </form>';
+
+             $('#element_to_pop_up').append(col);
+             $('#element_to_pop_up').append(Emailform);
+
+
+            $("#Esubmit").click(function(){
+              sendEmail(value.get("email"),value.get("name"));
+            });
+    });
 
 
 
   });
  });
-  console.log(this.results.length);
-  //for(var i = 0; i<this.)
+
+
+
+
+}
+
+//-----------------------------------------------------------
+  sendEmail = function(toEmail, name){
+    //document.location.href = '../pages/newEmailForm.html';
+    console.log("Sending Email");
+      Parse.initialize(
+            "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+            "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
+            );
+      var from1 = $("SEmail").val();
+      var to1 = toEmail;
+      var subject1 = "LOST&FOUND : " + $("#subject").val();
+      var body1 = $("#emailbody").val();
+      console.log(to1);
+
+      Parse.Cloud.run('sendEmail', {to:to1,subject:subject1,text:body1},{
+        success:function() {
+        console.log("sent");
+        },
+        error:function(error) {
+        console.log("not sent");
+        }
+    });
+
 }
 
 
-var drawFeed = function(value) {
+
+//-----------------------------------------------------------
+ListManager.prototype.sendEmail = function(emailAddress) {
+
+
 
 }
 
@@ -131,19 +191,19 @@ Downloader.prototype.queryDownload = function(keyword) {
   //keyword = keyword.toLowerCase();
 
   var query1 = new Parse.Query(this.className);
-  query1.equalTo('LCname', keyword);
+  query1.contains('LCname', keyword);
 
   var query2 = new Parse.Query(this.className);
-  query2.equalTo('LCitem', keyword);
+  query2.contains('LCitem', keyword);
 
   var query3 = new Parse.Query(this.className);
-  query3.equalTo('phone', keyword);
+  query3.contains('phone', keyword);
 
   var query4 = new Parse.Query(this.className);
-  query4.equalTo('LCemail', keyword);
+  query4.contains('LCemail', keyword);
 
   var query5 = new Parse.Query(this.className);
-  query5.equalTo('LCloc', keyword);
+  query5.contains('LCloc', keyword);
 
   var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
 

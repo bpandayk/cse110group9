@@ -48,7 +48,7 @@ body{
     padding:40px;
     min-width:680px;
     min-height: 870px;
-		font-size: 20pt;
+		font-size: 10pt;
 }
 .b-close{
     cursor:pointer;
@@ -64,4 +64,12 @@ td{
 
 p{
 	font-size:10pt;
+}
+
+.right {
+	float:right;
+}
+
+.left{
+	float:left;
 }

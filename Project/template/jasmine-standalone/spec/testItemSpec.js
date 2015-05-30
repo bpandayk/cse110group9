@@ -1,5 +1,5 @@
-describe("test ItemSpec functions", function() {
-	
+describe("Testing ItemSpec functions", function() {
+
 	/* create obj object and val() function */
 	function obj(value){
 		this.v = value;
@@ -15,7 +15,7 @@ describe("test ItemSpec functions", function() {
 
 	it("val should get the value of the obj", function() {
 		expect(name.val()).toEqual("Max");
-	}); 
+	});
 
 	/* tests for Name*/
 	describe("test Name", function() {
@@ -26,11 +26,11 @@ describe("test ItemSpec functions", function() {
 			expect(validName.getValue()).toEqual("Max");
 		});
 
-		it("valid names sholud return true", function() {
+		it("valid names should return true", function() {
 			expect(validName.validate()).toBeTruthy();
 		});
 
-		it("blank names sholud return false", function() {
+		it("blank names should return false", function() {
 			expect(invalidName.validate()).toBeFalsy();
 		});
 	});
@@ -42,11 +42,11 @@ describe("test ItemSpec functions", function() {
 		var validItemName = new ItemName(itemName);
 		var invalidItemName = new ItemName(empty);
 
-		it("valid item names sholud return true", function() {
+		it("valid item names should return true", function() {
 			expect(validItemName.validate()).toBeTruthy();
 		});
 
-		it("blank item names sholud return false", function() {
+		it("blank item names should return false", function() {
 			expect(invalidItemName.validate()).toBeFalsy();
 		});
 	});
@@ -63,19 +63,19 @@ describe("test ItemSpec functions", function() {
 		var invalidEmail2 = new Email(noDot);
 		var invalidEmail3 = new Email(badEmail);
 
-		it("valid emails sholud return true", function() {
+		it("valid emails should return true", function() {
 			expect(validEmail.validate()).toBeTruthy();
 		});
 
-		it("emails with no '@' sholud return false", function() {
+		it("emails with no '@' should return false", function() {
 			expect(invalidEmail1.validate()).toBeFalsy();
 		});
 
-		it("emails with no '.' sholud return false", function() {
+		it("emails with no '.' should return false", function() {
 			expect(invalidEmail2.validate()).toBeFalsy();
 		});
 
-		it("emails with no '@' occuring before last '.' sholud return false", function() {
+		it("emails with no '@' occuring before last '.' should return false", function() {
 			expect(invalidEmail3.validate()).toBeFalsy();
 		});
 	});
@@ -92,19 +92,19 @@ describe("test ItemSpec functions", function() {
 		var invalidDate2 = new ReportDate(noYear);
 		var invalidDate3 = new ReportDate(noYear);
 
-		it("valid dates sholud return true", function() {
+		it("valid dates should return true", function() {
 			expect(validDate.validate()).toBeTruthy();
 		});
 
-		it("dates without day or month sholud return false", function() {
+		it("dates without day or month should return false", function() {
 			expect(invalidDate1.validate()).toBeFalsy();
 		});
 
-		it("dates without year sholud return false", function() {
+		it("dates without year should return false", function() {
 			expect(invalidDate2.validate()).toBeFalsy();
 		});
 
-		it("invalid sholud return false", function() {
+		it("invalid should return false", function() {
 			expect(invalidDate3.validate()).toBeFalsy();
 		});
 	});
@@ -119,15 +119,15 @@ describe("test ItemSpec functions", function() {
 		var invalidPhone2 = new Phone(empty);
 
 
-		it("valid phone numbers sholud return true", function() {
+		it("valid phone numbers should return true", function() {
 			expect(validPhone.validate()).toBeTruthy();
 		});
 
-		it("invalid phone numbers sholud return false", function() {
+		it("invalid phone numbers should return false", function() {
 			expect(invalidPhone1.validate()).toBeFalsy();
 		});
 
-		it("empty phone numbers sholud return true", function() {
+		it("empty phone numbers should return true", function() {
 			expect(invalidPhone2.validate()).toBeTruthy();
 		});
 	});
@@ -150,6 +150,7 @@ describe("test ItemSpec functions", function() {
 		})
 	});
 
+<<<<<<< HEAD
 	/* test for image */
 	describe("test Image", function() {
 		var image = new Image(empty);
@@ -171,3 +172,6 @@ describe("test ItemSpec functions", function() {
 	});
 
 });
+=======
+});
+>>>>>>> 7e17440afe17984eab7475a1dcf887c3e8192aa2

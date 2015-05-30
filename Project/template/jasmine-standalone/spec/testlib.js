@@ -1,6 +1,6 @@
 
-describe("Test extend in lib for OOP", function() {
-	
+describe("Testing extend function in lib for OOP", function() {
+
     function Fruit(name,season) {
 	this.name = name;
 	this.season = season;
@@ -21,7 +21,7 @@ describe("Test extend in lib for OOP", function() {
 	it("var in same class should share public property", function() {
 	expect(fuji.name).toEqual("Apple");
 	});
-	
+
 	it("isA describe instanciation relationship", function(){
 	expect(fuji.isA(Fruit)).toBeTruthy();
 	});
@@ -38,7 +38,7 @@ describe("Test extend in lib for OOP", function() {
 
 });
 
-describe("deepCopy should really create a new Obj", function() {
+describe("Testing deepCopy - should create a new Obj", function() {
 	var Country = {};
 	Country.states = [];
 

@@ -1,5 +1,5 @@
 
-describe("Test lib for OOP", function() {
+describe("Test extend in lib for OOP", function() {
 	
     function Fruit(name,season) {
 	this.name = name;
@@ -14,11 +14,11 @@ describe("Test lib for OOP", function() {
 	extend(Apple,Fruit);
 	var fuji = new Apple("Fuji");
 
-	it("apple should extend Fruit", function() {
+	it("subclass should extend superclass", function() {
 	expect(Apple.prototype.superClass).toEqual(Fruit.prototype);
 	});
 
-	it("any brand of Apple should have name Apple", function() {
+	it("var in same class should share public property", function() {
 	expect(fuji.name).toEqual("Apple");
 	});
 	
@@ -35,5 +35,28 @@ describe("Test lib for OOP", function() {
 	    function(){
 	expect(fuji.superClass.brand).toBe(undefined);
 	});
+
+});
+
+describe("deepCopy should really create a new Obj", function() {
+	var Country = {};
+	Country.states = [];
+
+	var China = deepCopy(Country);
+
+	China.states.push('Xian');
+	China.states.push('Fuzhou');
+
+	it("the class that deepCopy another class is independent on itself",
+	   function() {
+	   expect(China.states[0]).toEqual('Xian');
+	   expect(China.states[1]).toEqual('Fuzhou');
+	});
+
+	it("the class that has been deepCopy should not be influenced",
+	   function() {
+            expect(Country.states.length).toEqual(0);
+	    expect(Country.states[0]).not.toEqual('Xian');
+	   });
 
 });

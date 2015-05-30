@@ -6,11 +6,10 @@ var ListManager = function(results) {
   this.results = results;
 }
 
-ListManager.prototype.drawList= function(tooMany, numberOfPages) {
+ListManager.prototype.drawList= function(tooMany, numberOfPages) 
+{
   $('#feed').empty();
   $.each(this.results, function(index, value) {
-
-
      var phto = value.get("myfile");
 
      var miniImg = new Image;
@@ -27,8 +26,6 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
                 '</tr></table></div>';
 
        $('#feed').prepend(mol);
-
-
 
   });
 
@@ -120,21 +117,23 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
             if(value.get("phone") == 0000000000){
               $('#element_to_pop_up').append("<p><font color='RED'> Sorry.Your"+
                " request could not be completed. Error- Phone Not Available</font></p>");
-            }else {
+            }
+            else {
               smsForm();
               $("#Esubmit").click(function(){
                 sendSMS(value.get("phone"),value.get("name"));
               });
             }
-
           });
-    });
- });
-
-
-
-
+    }); // End of click
+ }); // End of click
 }
+
+
+
+
+
+
 //-----------------------------------------------------------
 var smsForm = function(){
   $('#element_to_pop_up').empty();
@@ -225,13 +224,7 @@ console.log(message1);
 }
 
 //-----------------------------------------------------------
-ListManager.prototype.sendEmail = function(emailAddress) {
-
-
-
-}
-
-
+ListManager.prototype.sendEmail = function(emailAddress) {}
 
 
 ///////////////////////////////////////////////////////////////
@@ -332,8 +325,8 @@ Downloader.prototype.onClickDownload = function(objectID) {
 /////////////////////////////////////////////////////////////
 var Validator = function(object){
   this.object = object;
-
 }
+
 //////////////////////////////////////////////////////////////
 var Items = function(value) {
   this.value = value;
@@ -358,11 +351,9 @@ var main = function(){
       lost.queryDownload(keyword);
       }
     });
+  } 
 
-
-
-
-  } else if(location.pathname == "/pages/newFoundPage.html") {
+  else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");
     found.download();
 
@@ -383,7 +374,7 @@ var main = function(){
     });
 
   }
-}
+} // End of main
 
 $(document).ready(main);
 

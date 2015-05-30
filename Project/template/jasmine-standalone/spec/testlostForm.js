@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 $.getScript("../../js/Uploader.js", function(){
 
    //alert("Script loaded and executed.");
@@ -20,6 +21,9 @@ this.currItem = new ItemSpec(
 */
 //var uploader = new ParseUploader();
 describe("LostForm functionality test", function() {
+=======
+describe("Testing LostForm functionality", function() {
+>>>>>>> 144823285469dca64fca555db50fca65cc933799
   it("should be true anyway", function() {
 //    expect(LostForm(uploader).currItem.toEqual(currItem);
       expect(true).toEqual(true);

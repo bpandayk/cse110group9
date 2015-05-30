@@ -21,8 +21,7 @@ function LostForm(uploader) {
 
     this.currItem = new ItemSpec(
         $("#lostname"),
-        ($('#item').val() === "Other") ?
-            $("#othername") : $("#item"),
+        $("#item"),
         $("#lostemail"),
         $("#lostdate"),
         $("#phone"),

@@ -8,6 +8,7 @@ describe("test ItemSpec functions", function() {
 		return this.v;
 	};
 	obj.prototype.datepicker = function() {};
+	obj.prototype.bind = function() {};
 
 	var name = new obj("Max");
 	var empty = new obj("");
@@ -147,6 +148,26 @@ describe("test ItemSpec functions", function() {
 		it("description should always return true", function() {
 			expect(description.validate()).toBeTruthy();
 		})
+	});
+
+	/* test for image */
+	describe("test Image", function() {
+		var image = new Image(empty);
+
+		it("image should always return true", function() {
+			expect(image.validate()).toBeTruthy();
+		})
+	});
+
+	/* test for ItemSpec */
+	describe("test ItemSpec constructor", function() {
+		var itemSpec = new ItemSpec(name, itemName, email
+				date, phone, empty, empty, empty);
+		
+		it("ItemSpec should always return true", function() {
+			expect(itemSpec.reporter).toEqual("Max");
+		})
+
 	});
 
 });

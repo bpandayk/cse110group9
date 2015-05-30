@@ -113,6 +113,20 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
               sendEmail(value.get("email"),value.get("name"));
             });
           });
+
+
+
+          $("#S"+value.id).click(function(){
+            if(value.get("phone") == 0000000000){
+              alert("Sorry. Your request could not be completed. Error-Phone Not Available");
+            }else {
+              smsForm();
+              $("#Esubmit").click(function(){
+                sendSMS(value.get("phone"),value.get("name"));
+              });
+            }
+
+          });
     });
  });
 
@@ -120,9 +134,35 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
 
 
 }
-
 //-----------------------------------------------------------
-  sendEmail = function(toEmail, name){
+var smsForm = function(){
+  $('#element_to_pop_up').empty();
+  var col = ("<a class='b-close'>X<a/>");
+  var smsform = '<div class = "panel panel-primary">'+
+     '<div class="panel-heading">SMS</div>'+
+     '<div class="panel-body">'+
+      '<div class="forms">'+
+        '<form id = "smsform" >'+
+          '<div class = "form-group">'+
+            '<label for="lostform">Name</label>'+
+              '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
+          '</div> <div class="form-group">' +
+           '<label for="exampleInputEmail1">From: Email address</label>' +
+           '<input type="email" class="form-control" id="SEmail" placeholder="Enter your contact email"></div>' +
+         '<div class="form-group">'+
+         '<div class="form-group">'+
+           '<textarea class="form-control" maxlength="160"   placeholder="MAX OF 160 CHARACTERS" id = "smsbody" rows="20">'+
+           '</textarea>'+
+           '</div><div>'+
+           '<button type="button" class="btn btn-primary" id="Esubmit">Send SMS</button></div>'+
+         '</div></div>  </form>';
+
+         $('#element_to_pop_up').append(col);
+         $('#element_to_pop_up').append(smsform);
+}
+
+//------------------------------------------------------------------------------
+  var sendEmail = function(toEmail, name){
     //document.location.href = '../pages/newEmailForm.html';
     console.log("Sending Email");
       Parse.initialize(
@@ -154,14 +194,16 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
 
 }
 
-//__________________________________________________________
-sendSMS = function(toPhone, name) {
+//______________________________________________________________________________
+var sendSMS = function(toPhone, name) {
   Parse.initialize(
           "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
           "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
           );
   var phone1=toPhone;
-  var message1= $("").val();
+  var message1= $("#smsbody").val();
+console.log(message1);
+
 
   Parse.Cloud.run('sendSMS', {PhoneNumbers:phone1,Message:message1}, {
     success: function(result) {

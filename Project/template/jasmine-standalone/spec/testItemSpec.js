@@ -1,16 +1,28 @@
-describe("ItemSpec tests validate functions", function()
-{
-    function Field(){}
+describe("ItemSpec tests validate functions", function() {
+	
+	function obj(value){
+		this.v = value;
+	};
+	obj.prototype.val = function() {
+		return this.v;
+	};
 
-	function Name(obj) {
-		this.obj = obj;
-	}
-	extend (Name, Field);
+	var max = new obj("Max");
+	var noName = new obj("");
 
-	var validName = new Name("Max");
-	var invalidName = new Name("");
+	it("val should get the value of the obj", function() {
+		expect(max.val()).toEqual("Max");
+	});
 
-	it("getValue should get the value of the object", function(){
-		expect(validName.prototype.getValue()).toEqual("Max");
+	/* tests for Name's getValue and validate functions*/
+	var validName = new Name(max);
+	var invalidName = new Name(noName);
+
+	it("getValue should get the value of the object", function() {
+		expect(validName.getValue()).toEqual("Max");
+	});
+
+	it("valid names sholud return true", function() {
+		expect(validName.validate()).toBeTruthy();
 	});
 });

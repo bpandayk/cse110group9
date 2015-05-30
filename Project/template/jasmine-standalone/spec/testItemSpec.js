@@ -1,5 +1,5 @@
-describe("test ItemSpec functions", function() {
-	
+describe("Testing ItemSpec functions", function() {
+
 	/* create obj object and val() function */
 	function obj(value){
 		this.v = value;
@@ -14,7 +14,7 @@ describe("test ItemSpec functions", function() {
 
 	it("val should get the value of the obj", function() {
 		expect(name.val()).toEqual("Max");
-	}); 
+	});
 
 	/* tests for Name*/
 	describe("test Name", function() {
@@ -25,11 +25,11 @@ describe("test ItemSpec functions", function() {
 			expect(validName.getValue()).toEqual("Max");
 		});
 
-		it("valid names sholud return true", function() {
+		it("valid names should return true", function() {
 			expect(validName.validate()).toBeTruthy();
 		});
 
-		it("blank names sholud return false", function() {
+		it("blank names should return false", function() {
 			expect(invalidName.validate()).toBeFalsy();
 		});
 	});
@@ -41,11 +41,11 @@ describe("test ItemSpec functions", function() {
 		var validItemName = new ItemName(itemName);
 		var invalidItemName = new ItemName(empty);
 
-		it("valid item names sholud return true", function() {
+		it("valid item names should return true", function() {
 			expect(validItemName.validate()).toBeTruthy();
 		});
 
-		it("blank item names sholud return false", function() {
+		it("blank item names should return false", function() {
 			expect(invalidItemName.validate()).toBeFalsy();
 		});
 	});
@@ -66,11 +66,11 @@ describe("test ItemSpec functions", function() {
 			expect(validEmail.validate()).toBeTruthy();
 		});
 
-		it("emails with no '@' sholud return false", function() {
+		it("emails with no '@' shouldud return false", function() {
 			expect(invalidEmail1.validate()).toBeFalsy();
 		});
 
-		it("emails with no '.' sholud return false", function() {
+		it("emails with no '.' should return false", function() {
 			expect(invalidEmail2.validate()).toBeFalsy();
 		});
 

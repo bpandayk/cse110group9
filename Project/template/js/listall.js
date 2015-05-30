@@ -118,7 +118,8 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
 
           $("#S"+value.id).click(function(){
             if(value.get("phone") == 0000000000){
-              alert("Sorry. Your request could not be completed. Error-Phone Not Available");
+              $('#element_to_pop_up').append("<p><font color='RED'> Sorry.Your"+
+               " request could not be completed. Error- Phone Not Available</font></p>");
             }else {
               smsForm();
               $("#Esubmit").click(function(){
@@ -181,14 +182,14 @@ var smsForm = function(){
         $('#element_to_pop_up').append("<p>Email Sent Successfully to " +
          toEmail+"</p>");
         document.getElementById("emailform").reset();
-
-
+        var bPopup = $('#element_to_pop_up').bPopup();
+        bPopup.close();
         },
         error:function(error) {
         console.log("not sent");
         $('#element_to_pop_up').append("<p><font color= 'RED'>Error in sending Email. "+
         "</font></p>");
-        formObject.reset();
+        document.getElementById("emailform").reset();
         }
     });
 
@@ -208,8 +209,16 @@ console.log(message1);
   Parse.Cloud.run('sendSMS', {PhoneNumbers:phone1,Message:message1}, {
     success: function(result) {
       console.log(result);
+      $('#element_to_pop_up').append("<p>SMS Sent Successfully to " +
+       phone1+"</p>");
+      document.getElementById("smsform").reset();
+
     },
     error: function(error) {
+      $('#element_to_pop_up').append("<p><font color='RED'>Message not sent - " +
+       phone1+"</font></p>");
+      document.getElementById("smsform").reset();
+
     }
   });
 

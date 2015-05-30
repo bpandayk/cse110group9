@@ -50,4 +50,3 @@ FormManager.prototype.callback = function() {
     }
     console.log('left FormManager.callback');
 };
-

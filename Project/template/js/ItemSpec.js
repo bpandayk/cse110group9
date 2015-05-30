@@ -74,7 +74,7 @@ ReportDate.prototype.validate = function() {
 function Phone(obj) { this.obj = obj; }
 extend(Phone,Field);
 Phone.prototype.validate = function() {
-    var correct_phone_num_reg = /(\d{3}[ -]?){2}\d{4}/;
+    var correct_phone_num_reg = /^\d{10}$/;
     var empty = this.getValue() === '';
     if( !correct_phone_num_reg.test(this.getValue()) && !empty ) {
         return false;
@@ -175,4 +175,3 @@ ItemSpec.prototype.validate = function() {
 } // end of ItemSpec.validate()
 
 // ----------------------------------------------------------------------
-

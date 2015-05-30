@@ -72,7 +72,7 @@ $(document).ready({
 });
 
 
-  Parse.initialize(
+  /*Parse.initialize(
           "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
           "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
           );
@@ -102,4 +102,34 @@ Parse.Cloud.run('hello', {}, {
   },
   error: function(error) {
   }
+});
+*/
+
+
+Parse.initialize(
+        "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+        "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
+        );
+
+
+var user1= 'bibekkshetri';
+var password1= 'Sarbada1';
+var phone1='5109848659';
+var message1='HAHA SIR , MAKE TEA FOR ME TOO';
+
+Parse.Cloud.run('sendSMS', {PhoneNumbers:phone1,Message:message1}, {
+  success: function(result) {
+    console.log(result);
+  },
+  error: function(error) {
+  }
+});
+
+$("#clk").click(function(){
+  console.log("clk clicked");
+  $("#filei").trigger("click");
+});
+
+$("#filei").click(function(){
+  console.log("filei clicked");
 });

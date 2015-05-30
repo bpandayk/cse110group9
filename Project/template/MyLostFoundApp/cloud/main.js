@@ -25,7 +25,23 @@ Parse.Cloud.define("sendEmail", function(request, response) {
 });
 
 
-Parse.Cloud.define("hello", function(request, response) {
-  console.log("hello");
-  response.success("Hello world!");
+
+Parse.Cloud.define("sendSMS", function(request, response) {
+  Parse.Cloud.httpRequest({
+    method:'POST',
+    url: 'https://app.eztexting.com/sending/messages?format=json',
+    headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+    body: {
+      User: 'bibekkshetri',
+      Password: 'Sarbada1',
+      PhoneNumbers:request.params.PhoneNumbers,
+      Message:request.params.Message
+    }
+  }).then(function(httpResponse){
+    console.log(httpResponse.text);
+    response.success("sent");
+  }, function(httpResponse) {
+    console.error(httpResponse.error);
+    response.error("Failed");
+  });
 });

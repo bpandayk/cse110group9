@@ -86,10 +86,10 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
       $('#element_to_pop_up').empty();
 
       var Emailform =  '<div class = "panel panel-primary">'+
-         '<div class="panel-heading">Email Form</div>'+
+         '<div class="panel-heading">Email</div>'+
          '<div class="panel-body">'+
           '<div class="forms">'+
-            '<form >'+
+            '<form id = "emailform" >'+
               '<div class = "form-group">'+
                 '<label for="lostform">Name</label>'+
                   '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
@@ -101,9 +101,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
                '<input type="text" class="form-control" id="subject" placeholder="Enter Subject">'+
              '</div> <div class="form-group">'+
                '<textarea class="form-control" placeholder="Email Body" id = "emailbody" rows="20"></textarea>'+
-             '</div><div class = "left">'+
-               '<button type="button" class="btn btn-primary" id="EBack">Back</button></div>'+
-               '<div class = "right">'+
+               '</div><div>'+
                '<button type="button" class="btn btn-primary" id="Esubmit">Send Email</button></div>'+
              '</div></div>  </form>';
 
@@ -114,11 +112,8 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
             $("#Esubmit").click(function(){
               sendEmail(value.get("email"),value.get("name"));
             });
+          });
     });
-
-
-
-  });
  });
 
 
@@ -143,15 +138,40 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages) {
       Parse.Cloud.run('sendEmail', {to:to1,subject:subject1,text:body1},{
         success:function() {
         console.log("sent");
+        $('#element_to_pop_up').append("<p>Email Sent Successfully to " +
+         toEmail+"</p>");
+        document.getElementById("emailform").reset();
+
+
         },
         error:function(error) {
         console.log("not sent");
+        $('#element_to_pop_up').append("<p><font color= 'RED'>Error in sending Email. "+
+        "</font></p>");
+        formObject.reset();
         }
     });
 
 }
 
+//__________________________________________________________
+sendSMS = function(toPhone, name) {
+  Parse.initialize(
+          "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+          "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
+          );
+  var phone1=toPhone;
+  var message1= $("").val();
 
+  Parse.Cloud.run('sendSMS', {PhoneNumbers:phone1,Message:message1}, {
+    success: function(result) {
+      console.log(result);
+    },
+    error: function(error) {
+    }
+  });
+
+}
 
 //-----------------------------------------------------------
 ListManager.prototype.sendEmail = function(emailAddress) {
@@ -159,6 +179,9 @@ ListManager.prototype.sendEmail = function(emailAddress) {
 
 
 }
+
+
+
 
 ///////////////////////////////////////////////////////////////
 
@@ -209,9 +232,16 @@ Downloader.prototype.queryDownload = function(keyword) {
 
   mainQuery.find({
     success: function(results){
+      if(results.length > 0) {
       var list1 = new ListManager(results);
       list1.drawList(false, 1);
+    } else if(results.length == 0) {
+      $("#feed").empty();
+      $('#feed').prepend('<div class="well well-lg black-font" >'+
+      "<p>Your search - <font color = 'RED'>"+keyword+
+      " </font> did not match any documents</p> <p>Try with another keyword</p>");
     }
+  }
 
   });
 
@@ -243,19 +273,32 @@ Downloader.prototype.onClickDownload = function(objectID) {
   query.get(objectID, {
     success: function(results){
       var list1 = new ListManager(results);
-
     }
   });
 
 }
 
+/////////////////////////////////////////////////////////////
+var Validator = function(object){
+  this.object = object;
 
+}
+//////////////////////////////////////////////////////////////
+var Items = function(value) {
+  this.value = value;
+}
 
 /////////////////////////////////////////////////////////////
 var main = function(){
   if(location.pathname == "/pages/newLostPage.html") {
     var lost = new Downloader("Lost");
     var res = lost.download();
+    $('#searchLost').bind('keypress', function(e){
+      if(e.keyCode==13){
+         $('#listLostSearch').trigger('click');
+      }
+    });
+
     $('#listLostSearch').click(function(){
       var keyword = $('#searchLost').val();
       if(keyword.length == 0){
@@ -271,7 +314,23 @@ var main = function(){
   } else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");
     found.download();
-    found.queryDownload();
+
+    $('#searchFound').bind('keypress', function(e){
+      if(e.keyCode==13){
+         $('#listFoundSearch').trigger('click');
+      }
+    });
+
+    $('#listFoundSearch').click(function(){
+      var keyword = $('#searchFound').val();
+      console.log(keyword);
+      if(keyword.length == 0){
+        found.download();
+      } else {
+      found.queryDownload(keyword);
+      }
+    });
+
   }
 }
 

@@ -14,7 +14,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
 
      var miniImg = new Image;
      miniImg.src = phto.url;
-      var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
+     var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
                 '<table style = width:100%>'+
                 '<tr>'+
                 '<td>'+

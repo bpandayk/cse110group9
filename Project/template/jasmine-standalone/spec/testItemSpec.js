@@ -1,5 +1,6 @@
-describe("ItemSpec tests validate functions", function() {
+describe("test ItemSpec functions", function() {
 	
+	/* create obj object and val() function */
 	function obj(value){
 		this.v = value;
 	};
@@ -7,15 +8,15 @@ describe("ItemSpec tests validate functions", function() {
 		return this.v;
 	};
 
-	var max = new obj("Max");
+	var name = new obj("Max");
 	var noName = new obj("");
 
-	it("val should get the value of the obj", function() {
-		expect(max.val()).toEqual("Max");
-	});
+	/*it("val should get the value of the obj", function() {
+		expect(name.val()).toEqual("Max");
+	}); */
 
-	/* tests for Name's getValue and validate functions*/
-	var validName = new Name(max);
+	/* tests for Name*/
+	var validName = new Name(name);
 	var invalidName = new Name(noName);
 
 	it("getValue should get the value of the object", function() {
@@ -24,5 +25,35 @@ describe("ItemSpec tests validate functions", function() {
 
 	it("valid names sholud return true", function() {
 		expect(validName.validate()).toBeTruthy();
+	});
+
+	it("invalid names sholud return false", function() {
+		expect(invalidName.validate()).toBeFalsy();
+	});
+
+	/* tests for ItemName */
+	var itemName = new obj("Laptop")
+	var validItemName = new ItemName(itemName);
+	var invalidItemName = new ItemName(noName);
+
+	it("valid item names sholud return true", function() {
+		expect(validItemName.validate()).toBeTruthy();
+	});
+
+	it("invalid item names sholud return false", function() {
+		expect(invalidItemName.validate()).toBeFalsy();
+	});
+
+	/* tests for Email */
+	var email = new obj("max@ucsd.edu")
+	var validItemName = new ItemName(itemName);
+	var invalidItemName = new ItemName(noName);
+
+	it("valid item names sholud return true", function() {
+		expect(validItemName.validate()).toBeTruthy();
+	});
+
+	it("invalid item names sholud return false", function() {
+		expect(invalidItemName.validate()).toBeFalsy();
 	});
 });

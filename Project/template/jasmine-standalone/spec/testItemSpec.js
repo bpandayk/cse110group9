@@ -150,7 +150,6 @@ describe("Testing ItemSpec functions", function() {
 		})
 	});
 
-<<<<<<< HEAD
 	/* test for image */
 	describe("test Image", function() {
 		var image = new Image(empty);
@@ -161,7 +160,7 @@ describe("Testing ItemSpec functions", function() {
 	});
 
 	/* test for ItemSpec */
-	describe("test ItemSpec constructor", function() {
+	/*describe("test ItemSpec constructor", function() {
 		var itemSpec = new ItemSpec(name, itemName, email
 				date, phone, empty, empty, empty);
 		
@@ -169,9 +168,5 @@ describe("Testing ItemSpec functions", function() {
 			expect(itemSpec.reporter).toEqual("Max");
 		})
 
-	});
-
+	});*/
 });
-=======
-});
->>>>>>> 7e17440afe17984eab7475a1dcf887c3e8192aa2

@@ -1,4 +1,13 @@
 
+importScripts = [
+    '../js/lib.js',
+];
+importScripts.forEach(function(val,index,arr) {
+    $("head").append(
+        '<script type="text/javascript" src="' + val + '"></script>'
+    );
+});
+
 // ======================================================================
 // Uploader
 

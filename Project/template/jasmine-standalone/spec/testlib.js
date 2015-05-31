@@ -7,15 +7,16 @@ describe("Testing extend function in lib for OOP", function() {
 	}
 	Fruit.prototype.category = "Food";
     function Apple(brand) {
-	this.name = "Apple";
 	this.brand = brand;
 	}
+        Apple.prototype.name = "Apple";
 
 	extend(Apple,Fruit);
 	var fuji = new Apple("Fuji");
 
 	it("subclass should extend superclass", function() {
 	expect(Apple.prototype.superClass).toEqual(Fruit.prototype);
+	expect(fuji instanceof Fruit).not.toBeTruthy();
 	});
 
 	it("var in same class should share public property", function() {
@@ -36,7 +37,6 @@ describe("Testing extend function in lib for OOP", function() {
 	expect(fuji.superClass.brand).toBe(undefined);
 	});
 
-});
 
 describe("Testing deepCopy - should create a new Obj", function() {
 	var Country = {};
@@ -59,4 +59,7 @@ describe("Testing deepCopy - should create a new Obj", function() {
 	    expect(Country.states[0]).not.toEqual('Xian');
 	   });
 
-});
+});// deepCopy
+
+
+}); // main testlib

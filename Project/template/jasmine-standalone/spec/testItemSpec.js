@@ -168,5 +168,12 @@ describe("Testing ItemSpec functions", function() {
 			expect(itemSpec.reporter).toEqual("Max");
 		})
 
+<<<<<<< HEAD
 	});*/
 });
+=======
+	});
+
+});
+
+>>>>>>> a6d04e3a6c2842f5c9c05e528af7c9b244627a59

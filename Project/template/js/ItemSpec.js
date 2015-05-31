@@ -1,4 +1,13 @@
 
+importScripts = [
+    '../js/lib.js',
+];
+importScripts.forEach(function(val,index,arr) {
+    $("head").append(
+        '<script type="text/javascript" src="' + val + '"></script>'
+    );
+});
+
 // ======================================================================
 // interface Field
 
@@ -55,7 +64,10 @@ Email.prototype.validate = function() {
 // ReportDate implements Field
 function ReportDate(obj) {
     this.obj = obj;
-    this.obj.datepicker(); // enable datepiker
+    if ( 'datepicker' in this.obj )
+        this.obj.datepicker(); // enable datepicker
+    else 
+        console.log('failed to load datepicker()');
 }
 extend(ReportDate,Field);
 ReportDate.prototype.validate = function() {

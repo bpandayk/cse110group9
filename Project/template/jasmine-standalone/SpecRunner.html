@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Jasmine Spec Runner v2.3.4</title>
-  
-  
+
+
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.3.4/jasmine_favicon.png">
   <link rel="stylesheet" href="lib/jasmine-2.3.4/jasmine.css">
@@ -25,35 +25,31 @@
   <script src="src/Song.js"></script>
   <script src="src/Helloworld.js"></script>
   <script src="src/ListManager.js"></script>
-  <script src="../js/lostForm.js"></script>
   <script src="../js/lib.js"></script>
   <script src="../js/ItemSpec.js"></script>
-
-
-
-
-  <script src="src/ItemSpec.js"></script>
-  <script src="src/Uploaders.js"></script>
-
+  <script src="../js/Uploaders.js"></script>
+  <script src="../js/FormManager.js"></script>
+  <script src="../js/lostform.js"></script>
 
   <!-- include spec files here... -->
   <script src="spec/HelloworldSpec.js"></script>
   <script src="spec/SpecHelper.js"></script>
   <script src="spec/PlayerSpec.js"></script>
-
   <script src="spec/testListManager.js"></script>
-  <script src="spec/testlostForm.js"></script>
   <script src="spec/testlib.js"></script>
-<<<<<<< HEAD
-  <script src="spec/testUploadFile.js"></script>
-
-
-=======
+  <script src="spec/testlostForm.js"></script>
   <script src="spec/testItemSpec.js"></script>
->>>>>>> 144823285469dca64fca555db50fca65cc933799
+  <script src="spec/testUploadFile.js"></script>
 
 </head>
 
 <body>
+
+	<div>
+	<input type="text" id="lostdate" placeholder="mm/dd/yy">
+	<script $("#lostdate").datepicker()></script>
+	</div>
+
 </body>
+
 </html>

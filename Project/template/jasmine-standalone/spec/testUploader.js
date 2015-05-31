@@ -21,6 +21,7 @@ testLostObject.set("lcloc",    String(item.loc.getValue()).toLowerCase());
 testLostObject.set("lcitem",   String(item.itemName.getValue()).toLowerCase());
 
 */
+/*
 var testItemSpec = new ItemSpec(
         "uan",
         "laptop",
@@ -40,5 +41,4 @@ var testItemSpec = new ItemSpec(
 //	expect(true).toEqual(true);
   });
   });
-});
-
+});*/

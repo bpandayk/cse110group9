@@ -6,14 +6,18 @@ var ListManager = function(results) {
   this.results = results;
 }
 
-ListManager.prototype.drawList= function(tooMany, numberOfPages) 
+ListManager.prototype.drawList= function(tooMany, numberOfPages)
 {
   $('#feed').empty();
   $.each(this.results, function(index, value) {
      var phto = value.get("myfile");
-
      var miniImg = new Image;
-     miniImg.src = phto.url;
+     if(phto == undefined) {
+       miniImg.src = "../img/Noimage.png"
+     } else {
+       miniImg.src = phto.url;
+     }
+
      var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
                 '<table style = width:100%>'+
                 '<tr>'+
@@ -34,10 +38,13 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
   $("#" + value.id).click(function(){
     $('#element_to_pop_up').empty();
     var photo = value.get("myfile");
-    var url = photo.url;
 
     var img = new Image;
-    img.src = photo.url;
+    if(photo == undefined) {
+      img.src = "../img/Noimage.png"
+    } else {
+      img.src = phto.url;
+    }
     img.width = 600;
     img.height = 400;
     var col = ("<a class='b-close'>X<a/>");
@@ -351,7 +358,7 @@ var main = function(){
       lost.queryDownload(keyword);
       }
     });
-  } 
+  }
 
   else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");

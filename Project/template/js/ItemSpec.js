@@ -66,7 +66,7 @@ function ReportDate(obj) {
     this.obj = obj;
     if ( 'datepicker' in this.obj )
         this.obj.datepicker(); // enable datepicker
-    else 
+    else
         console.log('failed to load datepicker()');
 }
 extend(ReportDate,Field);
@@ -130,11 +130,15 @@ Image.prototype.validate = function() { return true; }
 Image.prototype.trackFile = function() {
     console.log('entered Image.trackFile');
     var img = this;
+    var defaults = "../img/Noimage.png";
     img.obj.bind('change', function(e) {
         var files = e.target.files || e.dataTransfer.files;
         img.file = files[0];
+        console.log(files[0].name);
         if(files[0] == undefined) {
           console.log("img undefined");
+          files[0].name = "../img/Noimage.png";
+          img.file = files[0];
         }
         console.log('image file is',img.getValue());
     });

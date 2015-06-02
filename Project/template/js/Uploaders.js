@@ -73,6 +73,11 @@ ParseUploader.prototype.upload = function(item,obj_type){
             console.log('data saved sucessfully');
             console.log('start uploading photo');
             console.log('photo is', item.img.getValue() );
+            /*if(item.img.getValue() == undefined) {
+              console.log("photo unavaibale, uploading defult photo");
+              item.img.file.src = "../img/Noimage.png";
+              console.log('photo is', item.img.getValue() );
+            }*/
             if (item.img.file && obj_type === PARSEUPLOAD_CODE_FOUND )
               ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id, "Found");
             else if (item.img.file && obj_type === PARSEUPLOAD_CODE_LOST )

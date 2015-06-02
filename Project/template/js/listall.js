@@ -24,7 +24,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
                 '<td>'+
                 '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
                 '</td>'+
-                '<td> <p> Lost Item: ' + value.get("item") + '</p>'+
+                '<td> <p> Item: ' + value.get("item") + '</p>'+
                 '<p class = "hide2" id = "' + value.id + 'details">' +
                 "Description: " + value.get("descp") + '</p>'+ '</td>'+
                 '</tr></table></div>';
@@ -43,14 +43,12 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
     if(photo == undefined) {
       img.src = "../img/Noimage.png"
     } else {
-      img.src = phto.url;
+      img.src = photo.url;
     }
     img.width = 600;
     img.height = 400;
     var col = ("<a class='b-close'>X<a/>");
     var sol = (img);
-    console.log(col);
-
 
     var info = '<div class = "iteminfo">'+
                '<p> </p>'+
@@ -95,13 +93,13 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
           '<div class="forms">'+
             '<form id = "emailform" >'+
               '<div class = "form-group">'+
-                '<label for="lostform">Name</label>'+
+                '<label for="lostform">Name<font color="RED">*</font></label>'+
                   '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
               '</div> <div class="form-group">' +
-               '<label for="exampleInputEmail1">From: Email address</label>' +
+               '<label for="exampleInputEmail1">From: Email address<font color="RED">*</font></label>' +
                '<input type="email" class="form-control" id="SEmail" placeholder="Enter your contact email"></div>' +
              '<div class="form-group">'+
-           '<label for="exampleInputEmail1">Subject</label>'+
+           '<label for="exampleInputEmail1">Subject<font color="RED">*</font></label>'+
                '<input type="text" class="form-control" id="subject" placeholder="Enter Subject">'+
              '</div> <div class="form-group">'+
                '<textarea class="form-control" placeholder="Email Body" id = "emailbody" rows="20"></textarea>'+
@@ -121,7 +119,9 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
 
 
           $("#S"+value.id).click(function(){
-            if(value.get("phone") == 0000000000){
+            var phon = value.get("phone");
+            console.log(phon);
+            if(phon.includes("Not Available")){
               $('#element_to_pop_up').append("<p><font color='RED'> Sorry.Your"+
                " request could not be completed. Error- Phone Not Available</font></p>");
             }
@@ -151,10 +151,10 @@ var smsForm = function(){
       '<div class="forms">'+
         '<form id = "smsform" >'+
           '<div class = "form-group">'+
-            '<label for="lostform">Name</label>'+
+            '<label for="lostform">Name<font color="RED">*</font></label>'+
               '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
           '</div> <div class="form-group">' +
-           '<label for="exampleInputEmail1">From: Email address</label>' +
+           '<label for="exampleInputEmail1">From: Email address<font color="RED">*</font></label>' +
            '<input type="email" class="form-control" id="SEmail" placeholder="Enter your contact email"></div>' +
          '<div class="form-group">'+
          '<div class="form-group">'+

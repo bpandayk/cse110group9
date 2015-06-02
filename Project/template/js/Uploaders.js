@@ -50,6 +50,23 @@ ParseUploader.prototype.upload = function(item,obj_type){
         console.log('Wrong obj_code for ParseUploader.upload');
     }
 
+
+    var phone;
+    var location;
+    if(item.phone.getValue() == '')
+      phone = "Not Available";
+    else {
+      phone = item.phone.getValue();
+    }
+
+    if(item.loc.getValue() == '')
+      location = "Not Available";
+    else {
+      location = item.phone.getValue();
+    }
+
+    console.log(phone);
+    console.log(location);
     // set data of upload_obj
     // notice image is NOT in the list and will be handled at uploading
     console.log('setting new upload_obj...');
@@ -57,12 +74,12 @@ ParseUploader.prototype.upload = function(item,obj_type){
     upload_obj.set("item",     String(item.itemName.getValue()));
     upload_obj.set("email",    String(item.email.getValue()));
     upload_obj.set("lostdate", String(item.reportDate.getValue()));
-    upload_obj.set("phone",    String(item.phone.getValue()));
-    upload_obj.set("loc",      String(item.loc.getValue()));
+    upload_obj.set("phone",    String(phone));
+    upload_obj.set("loc",      String(location));
     upload_obj.set("descp",    String(item.description.getValue()));
     upload_obj.set("LCname",   String(item.reporter.getValue()).toLowerCase());
     upload_obj.set("LCemail",  String(item.email.getValue()).toLowerCase());
-    upload_obj.set("LCloc",    String(item.loc.getValue()).toLowerCase());
+    upload_obj.set("LCloc",    String(location.toLowerCase()));
     upload_obj.set("LCitem",   String(item.itemName.getValue()).toLowerCase());
     console.log('done');
 
@@ -82,6 +99,11 @@ ParseUploader.prototype.upload = function(item,obj_type){
               ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id, "Found");
             else if (item.img.file && obj_type === PARSEUPLOAD_CODE_LOST )
                 ParseUploader.prototype.uploadFile(item.img.file,upload_obj.id, "Lost");
+            else if(obj_type === PARSEUPLOAD_CODE_LOST) {
+              document.location.href = "../pages/newLostPage.html";
+            } else if(obj_type === PARSEUPLOAD_CODE_FOUND) {
+              document.location.href= "../pages/newFoundPage.html";
+            }
             console.log('done');
         },
         error: function(upload_obj, error) {
@@ -148,7 +170,11 @@ ParseUploader.prototype.linkDataTo = function(data, objID, classes) {
         "dataType": "json",
         'success': function(data) {
             console.log("post uploaded successfully");
-            // TODO what to do?
+            if(obj_type === PARSEUPLOAD_CODE_FOUND) {
+              document.location.href = "../pages/newLostPage.html";
+            } else if(obj_type === PARSEUPLOAD_CODE_FOUND) {
+              document.location.href= "../pages/newFoundPage.html";
+            }
         },
         'error': function(data) {
             console.log("an error occured during post upload");

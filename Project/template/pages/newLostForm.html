@@ -79,12 +79,14 @@
                         <div class="col-md-3"></div>
                         <div class="col-sm-6">
                        <div class = "panel panel-primary">
-                         <div class="panel-heading">Report Lost</div>
+                         <div class="panel-heading">Report Lost Item(s)</div>
                          <div class="panel-body">
+                           <div class="col-md-1"></div>
+                           <div class = 'infobt'><label>Your Contact Information</label></div>
                           <div class="forms">
                          <form class="form-horizontal">
                             <div class = "form-group">
-                              <label for="lostform" class="col-sm-4 control-label">Name</label>
+                              <label for="lostform" class="col-sm-4 control-label">Name<font color="RED">*</font></label>
                               <div class = "col-sm-6">
                                 <input type="text" class="form-control" id="lostname" placeholder="First Last">
                               </div>
@@ -92,8 +94,24 @@
 
 
                             <div class = "form-group">
+                              <label for="lostform" class="col-sm-4 control-label">Phone</label>
+                              <div class = "col-sm-6">
+                                <input type="tel" class="form-control" id="phone" placeholder="0000000000" maxlength = "10">
+                              </div>
+                            </div>
+
+                            <div class = "form-group">
+                              <label for="lostform" class="col-sm-4 control-label">Email<font color="RED">*</font></label>
+                              <div class = "col-sm-6">
+                                <input type="email" class="form-control" id="lostemail" placeholder="abc@email.com">
+                              </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class = 'infobt'><label>Lost Item Detail(s)</label></div>
+
+                            <div class = "form-group">
                               <div class = "col-sm-2"></div>
-                               <label for="lostform" class="col-sm-2 control-label">Item Name</label>
+                               <label for="lostform" class="col-sm-2 control-label">Item Lost<font color="RED">*</font></label>
                                <div class = "col-sm-6" id="select">
                                  <select class="form-control" id="item">
                                    <option> Back Pack </option>
@@ -124,26 +142,15 @@
                              </div>
 
 
-                            <div class = "form-group">
-                              <label for="lostform" class="col-sm-4 control-label">Email</label>
-                              <div class = "col-sm-6">
-                                <input type="email" class="form-control" id="lostemail" placeholder="abc@email.com">
-                              </div>
-                            </div>
+
 
                             <div class = "form-group">
-                              <label for="lostform" class="col-sm-4 control-label">Lost Date</label>
+                              <label for="lostform" class="col-sm-4 control-label">Lost Date<font color="RED">*</font></label>
                               <div class = "col-sm-6">
                                 <input type="text" class="form-control" id="lostdate" placeholder="mm/dd/yyyy">
                               </div>
                             </div>
 
-                            <div class = "form-group">
-                              <label for="lostform" class="col-sm-4 control-label">Phone</label>
-                              <div class = "col-sm-6">
-                                <input type="tel" class="form-control" id="phone" placeholder="0000000000" maxlength = "10">
-                              </div>
-                            </div>
 
                             <div class = "form-group">
                               <label for="lostform" class="col-sm-4 control-label">Last Location</label>
@@ -155,14 +162,14 @@
 
                             <div class = "form-group">
                               <label for="lostform" class="col-sm-4 control-label">Upload Image</label>
-                              <div class = "col-sm-6">
+                              <div class = "col-sm-5">
                                 <input type="file" class="btn btn-default btn-file" id="img" placeholder=" Upload Image">
                               </div>
                             </div>
 
 
                             <div class = "form-group">
-                              <label for="lostform" class="col-sm-4 control-label">Description</label>
+                              <label for="lostform" class="col-sm-4 control-label">Description<font color="RED">*</font></label>
                               <div class = "col-sm-6">
                                 <textarea class="form-control" id="itemdesc" rows="3" maxlength = "300" placeholder="Maximum of 300 characters">
                                 </textarea>
@@ -170,7 +177,7 @@
                             </div>
 
                             <div class = "form-group">
-                              <div class = "col-sm-6"></div>
+                              <div class = "col-sm-5"></div>
                               <div class="col-sm-1">
                                 <button type="button" class="btn btn-primary" id="submit">Submit</button>
                               </div>

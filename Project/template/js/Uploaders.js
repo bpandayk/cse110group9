@@ -60,10 +60,13 @@ ParseUploader.prototype.upload = function(item,obj_type){
     }
 
     if(item.loc.getValue() == '')
-      location = "Not Available";
+      location = "Not Availabe";
     else {
-      location = item.phone.getValue();
+      location = item.loc.getValue();
     }
+
+    var dt = new Date(item.reportDate.getValue());
+    dt = dt.toISOString()
 
     console.log(phone);
     console.log(location);
@@ -81,6 +84,7 @@ ParseUploader.prototype.upload = function(item,obj_type){
     upload_obj.set("LCemail",  String(item.email.getValue()).toLowerCase());
     upload_obj.set("LCloc",    String(location.toLowerCase()));
     upload_obj.set("LCitem",   String(item.itemName.getValue()).toLowerCase());
+    upload_obj.set("isodate",  String(dt));
     console.log('done');
 
     // save myLost to parse

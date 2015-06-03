@@ -8,7 +8,7 @@ var ListManager = function(results) {
 
 ListManager.prototype.drawList= function(tooMany, numberOfPages)
 {
-  $('#feed').empty();
+
   $.each(this.results, function(index, value) {
      var phto = value.get("myfile");
      var miniImg = new Image;
@@ -29,7 +29,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
                 "Description: " + value.get("descp") + '</p>'+ '</td>'+
                 '</tr></table></div>';
 
-       $('#feed').prepend(mol);
+       $('#feed').append(mol);
 
   });
 
@@ -122,8 +122,9 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
             var phon = value.get("phone");
             console.log(phon);
             if(phon.includes("Not Available")){
-              $('#element_to_pop_up').append("<p><font color='RED'> Sorry.Your"+
-               " request could not be completed. Error- Phone Not Available</font></p>");
+              $('#smss').empty();
+              $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+               " request could not be completed. Error- Phone Not Available</font></p></div>");
             }
             else {
               smsForm();
@@ -209,7 +210,7 @@ var sendSMS = function(toPhone, name) {
           );
   var phone1=toPhone;
   var message1= $("#smsbody").val();
-console.log(message1);
+  console.log(message1);
 
 
   Parse.Cloud.run('sendSMS', {PhoneNumbers:phone1,Message:message1}, {
@@ -236,8 +237,10 @@ ListManager.prototype.sendEmail = function(emailAddress) {}
 
 ///////////////////////////////////////////////////////////////
 
-var Downloader = function(className){
+var Downloader = function(className, counter, qcounter){
   this.className = className;
+  this.counter = counter;
+  this.qcounter = qcounter;
 }
 
 Downloader.prototype.download = function() {
@@ -246,13 +249,23 @@ Downloader.prototype.download = function() {
   var tooMany = false;
   var numberOfPages = 1;
   var query = new Parse.Query(this.className);
+  var date = new Date("06-01-2015");
 
-  //query.limit(10);
+  query.descending("createdAt");
+  query.skip(this.counter);
+  query.limit(4);
+  this.counter = this.counter+4;
   query.find({
     success:function(results){
-      var list = new ListManager(results);
-      list.drawList(true, 1);
+      if(results.length > 0) {
+        var list = new ListManager(results);
+        list.drawList(true, 1);
+      } else if (results.length == 0){
+        $('#feed').append('<div class="well well-lg black-font" >'+
+        "<p>NO MORE POST TO LOAD</p>");
+        //$(window).unbind('scroll');
       }
+    }
   });
 }
 
@@ -281,16 +294,24 @@ Downloader.prototype.queryDownload = function(keyword) {
 
   var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
 
+  mainQuery.descending();
+  mainQuery.skip(this.qcounter);
+  mainQuery.limit(5);
+  this.qcounter = this.qcounter+5;
+
   mainQuery.find({
     success: function(results){
       if(results.length > 0) {
-      var list1 = new ListManager(results);
+       var list1 = new ListManager(results);
+
+
       list1.drawList(false, 1);
     } else if(results.length == 0) {
-      $("#feed").empty();
-      $('#feed').prepend('<div class="well well-lg black-font" >'+
+      //$("#feed").empty();
+      $('#feed').append('<div class="well well-lg black-font" >'+
       "<p>Your search - <font color = 'RED'>"+keyword+
-      " </font> did not match any documents</p> <p>Try with another keyword</p>");
+      " </font> No matches</p> <p>Try with another keyword</p>");
+      //$(window).unbind('scroll');
     }
   }
 
@@ -302,6 +323,8 @@ Downloader.prototype.queryDownload = function(keyword) {
 Downloader.prototype.downloadByDate = function(date) {
    Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
    "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
+   var date = new Date('05-02-2015');
+   date = date.toISOString();
    var query = new Parse.Query(this.className);
    query.greaterThanOrEqualTo("createdAt", date);
    query.find({
@@ -342,8 +365,15 @@ var Items = function(value) {
 /////////////////////////////////////////////////////////////
 var main = function(){
   if(location.pathname == "/pages/newLostPage.html") {
-    var lost = new Downloader("Lost");
+    var counter=0;
+    var qCounter=0;
+    var mainFeed = false;
+    var queryFeed = false;
+    var keyword;
+
+    var lost = new Downloader("Lost",counter, qCounter);
     var res = lost.download();
+    mainFeed = true;
     $('#searchLost').bind('keypress', function(e){
       if(e.keyCode==13){
          $('#listLostSearch').trigger('click');
@@ -351,16 +381,46 @@ var main = function(){
     });
 
     $('#listLostSearch').click(function(){
-      var keyword = $('#searchLost').val();
+      keyword = $('#searchLost').val();
       if(keyword.length == 0){
+        $(window).bind('scroll');
+        $('#feed').empty();
+        lost = new Downloader("Lost",counter, qCounter);
         lost.download();
+        mainFeed = true;
+        queryFeed = false;
       } else {
-      lost.queryDownload(keyword);
+        $('#feed').empty();
+        $(window).bind('scroll');
+       lost.queryDownload(keyword);
+
+      queryFeed = true;
+      mainFeed = false;
       }
     });
-  }
 
-  else if(location.pathname == "/pages/newFoundPage.html") {
+    var scrll = function(){
+   $(window).scroll(function(){
+       if($(document).height()==$(window).scrollTop()+$(window).height()){
+           if(mainFeed==true) {
+             lost.download();
+             console.log(lost.counter);
+           }
+
+          if(queryFeed==true) {
+            lost.queryDownload(keyword);
+            console.log(lost.qCounter);
+          }
+
+
+       }
+
+
+   });
+}
+
+scrll();
+  } else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");
     found.download();
 

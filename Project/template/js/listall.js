@@ -121,15 +121,46 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
           $("#S"+value.id).click(function(){
             var phon = value.get("phone");
             console.log(phon);
+
+
+            console.log(phon);
             if(phon == "Not Available"){
               $('#smss').empty();
               $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
                " request could not be completed. Error- Phone Not Available</font></p></div>");
-            }
-            else {
+            }else {
               smsForm();
               $("#Esubmit").click(function(){
-                sendSMS(value.get("phone"),value.get("name"));
+                var Sname = $("#Sname").val();
+                var Semail = $("#SEmail").val();
+                console.log(Semail);
+                var smsbody = $("#smsbody").val();
+                console.log(smsbody);
+                if (Sname == '') {
+                  $('#smss').empty();
+                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+                   " request could not be completed. Error- Did not enter your Name</font></p></div>");
+
+                } else if (Semail == '') {
+                  $('#smss').empty();
+                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+                   " request could not be completed. Error- Did not enter your Email</font></p></div>");
+
+                }else if(smsbody=='') {
+                  $('#smss').empty();
+                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+                   " request could not be completed. Error- Did not enter SMS message</font></p></div>");
+                } else if (Sname == '' && Semail =='' && smsbody=='') {
+                  $('#smss').empty();
+                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+                   " request could not be completed. Error- SMS form is empty</font></p></div>");
+                } else {
+                  sendSMS(value.get("phone"),value.get("name"));
+                }
+
+
+
+
               });
             }
           });
@@ -222,6 +253,7 @@ var sendSMS = function(toPhone, name) {
 
     },
     error: function(error) {
+      $('#smss').empty();
       $('#element_to_pop_up').append("<p><font color='RED'>Message not sent - " +
        phone1+"</font></p>");
       document.getElementById("smsform").reset();

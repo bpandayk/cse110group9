@@ -121,7 +121,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
           $("#S"+value.id).click(function(){
             var phon = value.get("phone");
             console.log(phon);
-            if(phon.includes("Not Available")){
+            if(phon == "Not Available"){
               $('#smss').empty();
               $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
                " request could not be completed. Error- Phone Not Available</font></p></div>");
@@ -263,7 +263,8 @@ Downloader.prototype.download = function() {
       } else if (results.length == 0){
         $('#feed').append('<div class="well well-lg black-font" >'+
         "<p>NO MORE POST TO LOAD</p>");
-        //$(window).unbind('scroll');
+         mainFeed = false;
+        $(window).off('scroll');
       }
     }
   });
@@ -311,7 +312,7 @@ Downloader.prototype.queryDownload = function(keyword) {
       $('#feed').append('<div class="well well-lg black-font" >'+
       "<p>Your search - <font color = 'RED'>"+keyword+
       " </font> No matches</p> <p>Try with another keyword</p>");
-      //$(window).unbind('scroll');
+      $(window).off('scroll');
     }
   }
 
@@ -383,7 +384,7 @@ var main = function(){
     $('#listLostSearch').click(function(){
       keyword = $('#searchLost').val();
       if(keyword.length == 0){
-        $(window).bind('scroll');
+        scrll();
         $('#feed').empty();
         lost = new Downloader("Lost",counter, qCounter);
         lost.download();
@@ -391,7 +392,7 @@ var main = function(){
         queryFeed = false;
       } else {
         $('#feed').empty();
-        $(window).bind('scroll');
+        scrll();
        lost.queryDownload(keyword);
 
       queryFeed = true;
@@ -399,8 +400,8 @@ var main = function(){
       }
     });
 
-    var scrll = function(){
-   $(window).scroll(function(){
+   var scrll = function(){
+   $(window).on('scroll',function(){
        if($(document).height()==$(window).scrollTop()+$(window).height()){
            if(mainFeed==true) {
              lost.download();
@@ -420,6 +421,7 @@ var main = function(){
 }
 
 scrll();
+
   } else if(location.pathname == "/pages/newFoundPage.html") {
     var found = new Downloader("Found");
     found.download();

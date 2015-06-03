@@ -174,9 +174,9 @@ ParseUploader.prototype.linkDataTo = function(data, objID, classes) {
         "dataType": "json",
         'success': function(data) {
             console.log("post uploaded successfully");
-            if(obj_type === PARSEUPLOAD_CODE_FOUND) {
+            if(classes == 'Lost') {
               document.location.href = "../pages/newLostPage.html";
-            } else if(obj_type === PARSEUPLOAD_CODE_FOUND) {
+            } else if(classes =='Found') {
               document.location.href= "../pages/newFoundPage.html";
             }
         },

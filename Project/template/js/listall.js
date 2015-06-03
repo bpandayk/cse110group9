@@ -309,10 +309,11 @@ Downloader.prototype.queryDownload = function(keyword) {
       list1.drawList(false, 1);
     } else if(results.length == 0) {
       //$("#feed").empty();
-      $('#feed').append('<div class="well well-lg black-font" >'+
-      "<p>Your search - <font color = 'RED'>"+keyword+
-      " </font> No matches</p> <p>Try with another keyword</p>");
       $(window).off('scroll');
+      /*$('#feed').append('<div class="well well-lg black-font" >'+
+      "<p>Your search - <font color = 'RED'>"+keyword+
+      " </font> No matches</p> <p>Try with another keyword</p>");*/
+
     }
   }
 
@@ -365,12 +366,14 @@ var Items = function(value) {
 
 /////////////////////////////////////////////////////////////
 var main = function(){
+  $('.hideout').hide();
+  var counter=0;
+  var qCounter=0;
+  var mainFeed = false;
+  var queryFeed = false;
+  var keyword;
   if(location.pathname == "/pages/newLostPage.html") {
-    var counter=0;
-    var qCounter=0;
-    var mainFeed = false;
-    var queryFeed = false;
-    var keyword;
+
 
     var lost = new Downloader("Lost",counter, qCounter);
     var res = lost.download();
@@ -405,12 +408,12 @@ var main = function(){
        if($(document).height()==$(window).scrollTop()+$(window).height()){
            if(mainFeed==true) {
              lost.download();
+             mainFeed=true;
              console.log(lost.counter);
            }
 
           if(queryFeed==true) {
             lost.queryDownload(keyword);
-            console.log(lost.qCounter);
           }
 
 
@@ -423,8 +426,9 @@ var main = function(){
 scrll();
 
   } else if(location.pathname == "/pages/newFoundPage.html") {
-    var found = new Downloader("Found");
+    var found = new Downloader("Found",counter, qCounter);
     found.download();
+    mainFeed = true;
 
     $('#searchFound').bind('keypress', function(e){
       if(e.keyCode==13){
@@ -433,14 +437,47 @@ scrll();
     });
 
     $('#listFoundSearch').click(function(){
-      var keyword = $('#searchFound').val();
+      keyword = $('#searchFound').val();
       console.log(keyword);
       if(keyword.length == 0){
+        scrll();
+        $('#feed').empty();
+        found = new Downloader("Found",counter, qCounter);
         found.download();
+        mainFeed = true;
+        queryFeed = false;
       } else {
-      found.queryDownload(keyword);
+        $('#feed').empty();
+        scrll();
+       found.queryDownload(keyword);
+
+      queryFeed = true;
+      mainFeed = false;
       }
     });
+
+   var scrll = function(){
+   $(window).on('scroll',function(){
+       if($(document).height()==$(window).scrollTop()+$(window).height()){
+           if(mainFeed==true) {
+             found.download();
+             console.log(found.counter);
+           }
+
+          if(queryFeed==true) {
+            found.queryDownload(keyword);
+            console.log(found.qCounter);
+          }
+
+
+       }
+
+
+   });
+}
+
+scrll();
+
 
   }
 } // End of main

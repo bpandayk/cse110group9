@@ -65,8 +65,8 @@ Email.prototype.validate = function() {
 function ReportDate(obj) {
     this.obj = obj;
     if ( 'datepicker' in this.obj )
-        this.obj.datepicker(); // enable datepicker
-    else 
+        this.obj.datepicker({altFormat: "yy-mm-dd"}); // enable datepicker
+    else
         console.log('failed to load datepicker()');
 }
 extend(ReportDate,Field);
@@ -130,6 +130,7 @@ Image.prototype.validate = function() { return true; }
 Image.prototype.trackFile = function() {
     console.log('entered Image.trackFile');
     var img = this;
+    var defaults = "../img/Noimage.png";
     img.obj.bind('change', function(e) {
         var files = e.target.files || e.dataTransfer.files;
         img.file = files[0];

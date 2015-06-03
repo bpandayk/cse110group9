@@ -202,3 +202,17 @@ p{
     box-shadow: 0px 0px 10px #f00;
 }
 
+
+#fixedpanel {
+  position: fixed;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 573px;
+}
+
+.infobt{
+  padding-top:30px;
+  padding-bottom:30px;
+  padding-left:50px;
+  color:#0066CC;
+}

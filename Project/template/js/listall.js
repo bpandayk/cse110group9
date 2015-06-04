@@ -112,18 +112,21 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
 
 
             $("#Esubmit").click(function(){
-              sendEmail(value.get("email"),value.get("name"));
+
+              var Ename = $('#Sname').val();
+              var Eemail = $('#SEmail').val();
+              var Esubject = $('#subject').val();
+              var Ebody = $('#emailbody').val();
+              var valiemail = new Validator();
+              if(valiemail.validEmailform(Ename,Eemail,Esubject,Ebody))
+                 sendEmail(value.get("email"),Ename,Eemail,Esubject, Ebody);
             });
           });
 
 
-
+    /////////////////////////////////////////////////////
           $("#S"+value.id).click(function(){
             var phon = value.get("phone");
-            console.log(phon);
-
-
-            console.log(phon);
             if(phon == "Not Available"){
               $('#smss').empty();
               $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
@@ -131,36 +134,14 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
             }else {
               smsForm();
               $("#Esubmit").click(function(){
+                $('#smss').empty();
                 var Sname = $("#Sname").val();
-                var Semail = $("#SEmail").val();
-                console.log(Semail);
+                var Sphone = $('#Semail').val();
                 var smsbody = $("#smsbody").val();
                 console.log(smsbody);
-                if (Sname == '') {
-                  $('#smss').empty();
-                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
-                   " request could not be completed. Error- Did not enter your Name</font></p></div>");
-
-                } else if (Semail == '') {
-                  $('#smss').empty();
-                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
-                   " request could not be completed. Error- Did not enter your Email</font></p></div>");
-
-                }else if(smsbody=='') {
-                  $('#smss').empty();
-                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
-                   " request could not be completed. Error- Did not enter SMS message</font></p></div>");
-                } else if (Sname == '' && Semail =='' && smsbody=='') {
-                  $('#smss').empty();
-                  $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
-                   " request could not be completed. Error- SMS form is empty</font></p></div>");
-                } else {
-                  sendSMS(value.get("phone"),value.get("name"));
-                }
-
-
-
-
+                var validatesms = new Validator();
+                if(validatesms.validSmsform(Sname, Sphone,smsbody))
+                  sendSMS(value.get("phone"),Sname,Sphone,smsbody);
               });
             }
           });
@@ -186,11 +167,11 @@ var smsForm = function(){
             '<label for="lostform">Name<font color="RED">*</font></label>'+
               '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
           '</div> <div class="form-group">' +
-           '<label for="exampleInputEmail1">From: Email address<font color="RED">*</font></label>' +
-           '<input type="email" class="form-control" id="SEmail" placeholder="Enter your contact email"></div>' +
+           '<label for="exampleInputEmail1">Phone Number<font color="RED">*</font></label>' +
+           '<input type="tel" class="form-control" id="SEmail" placeholder="Enter your Phone Number" maxlength="10";></div>' +
          '<div class="form-group">'+
          '<div class="form-group">'+
-           '<textarea class="form-control" maxlength="160"   placeholder="MAX OF 160 CHARACTERS" id = "smsbody" rows="20">'+
+           '<textarea class="form-control" maxlength="140"   placeholder="MAX OF 140 CHARACTERS" id = "smsbody" rows="20">'+
            '</textarea>'+
            '</div><div>'+
            '<button type="button" class="btn btn-primary" id="Esubmit">Send SMS</button></div>'+
@@ -201,18 +182,19 @@ var smsForm = function(){
 }
 
 //------------------------------------------------------------------------------
-  var sendEmail = function(toEmail, name){
+  var sendEmail = function(toEmail, name,email,sub,body){
     //document.location.href = '../pages/newEmailForm.html';
     console.log("Sending Email");
       Parse.initialize(
             "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
             "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
             );
-      var from1 = $("SEmail").val();
+      var from1 = email;
       var to1 = toEmail;
-      var subject1 = "LOST&FOUND : " + $("#subject").val();
-      var body1 = $("#emailbody").val();
-      console.log(to1);
+      var subject1 = "LOST&FOUND : " + sub;
+      var body1 = "From: " + name +
+                   "Reply to: "+ email+
+                   "     "+body;
 
       Parse.Cloud.run('sendEmail', {to:to1,subject:subject1,text:body1},{
         success:function() {
@@ -234,13 +216,13 @@ var smsForm = function(){
 }
 
 //______________________________________________________________________________
-var sendSMS = function(toPhone, name) {
+var sendSMS = function(toPhone, name,frmPhone,msg) {
   Parse.initialize(
           "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
           "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
           );
   var phone1=toPhone;
-  var message1= $("#smsbody").val();
+  var message1= "From:"+frmPhone+ " - "+msg
   console.log(message1);
 
 
@@ -387,14 +369,100 @@ Downloader.prototype.onClickDownload = function(objectID) {
 }
 
 /////////////////////////////////////////////////////////////
-var Validator = function(object){
-  this.object = object;
+var Validator = function(){
 }
 
-//////////////////////////////////////////////////////////////
-var Items = function(value) {
-  this.value = value;
+Validator.prototype.validPhone=function(Phone){
+  var correct_phone_num_reg = /^\d{10}$/;
+  var empty = Phone === '';
+  if( !correct_phone_num_reg.test(Phone) && !empty ) {
+      return false;
+  } else {
+      return true;
+  }
 }
+
+Validator.prototype.validEmail=function(Email){
+  atpos =  Email.indexOf('@');
+  dotpos = Email.lastIndexOf('.');
+  if( atpos<1 || dotpos-atpos<2 ) {
+      return false;
+  } else {
+      return true;
+  }
+}
+
+
+Validator.prototype.validSmsform = function(Name, Phone, Body){
+
+   var phn = this.validPhone(Phone);
+
+
+  if(Name!='' && phn && Body == '') {
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Body of SMS empty</font></p></div>");
+    return false;
+  } else if (Name=='' && phn && Body != ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Name field empty</font></p></div>");
+     return false;
+  } else if (Name!='' && !phn && Body != ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Invalid Phone Number</font></p></div>");
+     return false;
+  } else if (Name=='' || !phn || Body == ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
+     return false;
+  } else {
+    return true;
+  }
+}
+
+
+
+Validator.prototype.validEmailform = function(Name, Email, Subject,Body){
+
+   var eml = this.validEmail(Email);
+
+
+  if(Name!='' && eml && Body == '' && Subject != '') {
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Body of Email empty</font></p></div>");
+    return false;
+  } else if (Name=='' && eml && Body != '' && Subject != ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Name field empty</font></p></div>");
+     return false;
+  } else if (Name!='' && eml && Body != '' && Subject ==''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Subject Field Empty</font></p></div>");
+     return false;
+  }else if (Name!='' && !eml && Body != '' && Subject !=''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Invalid Email Address/font></p></div>");
+     return false;
+  } else if (Name=='' || !eml || Body == '' || Subject == ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
+     return false;
+  } else {
+    return true;
+  }
+}
+
+
+
+
 
 /////////////////////////////////////////////////////////////
 var main = function(){
@@ -428,6 +496,7 @@ var main = function(){
       } else {
         $('#feed').empty();
         scrll();
+        lost = new Downloader("Lost",counter, qCounter);
        lost.queryDownload(keyword);
 
       queryFeed = true;
@@ -481,6 +550,7 @@ scrll();
       } else {
         $('#feed').empty();
         scrll();
+        found = new Downloader("Found",counter, qCounter);
        found.queryDownload(keyword);
 
       queryFeed = true;

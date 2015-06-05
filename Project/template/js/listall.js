@@ -18,15 +18,22 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
        miniImg.src = phto.url;
      }
 
+     var des = value.get("descp");
+
+     var dt = value.createdAt;
+     var Months = ["January", "February", "March",'April','May','June','July','August','September','October','November', 'December']
+     dt = Months[dt.getMonth()] + " " + dt.getDay()  + ",  "+dt.getFullYear();
+
      var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
                 '<table style = width:100%>'+
                 '<tr>'+
                 '<td>'+
                 '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
                 '</td>'+
-                '<td> <p> Item: ' + value.get("item") + '</p>'+
+                '<td> <p><strong> Posted on: </strong>' +dt +'</p>'+
+                '<p> <strong>Item: </strong>' + value.get("item") + '</p>'+
                 '<p class = "hide2" id = "' + value.id + 'details">' +
-                "Description: " + value.get("descp") + '</p>'+ '</td>'+
+                "<p><strong>Description: </strong>" + des + '</p>'+ '</td>'+
                 '</tr></table></div>';
 
        $('#feed').append(mol);
@@ -286,12 +293,17 @@ Downloader.prototype.download = function() {
 
 
 
-Downloader.prototype.queryDownload = function(keyword) {
+Downloader.prototype.queryDownload = function(keyword, date,dateto) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
   //keyword = keyword.toLowerCase();
+  if(date != '') {
+    date = new Date(date);
+    //date = date.toISOString();
+  }
 
+if(keyword!='' && date != '') {
   var query1 = new Parse.Query(this.className);
   query1.contains('LCname', keyword);
 
@@ -307,9 +319,36 @@ Downloader.prototype.queryDownload = function(keyword) {
   var query5 = new Parse.Query(this.className);
   query5.contains('LCloc', keyword);
 
-  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+  var query6 = new Parse.Query(this.className);
+  query6.greaterThanOrEqualTo('createdAt', date)
 
-  mainQuery.descending();
+  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+  mainQuery.greaterThanOrEqualTo('createdAt', date)
+} else if (keyword!='' && date == '') {
+  var query1 = new Parse.Query(this.className);
+  query1.contains('LCname', keyword);
+
+  var query2 = new Parse.Query(this.className);
+  query2.contains('LCitem', keyword);
+
+  var query3 = new Parse.Query(this.className);
+  query3.contains('phone', keyword);
+
+  var query4 = new Parse.Query(this.className);
+  query4.contains('LCemail', keyword);
+
+  var query5 = new Parse.Query(this.className);
+  query5.contains('LCloc', keyword);
+
+
+  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+} else if (keyword == '' && date!='') {
+  var mainQuery = new Parse.Query(this.className);
+  mainQuery.greaterThanOrEqualTo('createdAt', date);
+}
+
+
+  mainQuery.descending('createdAt');
   mainQuery.skip(this.qcounter);
   mainQuery.limit(5);
   this.qcounter = this.qcounter+5;
@@ -335,38 +374,6 @@ Downloader.prototype.queryDownload = function(keyword) {
 
 }
 
-
-Downloader.prototype.downloadByDate = function(date) {
-   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
-   var date = new Date('05-02-2015');
-   date = date.toISOString();
-   var query = new Parse.Query(this.className);
-   query.greaterThanOrEqualTo("createdAt", date);
-   query.find({
-    success: function(results){
-      var list1 = new ListManager(results);
-      list1.drawList(false, 1);
-    }
-  });
-}
-
-/*onclick on individual fees, this method opens up the detail pop up window of
- *that specific post feed.
- */
-
-Downloader.prototype.onClickDownload = function(objectID) {
-  Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
-
-  var query = new Parse.Query(this.className);
-  query.get(objectID, {
-    success: function(results){
-      var list1 = new ListManager(results);
-    }
-  });
-
-}
 
 /////////////////////////////////////////////////////////////
 var Validator = function(){
@@ -466,19 +473,43 @@ Validator.prototype.validEmailform = function(Name, Email, Subject,Body){
 
 /////////////////////////////////////////////////////////////
 var main = function(){
-  $('.hideout').hide();
+   $('.hideout').hide();
+   $('#searchdate').datepicker({maxDate:new Date()});
+   var m = $('#searchdate').val();
+   console.log(m);
+   var hide = true;
   var counter=0;
   var qCounter=0;
   var mainFeed = false;
   var queryFeed = false;
   var keyword;
+  var date;
+  var dateto;
   if(location.pathname == "/pages/newLostPage.html") {
-
-
     var lost = new Downloader("Lost",counter, qCounter);
     var res = lost.download();
     mainFeed = true;
+
+    $('#datesrch').click(function(){
+      if(hide == true) {
+        $('.hideout').show();
+        hide = false;
+      } else if(hide == false) {
+        $('.hideout').hide();
+        hide = true;
+      }
+
+    });
+
+
+
     $('#searchLost').bind('keypress', function(e){
+      if(e.keyCode==13){
+         $('#listLostSearch').trigger('click');
+      }
+    });
+
+    $('#searchdate').bind('keypress', function(e){
       if(e.keyCode==13){
          $('#listLostSearch').trigger('click');
       }
@@ -486,7 +517,11 @@ var main = function(){
 
     $('#listLostSearch').click(function(){
       keyword = $('#searchLost').val();
-      if(keyword.length == 0){
+      date = $('#searchdate').val();
+      $(".hideout").hide();
+      hide = true;
+      console.log(date);
+      if(keyword.length == 0 && date == ''){
         scrll();
         $('#feed').empty();
         lost = new Downloader("Lost",counter, qCounter);
@@ -497,7 +532,7 @@ var main = function(){
         $('#feed').empty();
         scrll();
         lost = new Downloader("Lost",counter, qCounter);
-       lost.queryDownload(keyword);
+       lost.queryDownload(keyword, date,dateto);
 
       queryFeed = true;
       mainFeed = false;
@@ -514,7 +549,7 @@ var main = function(){
            }
 
           if(queryFeed==true) {
-            lost.queryDownload(keyword);
+            lost.queryDownload(keyword,date,dateto);
           }
 
 
@@ -570,11 +605,7 @@ scrll();
             found.queryDownload(keyword);
             console.log(found.qCounter);
           }
-
-
        }
-
-
    });
 }
 

@@ -65,7 +65,7 @@ Email.prototype.validate = function() {
 function ReportDate(obj) {
     this.obj = obj;
     if ( 'datepicker' in this.obj )
-        this.obj.datepicker({altFormat: "yy-mm-dd"}); // enable datepicker
+        this.obj.datepicker({maxDate:new Date()}); // enable datepicker
     else
         console.log('failed to load datepicker()');
 }

@@ -203,11 +203,26 @@ p{
 }
 
 
+#feed{
+  overflow:scroll;
+}
+
 #fixedpanel {
   position: fixed;
+  padding-top: 20px;
+  padding-bottom: 15px;
+  width:560px;
+  resize: both;
+
+}
+
+#fixedp {
+
   padding-top: 15px;
   padding-bottom: 15px;
-  width: 573px;
+  width:600px;
+  resize: both;
+
 }
 
 .infobt{
@@ -215,4 +230,8 @@ p{
   padding-bottom:30px;
   padding-left:50px;
   color:#0066CC;
+}
+
+.form-inline{
+  padding-top: 20px;
 }

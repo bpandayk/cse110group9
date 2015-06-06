@@ -18,15 +18,22 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
        miniImg.src = phto.url;
      }
 
+     var des = value.get("descp");
+
+     var dt = value.createdAt;
+     var Months = ["January", "February", "March",'April','May','June','July','August','September','October','November', 'December']
+     dt = Months[dt.getMonth()] + " " + dt.getDay()  + ",  "+dt.getFullYear();
+
      var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
                 '<table style = width:100%>'+
                 '<tr>'+
                 '<td>'+
                 '<img src="'+ miniImg.src +'" height="150" width="150"/>'+
                 '</td>'+
-                '<td> <p> Item: ' + value.get("item") + '</p>'+
+                '<td> <p><strong> Posted on: </strong>' +dt +'</p>'+
+                '<p> <strong>Item: </strong>' + value.get("item") + '</p>'+
                 '<p class = "hide2" id = "' + value.id + 'details">' +
-                "Description: " + value.get("descp") + '</p>'+ '</td>'+
+                "<p><strong>Description: </strong>" + des + '</p>'+ '</td>'+
                 '</tr></table></div>';
 
        $('#feed').append(mol);
@@ -112,24 +119,36 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
 
 
             $("#Esubmit").click(function(){
-              sendEmail(value.get("email"),value.get("name"));
+
+              var Ename = $('#Sname').val();
+              var Eemail = $('#SEmail').val();
+              var Esubject = $('#subject').val();
+              var Ebody = $('#emailbody').val();
+              var valiemail = new Validator();
+              if(valiemail.validEmailform(Ename,Eemail,Esubject,Ebody))
+                 sendEmail(value.get("email"),Ename,Eemail,Esubject, Ebody);
             });
           });
 
 
-
+    /////////////////////////////////////////////////////
           $("#S"+value.id).click(function(){
             var phon = value.get("phone");
-            console.log(phon);
-            if(phon.includes("Not Available")){
+            if(phon == "Not Available"){
               $('#smss').empty();
               $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
                " request could not be completed. Error- Phone Not Available</font></p></div>");
-            }
-            else {
+            }else {
               smsForm();
               $("#Esubmit").click(function(){
-                sendSMS(value.get("phone"),value.get("name"));
+                $('#smss').empty();
+                var Sname = $("#Sname").val();
+                var Sphone = $('#Semail').val();
+                var smsbody = $("#smsbody").val();
+                console.log(smsbody);
+                var validatesms = new Validator();
+                if(validatesms.validSmsform(Sname, Sphone,smsbody))
+                  sendSMS(value.get("phone"),Sname,Sphone,smsbody);
               });
             }
           });
@@ -155,11 +174,11 @@ var smsForm = function(){
             '<label for="lostform">Name<font color="RED">*</font></label>'+
               '<input type="text" class="form-control" id="Sname" placeholder="First Last">'+
           '</div> <div class="form-group">' +
-           '<label for="exampleInputEmail1">From: Email address<font color="RED">*</font></label>' +
-           '<input type="email" class="form-control" id="SEmail" placeholder="Enter your contact email"></div>' +
+           '<label for="exampleInputEmail1">Phone Number<font color="RED">*</font></label>' +
+           '<input type="tel" class="form-control" id="SEmail" placeholder="Enter your Phone Number" maxlength="10";></div>' +
          '<div class="form-group">'+
          '<div class="form-group">'+
-           '<textarea class="form-control" maxlength="160"   placeholder="MAX OF 160 CHARACTERS" id = "smsbody" rows="20">'+
+           '<textarea class="form-control" maxlength="140"   placeholder="MAX OF 140 CHARACTERS" id = "smsbody" rows="20">'+
            '</textarea>'+
            '</div><div>'+
            '<button type="button" class="btn btn-primary" id="Esubmit">Send SMS</button></div>'+
@@ -170,18 +189,19 @@ var smsForm = function(){
 }
 
 //------------------------------------------------------------------------------
-  var sendEmail = function(toEmail, name){
+  var sendEmail = function(toEmail, name,email,sub,body){
     //document.location.href = '../pages/newEmailForm.html';
     console.log("Sending Email");
       Parse.initialize(
             "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
             "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
             );
-      var from1 = $("SEmail").val();
+      var from1 = email;
       var to1 = toEmail;
-      var subject1 = "LOST&FOUND : " + $("#subject").val();
-      var body1 = $("#emailbody").val();
-      console.log(to1);
+      var subject1 = "LOST&FOUND : " + sub;
+      var body1 = "From: " + name +
+                   "Reply to: "+ email+
+                   "     "+body;
 
       Parse.Cloud.run('sendEmail', {to:to1,subject:subject1,text:body1},{
         success:function() {
@@ -203,13 +223,13 @@ var smsForm = function(){
 }
 
 //______________________________________________________________________________
-var sendSMS = function(toPhone, name) {
+var sendSMS = function(toPhone, name,frmPhone,msg) {
   Parse.initialize(
           "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
           "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
           );
   var phone1=toPhone;
-  var message1= $("#smsbody").val();
+  var message1= "From:"+frmPhone+ " - "+msg
   console.log(message1);
 
 
@@ -222,6 +242,7 @@ var sendSMS = function(toPhone, name) {
 
     },
     error: function(error) {
+      $('#smss').empty();
       $('#element_to_pop_up').append("<p><font color='RED'>Message not sent - " +
        phone1+"</font></p>");
       document.getElementById("smsform").reset();
@@ -263,7 +284,8 @@ Downloader.prototype.download = function() {
       } else if (results.length == 0){
         $('#feed').append('<div class="well well-lg black-font" >'+
         "<p>NO MORE POST TO LOAD</p>");
-        //$(window).unbind('scroll');
+         mainFeed = false;
+        $(window).off('scroll');
       }
     }
   });
@@ -271,12 +293,17 @@ Downloader.prototype.download = function() {
 
 
 
-Downloader.prototype.queryDownload = function(keyword) {
+Downloader.prototype.queryDownload = function(keyword, date,dateto) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
   //keyword = keyword.toLowerCase();
+  if(date != '') {
+    date = new Date(date);
+    //date = date.toISOString();
+  }
 
+if(keyword!='' && date != '') {
   var query1 = new Parse.Query(this.className);
   query1.contains('LCname', keyword);
 
@@ -292,9 +319,36 @@ Downloader.prototype.queryDownload = function(keyword) {
   var query5 = new Parse.Query(this.className);
   query5.contains('LCloc', keyword);
 
-  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+  var query6 = new Parse.Query(this.className);
+  query6.greaterThanOrEqualTo('createdAt', date)
 
-  mainQuery.descending();
+  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+  mainQuery.greaterThanOrEqualTo('createdAt', date)
+} else if (keyword!='' && date == '') {
+  var query1 = new Parse.Query(this.className);
+  query1.contains('LCname', keyword);
+
+  var query2 = new Parse.Query(this.className);
+  query2.contains('LCitem', keyword);
+
+  var query3 = new Parse.Query(this.className);
+  query3.contains('phone', keyword);
+
+  var query4 = new Parse.Query(this.className);
+  query4.contains('LCemail', keyword);
+
+  var query5 = new Parse.Query(this.className);
+  query5.contains('LCloc', keyword);
+
+
+  var mainQuery = Parse.Query.or(query1,query2,query3,query4,query5);
+} else if (keyword == '' && date!='') {
+  var mainQuery = new Parse.Query(this.className);
+  mainQuery.greaterThanOrEqualTo('createdAt', date);
+}
+
+
+  mainQuery.descending('createdAt');
   mainQuery.skip(this.qcounter);
   mainQuery.limit(5);
   this.qcounter = this.qcounter+5;
@@ -308,10 +362,11 @@ Downloader.prototype.queryDownload = function(keyword) {
       list1.drawList(false, 1);
     } else if(results.length == 0) {
       //$("#feed").empty();
-      $('#feed').append('<div class="well well-lg black-font" >'+
+      $(window).off('scroll');
+      /*$('#feed').append('<div class="well well-lg black-font" >'+
       "<p>Your search - <font color = 'RED'>"+keyword+
-      " </font> No matches</p> <p>Try with another keyword</p>");
-      //$(window).unbind('scroll');
+      " </font> No matches</p> <p>Try with another keyword</p>");*/
+
     }
   }
 
@@ -320,61 +375,141 @@ Downloader.prototype.queryDownload = function(keyword) {
 }
 
 
-Downloader.prototype.downloadByDate = function(date) {
-   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
-   var date = new Date('05-02-2015');
-   date = date.toISOString();
-   var query = new Parse.Query(this.className);
-   query.greaterThanOrEqualTo("createdAt", date);
-   query.find({
-    success: function(results){
-      var list1 = new ListManager(results);
-      list1.drawList(false, 1);
-    }
-  });
-}
-
-/*onclick on individual fees, this method opens up the detail pop up window of
- *that specific post feed.
- */
-
-Downloader.prototype.onClickDownload = function(objectID) {
-  Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
-  "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
-
-  var query = new Parse.Query(this.className);
-  query.get(objectID, {
-    success: function(results){
-      var list1 = new ListManager(results);
-    }
-  });
-
-}
-
 /////////////////////////////////////////////////////////////
-var Validator = function(object){
-  this.object = object;
+var Validator = function(){
 }
 
-//////////////////////////////////////////////////////////////
-var Items = function(value) {
-  this.value = value;
+Validator.prototype.validPhone=function(Phone){
+  var correct_phone_num_reg = /^\d{10}$/;
+  var empty = Phone === '';
+  if( !correct_phone_num_reg.test(Phone) && !empty ) {
+      return false;
+  } else {
+      return true;
+  }
 }
+
+Validator.prototype.validEmail=function(Email){
+  atpos =  Email.indexOf('@');
+  dotpos = Email.lastIndexOf('.');
+  if( atpos<1 || dotpos-atpos<2 ) {
+      return false;
+  } else {
+      return true;
+  }
+}
+
+
+Validator.prototype.validSmsform = function(Name, Phone, Body){
+
+   var phn = this.validPhone(Phone);
+
+
+  if(Name!='' && phn && Body == '') {
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Body of SMS empty</font></p></div>");
+    return false;
+  } else if (Name=='' && phn && Body != ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Name field empty</font></p></div>");
+     return false;
+  } else if (Name!='' && !phn && Body != ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Invalid Phone Number</font></p></div>");
+     return false;
+  } else if (Name=='' || !phn || Body == ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
+     return false;
+  } else {
+    return true;
+  }
+}
+
+
+
+Validator.prototype.validEmailform = function(Name, Email, Subject,Body){
+
+   var eml = this.validEmail(Email);
+
+
+  if(Name!='' && eml && Body == '' && Subject != '') {
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Body of Email empty</font></p></div>");
+    return false;
+  } else if (Name=='' && eml && Body != '' && Subject != ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Name field empty</font></p></div>");
+     return false;
+  } else if (Name!='' && eml && Body != '' && Subject ==''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Subject Field Empty</font></p></div>");
+     return false;
+  }else if (Name!='' && !eml && Body != '' && Subject !=''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- Invalid Email Address/font></p></div>");
+     return false;
+  } else if (Name=='' || !eml || Body == '' || Subject == ''){
+    $('#smss').empty();
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+     " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
+     return false;
+  } else {
+    return true;
+  }
+}
+
+
+
+
 
 /////////////////////////////////////////////////////////////
 var main = function(){
+   $('.hideout').hide();
+   $('#searchdate').datepicker({maxDate:new Date()});
+   var m = $('#searchdate').val();
+   console.log(m);
+   var hide = true;
+  var counter=0;
+  var qCounter=0;
+  var mainFeed = false;
+  var queryFeed = false;
+  var keyword;
+  var date;
+  var dateto;
   if(location.pathname == "/pages/newLostPage.html") {
-    var counter=0;
-    var qCounter=0;
-    var mainFeed = false;
-    var queryFeed = false;
-    var keyword;
-
     var lost = new Downloader("Lost",counter, qCounter);
     var res = lost.download();
     mainFeed = true;
+
+    $('#datesrch').click(function(){
+      if(hide == true) {
+        $('.hideout').show();
+        hide = false;
+      } else if(hide == false) {
+        $('.hideout').hide();
+        hide = true;
+      }
+
+    });
+
+
+
     $('#searchLost').bind('keypress', function(e){
+      if(e.keyCode==13){
+         $('#listLostSearch').trigger('click');
+      }
+    });
+
+    $('#searchdate').bind('keypress', function(e){
       if(e.keyCode==13){
          $('#listLostSearch').trigger('click');
       }
@@ -382,8 +517,12 @@ var main = function(){
 
     $('#listLostSearch').click(function(){
       keyword = $('#searchLost').val();
-      if(keyword.length == 0){
-        $(window).bind('scroll');
+      date = $('#searchdate').val();
+      $(".hideout").hide();
+      hide = true;
+      console.log(date);
+      if(keyword.length == 0 && date == ''){
+        scrll();
         $('#feed').empty();
         lost = new Downloader("Lost",counter, qCounter);
         lost.download();
@@ -391,25 +530,26 @@ var main = function(){
         queryFeed = false;
       } else {
         $('#feed').empty();
-        $(window).bind('scroll');
-       lost.queryDownload(keyword);
+        scrll();
+        lost = new Downloader("Lost",counter, qCounter);
+       lost.queryDownload(keyword, date,dateto);
 
       queryFeed = true;
       mainFeed = false;
       }
     });
 
-    var scrll = function(){
-   $(window).scroll(function(){
+   var scrll = function(){
+   $(window).on('scroll',function(){
        if($(document).height()==$(window).scrollTop()+$(window).height()){
            if(mainFeed==true) {
              lost.download();
+             mainFeed=true;
              console.log(lost.counter);
            }
 
           if(queryFeed==true) {
-            lost.queryDownload(keyword);
-            console.log(lost.qCounter);
+            lost.queryDownload(keyword,date,dateto);
           }
 
 
@@ -420,9 +560,11 @@ var main = function(){
 }
 
 scrll();
+
   } else if(location.pathname == "/pages/newFoundPage.html") {
-    var found = new Downloader("Found");
+    var found = new Downloader("Found",counter, qCounter);
     found.download();
+    mainFeed = true;
 
     $('#searchFound').bind('keypress', function(e){
       if(e.keyCode==13){
@@ -431,14 +573,44 @@ scrll();
     });
 
     $('#listFoundSearch').click(function(){
-      var keyword = $('#searchFound').val();
+      keyword = $('#searchFound').val();
       console.log(keyword);
       if(keyword.length == 0){
+        scrll();
+        $('#feed').empty();
+        found = new Downloader("Found",counter, qCounter);
         found.download();
+        mainFeed = true;
+        queryFeed = false;
       } else {
-      found.queryDownload(keyword);
+        $('#feed').empty();
+        scrll();
+        found = new Downloader("Found",counter, qCounter);
+       found.queryDownload(keyword);
+
+      queryFeed = true;
+      mainFeed = false;
       }
     });
+
+   var scrll = function(){
+   $(window).on('scroll',function(){
+       if($(document).height()==$(window).scrollTop()+$(window).height()){
+           if(mainFeed==true) {
+             found.download();
+             console.log(found.counter);
+           }
+
+          if(queryFeed==true) {
+            found.queryDownload(keyword);
+            console.log(found.qCounter);
+          }
+       }
+   });
+}
+
+scrll();
+
 
   }
 } // End of main

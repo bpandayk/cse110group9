@@ -112,7 +112,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
                '<textarea class="form-control" placeholder="Email Body" id = "emailbody" rows="20"></textarea>'+
                '</div><div>'+
                '<button type="button" class="btn btn-primary" id="Esubmit">Send Email</button></div>'+
-             '</div></div>  </form>';
+             '</div></div>  </form><div id="smss"> </div>';
 
              $('#element_to_pop_up').append(col);
              $('#element_to_pop_up').append(Emailform);
@@ -182,7 +182,7 @@ var smsForm = function(){
            '</textarea>'+
            '</div><div>'+
            '<button type="button" class="btn btn-primary" id="Esubmit">Send SMS</button></div>'+
-         '</div></div>  </form>';
+         '</div></div>  </form> <div id="smss"> </div>';
 
          $('#element_to_pop_up').append(col);
          $('#element_to_pop_up').append(smsform);
@@ -239,6 +239,8 @@ var sendSMS = function(toPhone, name,frmPhone,msg) {
       $('#element_to_pop_up').append("<p>SMS Sent Successfully to " +
        phone1+"</p>");
       document.getElementById("smsform").reset();
+      var bPopup = $('#element_to_pop_up').bPopup();
+      bPopup.close();
 
     },
     error: function(error) {
@@ -297,7 +299,7 @@ Downloader.prototype.queryDownload = function(keyword, date) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
-  //keyword = keyword.toLowerCase();
+  keyword = keyword.toLowerCase();
   if(date != '') {
     date = new Date(date);
     //date = date.toISOString();
@@ -364,9 +366,6 @@ if(keyword!='' && date != '') {
     } else if(results.length == 0) {
       //$("#feed").empty();
       $(window).off('scroll');
-      /*$('#feed').append('<div class="well well-lg black-font" >'+
-      "<p>Your search - <font color = 'RED'>"+keyword+
-      " </font> No matches</p> <p>Try with another keyword</p>");*/
 
     }
   }
@@ -402,29 +401,29 @@ Validator.prototype.validEmail=function(Email){
 
 
 Validator.prototype.validSmsform = function(Name, Phone, Body){
-
+  $('#smss').empty();
    var phn = this.validPhone(Phone);
    console.log(phn)
 
 
   if(Name!='' && phn && Body == '') {
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Body of SMS empty</font></p></div>");
     return false;
   } else if (Name=='' && phn && Body != ''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Name field empty</font></p></div>");
      return false;
   } else if (Name!='' && !phn && Body != ''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Invalid Phone Number</font></p></div>");
      return false;
   } else if (Name=='' || !phn || Body == ''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
      return false;
   } else {
@@ -435,33 +434,33 @@ Validator.prototype.validSmsform = function(Name, Phone, Body){
 
 
 Validator.prototype.validEmailform = function(Name, Email, Subject,Body){
-
+  $('#smss').empty();
    var eml = this.validEmail(Email);
 
 
   if(Name!='' && eml && Body == '' && Subject != '') {
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Body of Email empty</font></p></div>");
     return false;
   } else if (Name=='' && eml && Body != '' && Subject != ''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Name field empty</font></p></div>");
      return false;
   } else if (Name!='' && eml && Body != '' && Subject ==''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Subject Field Empty</font></p></div>");
      return false;
   }else if (Name!='' && !eml && Body != '' && Subject !=''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Invalid Email Address/font></p></div>");
      return false;
   } else if (Name=='' || !eml || Body == '' || Subject == ''){
     $('#smss').empty();
-    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
      return false;
   } else {
@@ -522,7 +521,7 @@ var main = function(){
       date = $('#searchdate').val();
       $(".hideout").hide();
       hide = true;
-      console.log(date);
+
       if(keyword.length == 0 && date == ''){
         scrll();
         $('#feed').empty();
@@ -551,7 +550,7 @@ var main = function(){
            }
 
           if(queryFeed==true) {
-            lost.queryDownload(keyword,date,dateto);
+            lost.queryDownload(keyword,date);
           }
 
 
@@ -629,7 +628,7 @@ scrll();
            }
 
           if(queryFeed==true) {
-            found.queryDownload(keyword, date, dateto);
+            found.queryDownload(keyword, date);
             console.log(found.qCounter);
           }
        }

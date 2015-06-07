@@ -15,14 +15,14 @@ describe("test UploaderFile ", function() {
     var saveParseJSON = jQuery.parseJSON;
     var saveLinkDataTo = ParseUploader.prototype.linkDataTo;
 
-    it("should receive a failure", function(done) {
+    it("should call jQuery.parseJSON", function(done) {
         passed = true;
         jQuery.parseJSON = function() { done(); }
         testUploader.uploadFile(falsefile, falseID, "Lost");
         expect(passed).toBeTruthy();
     });
 
-    it("should not receive a failure", function(done) {
+    it("should call ParseUploader.prototype.linkDataTo", function(done) {
         passed = true;
         ParseUploader.prototype.linkDataTo = function() { done(); }
         testUploader.uploadFile(file, objID, "Lost");

@@ -1,6 +1,5 @@
-describe("Testing FormManager", function(){
+describe("Testing FoundForm", function(){
    it("FormManager", function() {
-	alert("GOES HERE");
 	spyOn(window, 'alert');
 	var my_FoundM = new FoundForm(null);
 	//expect(true).toEqual(true);

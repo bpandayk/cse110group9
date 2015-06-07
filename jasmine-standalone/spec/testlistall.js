@@ -1,4 +1,4 @@
-describe("Testing listall.js", function(){
+describe("Testing vakidation in listall.js", function(){
   it("hideout was hidden successfully", function(){
     var hideout = $(".hideout");
     var spyHideout = spyOn(hideout, "hide");

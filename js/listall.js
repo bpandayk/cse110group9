@@ -299,7 +299,7 @@ Downloader.prototype.queryDownload = function(keyword, date) {
   Parse.initialize("NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
   "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs");
 
-  keyword = keyword.toLowerCase();
+  //keyword = keyword.toLowerCase();
   if(date != '') {
     date = new Date(date);
     //date = date.toISOString();
@@ -455,12 +455,12 @@ Validator.prototype.validEmailform = function(Name, Email, Subject,Body){
      return false;
   }else if (Name!='' && !eml && Body != '' && Subject !=''){
     $('#smss').empty();
-    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- Invalid Email Address/font></p></div>");
      return false;
   } else if (Name=='' || !eml || Body == '' || Subject == ''){
     $('#smss').empty();
-    $('#smss').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
+    $('#element_to_pop_up').append("<div id='smss'><p><font color='RED'> Sorry.Your"+
      " request could not be completed. Error- SMS Form Field Empty</font></p></div>");
      return false;
   } else {

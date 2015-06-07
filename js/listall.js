@@ -22,7 +22,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
 
      var dt = value.createdAt;
      var Months = ["January", "February", "March",'April','May','June','July','August','September','October','November', 'December']
-     dt = Months[dt.getMonth()] + " " + dt.getDay()  + ",  "+dt.getFullYear();
+     dt = Months[dt.getMonth()] + " " + dt.getDate()  + ",  "+dt.getFullYear();
 
      var mol = '<div class="well well-lg black-font" id = '+ value.id + '>'+
                 '<table style = width:100%>'+

@@ -1,15 +1,36 @@
-$( document ).ready(function() {
-   function File(name) {this.name = name; this.url = "something";}
 describe("test UploaderFile ", function() {
-  var file = new File("/home/uan4ik/Desktop/index.jpeg");
-  var objID = "D5YiwzHhbL";
-  var testUploader = new ParseUploader();
-    testUploader.uploadFile(file, objID, "Lost");
-  it("Uploader file function works fine", function() {
-    testUploader.linkDataTo = jasmine.createSpy("uploadFile spy called successfully!");
-//    var spyEvent = spyOn(testUploader, 'linkDataTo');
-    expect(testUploader.linkDataTo).toHaveBeenCalled();
-  });
-  });
+    var file = new File([""], "filename");
+    var falsefile = {}; falsefile.name = '';
+    var falseID = "!!!";
+    var testUploader = new ParseUploader();
+
+    Parse.initialize(
+            "NJy4H7P2dhoagiSCTyoDCKrGbvfaTI1sGCygKTJc",
+            "2D0fOvD5ftmTbjx2TJluZo7vZFzYHhm8tOHOjOFs"
+            );
+    var Lost = Parse.Object.extend("Lost");
+    obj = new Lost();
+    var objID = obj.id;
+
+    var saveParseJSON = jQuery.parseJSON;
+    var saveLinkDataTo = ParseUploader.prototype.linkDataTo;
+
+    it("should receive a failure", function(done) {
+        passed = true;
+        jQuery.parseJSON = function() { done(); }
+        testUploader.uploadFile(falsefile, falseID, "Lost");
+        expect(passed).toBeTruthy();
+    });
+
+    it("should not receive a failure", function(done) {
+        passed = true;
+        ParseUploader.prototype.linkDataTo = function() { done(); }
+        testUploader.uploadFile(file, objID, "Lost");
+        expect(passed).toBeTruthy();
+    });
+
+    jQuery.parseJSON = saveParseJSON;
+    ParseUploader.prototype.linkDataTo = saveLinkDataTo;
+
 });
 

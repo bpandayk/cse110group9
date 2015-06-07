@@ -4,7 +4,12 @@ describe("Testing FoundForm", function(){
 	var my_FoundM = new FoundForm(null);
 	//expect(true).toEqual(true);
 	expect(window.alert).toHaveBeenCalledWith('FoundForm has to have an Uploader!');
-
-//      expect(true).toBe(true);
+   });
+   it("test something else...", function(){
+     var ItemSpecCalled = spyOn(window, "ItemSpec");
+     var uploader = new ParseUploader();
+     var foundForm = new FoundForm(uploader);
+     expect(ItemSpecCalled).toHaveBeenCalled();
+     //expect(true).toEqual(true);
    });
 });

@@ -1,4 +1,3 @@
-
 importScripts = [
     '../js/lib.js',
 ];

@@ -149,7 +149,7 @@ ParseUploader.prototype.uploadFile = function(file,objID, classes) {
         },
         error: function(data) {
             var obj = jQuery.parseJSON(data);
-            console.error("Error: ");
+            console.error("Error: ", obj);
         }
     });
 }

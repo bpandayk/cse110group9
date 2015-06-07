@@ -111,7 +111,7 @@ Location.prototype.validate = function() {
 function Description(obj) { this.obj = obj; }
 extend(Description,Field);
 Description.prototype.validate = function() {
-    var empty = /^\s*$/;
+    var empty = /^\s*$/.test(this.getValue());
     if( empty ) {
         return false;
     } else {

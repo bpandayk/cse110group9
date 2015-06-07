@@ -8,15 +8,13 @@ $('head').append(
 describe("LostForm functionality test", function() {
 
 	function notAUploader(){};
-	var uploader = new notAUploader();
-	var lostForm = new LostForm(uploader);
+    var uploader = new notAUploader();
 
-	it("Alert when uploader is not valid", function() {
- 	spyOn(window,'alert');
- 	//expect(window.alert).toHaveBeenCalledWith(
- 	//'LostForm has to have an Uploader!');
- 	expect(window.alert).not.toHaveBeenCalled();
- 	});
+    it("Alert when uploader is not valid", function() {
+        spyOn(window,'alert');
+        var lostForm = new LostForm(uploader);
+        expect(window.alert).toHaveBeenCalledWith('LostForm has to have an Uploader!');
+    });
 
 });
 

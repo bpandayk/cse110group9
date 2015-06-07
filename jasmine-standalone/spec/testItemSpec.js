@@ -1,6 +1,6 @@
 describe("Testing ItemSpec functions", function() {
 
-	/* create obj object and val() function */
+	/* create obj object with a val() function */
 	function obj(value){
 		this.v = value;
 	};
@@ -143,11 +143,21 @@ describe("Testing ItemSpec functions", function() {
 
 	/* test for description */
 	describe("test Description", function() {
-		var description = new Description(empty);
-
-		it("description should always return true", function() {
-			expect(description.validate()).toBeTruthy();
+        var emptydesc = new Description(empty);
+        var spacedesc = new Description(new obj('    '));
+        var textdesc = new Description(new obj('hey'));
+		it("empty description should return false", function() {
+			expect(emptydesc.validate()).toBeFalsy();
 		})
+
+		it("description with white space only should return false", function() {
+			expect(spacedesc.validate()).toBeFalsy();
+		})
+
+		it("description with text should return true", function() {
+			expect(textdesc.validate()).toBeTruthy();
+		})
+
 	});
 
 	/* test for image */
@@ -161,11 +171,16 @@ describe("Testing ItemSpec functions", function() {
 
 	/* test for ItemSpec */
 	describe("test ItemSpec constructor", function() {
-		var itemSpec = new ItemSpec(name, itemName, email
+        var name = new obj("Max");
+        var itemName = new obj("Laptop");
+        var email = new obj("a@a.com");
+        var date = new obj("1/1/1111");
+        var phone = new obj("");
+		var itemSpec = new ItemSpec(name, itemName, email,
 				date, phone, empty, empty, empty);
 		
 		it("ItemSpec should always return true", function() {
-			expect(itemSpec.reporter).toEqual("Max");
+			expect(itemSpec.reporter.getValue()).toEqual("Max");
 		})
 
 	});

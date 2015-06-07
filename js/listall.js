@@ -143,7 +143,7 @@ ListManager.prototype.drawList= function(tooMany, numberOfPages)
               $("#Esubmit").click(function(){
                 $('#smss').empty();
                 var Sname = $("#Sname").val();
-                var Sphone = $('#Semail').val();
+                var Sphone = $('#SEmail').val();
                 var smsbody = $("#smsbody").val();
                 console.log(smsbody);
                 var validatesms = new Validator();
@@ -404,6 +404,7 @@ Validator.prototype.validEmail=function(Email){
 Validator.prototype.validSmsform = function(Name, Phone, Body){
 
    var phn = this.validPhone(Phone);
+   console.log(phn)
 
 
   if(Name!='' && phn && Body == '') {
